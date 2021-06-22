@@ -1,0 +1,25 @@
+.navigation__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navigation__item:last-of-type {
+  margin-left: 16px;
+}
+
+.navigation__link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+}
+
+.navigation__link_active {
+  font-weight: 500;
+  align-content: flex-end;
+}
