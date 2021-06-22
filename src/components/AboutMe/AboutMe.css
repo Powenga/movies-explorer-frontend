@@ -1,0 +1,110 @@
+.about-me {
+  padding: 110px 0 125px;
+}
+
+.about-me__person {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.about-me__content {
+  max-width: calc(600 / 1140 * 100%);
+  margin-bottom: 100px;
+}
+
+.about-me__title {
+  margin: 0 0 15px;
+  color: #fff;
+  font-size: 50px;
+  line-height: 58px;
+  font-weight: 400;
+  letter-spacing: -2px;
+}
+
+.about-me__subtitle {
+  margin: 0 0 26px;
+  color: #fff;
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 500;
+}
+
+.about-me__text {
+  margin: 0 0 99px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+}
+
+.about-me__social-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.about-me__social-item:last-child {
+  margin-left: 20px;
+}
+
+.about-me__social-link {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 500;
+}
+
+.about-me__avatar {
+  border-radius: 10px;
+}
+
+.about-me__portfolio-title {
+  margin: 0 0 30px;
+  color: #8B8B8B;
+  font-size: 18px;
+  line-height: 20px;
+  font-weight: 400;
+}
+
+.about-me__portfolio-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-me__porfolio-item {
+  border-bottom: 1px solid #424242;
+}
+
+.about-me__porfolio-item:last-child {
+  border-bottom: none;
+}
+
+.about-me__portfolio-link {
+  display: block;
+  position: relative;
+  text-decoration: none;
+  padding: 20px 0 19px;
+  color: #fff;
+  font-size: 30px;
+  line-height: 50px;
+  font-weight: 400;
+  letter-spacing: -1.2px;
+}
+
+.about-me__portfolio-link::after {
+  content: url(../../images/about-me-link-arrow.svg);
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  line-height: 100%;
+
+}

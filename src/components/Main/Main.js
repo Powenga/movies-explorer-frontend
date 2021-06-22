@@ -2,6 +2,7 @@ import "./Main.css";
 import Promo from "../Promo/Promo.js";
 import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs.js";
+import AboutMe from "../AboutMe/AboutMe";
 
 function Main() {
   return (
@@ -22,6 +23,13 @@ function Main() {
             Технологии
           </h2>
         </Techs>
+      </section>
+      <section className="main__section main__section_type_about-me">
+        <AboutMe classes="main__section-inner">
+          <h2 className="main__section-title main__section-title_type_about-me">
+            Cтудент
+          </h2>
+        </AboutMe>
       </section>
     </main>
   );
