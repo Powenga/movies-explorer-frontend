@@ -3,7 +3,6 @@ import Header from "../Header/Header";
 import Main from "../Main/Main";
 import Navigation from "../Navigation/Navigation";
 import UserWidget from "../UserWidget/UserWidget";
-import Promo from "../Promo/Promo";
 import { matchPath, Route, Switch, useLocation } from "react-router-dom";
 
 function App() {
