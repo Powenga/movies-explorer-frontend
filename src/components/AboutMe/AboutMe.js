@@ -1,5 +1,7 @@
 import "./AboutMe.css";
+import { aboutMeLinks } from "../../utils/constants";
 import avatarPath from "../../images/about-me-avatar.jpg";
+import Social from "../Social/Social";
 
 function AboutMe({ classes, children }) {
   return (
@@ -17,28 +19,7 @@ function AboutMe({ classes, children }) {
             заказы. Сейчас разработка на фрилансе - моя основная сфера
             деятельности. Люблю походы, и хорошие фильмы.
           </p>
-          <ul className="about-me__social-list">
-            <li className="about-me__social-item">
-              <a
-                className="about-me__social-link"
-                href="https://www.facebook.com/rakhmanin.dm/"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Facebook
-              </a>
-            </li>
-            <li className="about-me__social-item">
-              <a
-                className="about-me__social-link"
-                href="https://github.com/Powenga"
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                Github
-              </a>
-            </li>
-          </ul>
+          <Social classes="about-me__social" links={aboutMeLinks} />
         </div>
         <img
             className="about-me__avatar"

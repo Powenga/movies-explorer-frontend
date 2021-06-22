@@ -39,28 +39,6 @@
   font-weight: 400;
 }
 
-.about-me__social-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-}
-
-.about-me__social-item:last-child {
-  margin-left: 20px;
-}
-
-.about-me__social-link {
-  text-decoration: none;
-  color: #fff;
-  font-size: 14px;
-  line-height: 120%;
-  font-weight: 500;
-}
-
 .about-me__avatar {
   border-radius: 10px;
 }
@@ -106,5 +84,9 @@
   right: 0;
   transform: translate(0, -50%);
   line-height: 100%;
+  transition: transform .3s ease;
+}
 
+.about-me__portfolio-link:hover::after  {
+  transform: translate(0, -50%) rotate(45deg);
 }
