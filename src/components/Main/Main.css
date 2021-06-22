@@ -1,0 +1,9 @@
+.main__section_type_promo {
+  background-color: #073042;
+}
+
+.main__section-inner {
+  max-width: 1140px;
+  width: calc(1140 / 1280 * 100%);
+  margin: 0 auto;
+}

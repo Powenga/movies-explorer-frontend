@@ -1,0 +1,16 @@
+.btn {
+  display: block;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn_type_promo {
+  border: 1px solid rgba(255, 255, 255, .6);
+  border-radius: 3px;
+  padding: 10px 20px;
+}
