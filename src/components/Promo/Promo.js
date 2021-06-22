@@ -3,7 +3,7 @@ import Button from "../Button/Button";
 
 function Promo({ classes }) {
   return (
-    <div className={`promo ${classes ? classes : ""}`}>
+    <div className={`promo ${classes ? classes : ''}`}>
       <div className="promo__grid">
         <div className="promo__content">
           <h1 className="promo__title">

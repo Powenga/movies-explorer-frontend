@@ -1,14 +1,19 @@
 import "./Main.css";
 import Promo from "../Promo/Promo.js";
+import AboutProject from "../AboutProject/AboutProject";
 
 function Main() {
   return (
     <main className="main">
       <section className="main__section main__section_type_promo">
-        <Promo classes="main__section-inner"/>
+        <Promo classes="main__section-inner" />
       </section>
       <section className="main__section">
-        <Promo classes="main__section-inner"/>
+        <AboutProject classes="main__section-inner">
+          <h2 className="main__section-title main__section-title_type_about-project">
+            О проекте
+          </h2>
+        </AboutProject>
       </section>
     </main>
   );

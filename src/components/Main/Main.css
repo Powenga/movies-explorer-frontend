@@ -7,3 +7,17 @@
   width: calc(1140 / 1280 * 100%);
   margin: 0 auto;
 }
+
+.main__section-title {
+  margin: 0;
+  padding-bottom: 23px;
+  color: #fff;
+  font-size: 22px;
+  line-height: 120%;
+  font-weight: 400;
+  border-bottom: 1px solid #DADADA;
+}
+
+.main__section-title_type_about-project {
+  margin-bottom: 70px;
+}
