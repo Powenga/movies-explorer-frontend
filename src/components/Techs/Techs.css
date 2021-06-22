@@ -1,0 +1,46 @@
+.techs {
+  padding: 100px 0;
+}
+
+.techs__subtitle {
+  margin: 0 0 26px;
+  color: #fff;
+  font-size: 50px;
+  line-height: 58px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.techs__text {
+  margin: 0 auto 100px;
+  max-width: 460px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 400;
+  letter-spacing: -.6px;
+  text-align: center;
+}
+
+.techs__techs-list {
+  max-width: 690px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(84px, 1fr));
+  gap: 10px;
+  justify-content: center;
+}
+
+.techs__item {
+  color: #fff;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 400;
+  letter-spacing: -.6px;
+  text-align: center;
+  background-color: #303030;
+  border-radius: 10px;
+  padding: 21px 0;
+}
