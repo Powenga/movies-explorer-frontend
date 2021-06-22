@@ -23,3 +23,18 @@ export const aboutMeLinks = [
     link: 'https://github.com/Powenga',
   },
 ];
+
+export const portfolio = [
+  {
+    title: 'Статичный сайт',
+    link: 'https://github.com/Powenga/how-to-learn',
+  },
+  {
+    title: 'Адаптивный сайт',
+    link: 'https://github.com/Powenga/russian-travel',
+  },
+  {
+    title: 'Одностраничное приложение',
+    link: 'https://github.com/Powenga/react-mesto-api-full',
+  },
+];

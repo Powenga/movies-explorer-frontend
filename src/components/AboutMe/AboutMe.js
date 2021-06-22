@@ -2,6 +2,7 @@ import "./AboutMe.css";
 import { aboutMeLinks } from "../../utils/constants";
 import avatarPath from "../../images/about-me-avatar.jpg";
 import Social from "../Social/Social";
+import Portfolio from "../Portfolio/Portfolio";
 
 function AboutMe({ classes, children }) {
   return (
@@ -27,39 +28,7 @@ function AboutMe({ classes, children }) {
             alt="аватар студента"
           />
       </div>
-      <h4 className="about-me__portfolio-title">Портфолио</h4>
-      <ul className="about-me__portfolio-list">
-        <li className="about-me__porfolio-item">
-          <a
-            className="about-me__portfolio-link"
-            href="https://github.com/Powenga/how-to-learn"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Статичный сайт
-          </a>
-        </li>
-        <li className="about-me__porfolio-item">
-          <a
-            className="about-me__portfolio-link"
-            href="https://github.com/Powenga/russian-travel"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Адаптивный сайт
-          </a>
-        </li>
-        <li className="about-me__porfolio-item">
-          <a
-            className="about-me__portfolio-link"
-            href="https://github.com/Powenga/react-mesto-api-full"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Одностраничное приложение
-          </a>
-        </li>
-      </ul>
+      <Portfolio />
     </div>
   );
 }

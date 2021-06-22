@@ -8,34 +8,32 @@ import { matchPath, Route, Switch, useLocation } from 'react-router-dom';
 
 function App() {
   const location = useLocation();
+  const isMainRoutes = matchPath(location.pathname, {
+    path: ['/', '/movies', '/saved-movies'],
+    exact: true,
+  });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
   return (
     <div className="page">
+      {isMainRoutes && (
+        <Header isMain={isMain}>
+          <Navigation classes={'header__nav'} />
+          <UserWidget loggedIn={true} classes={'header__user'} />
+        </Header>
+      )}
       <Switch>
         <Route path="/" exact>
-          <Header isMain={isMain}>
-            <Navigation classes={'header__nav'} />
-            <UserWidget loggedIn={true} classes={'header__user'} />
-          </Header>
           <Main />
-          <Footer />
         </Route>
         <Route path="/movies">
-          <Header isMain={isMain}>
-            <Navigation classes={'header__nav'} />
-            <UserWidget loggedIn={true} classes={'header__user'} />
-          </Header>
         </Route>
         <Route path="/saved-movies">
-          <Header isMain={isMain}>
-            <Navigation classes={'header__nav'} />
-            <UserWidget loggedIn={true} classes={'header__user'} />
-          </Header>
         </Route>
         <Route path="/profile"></Route>
         <Route path="/signin"></Route>
         <Route path="/signup"></Route>
       </Switch>
+      {isMainRoutes && <Footer />}
     </div>
   );
 }
