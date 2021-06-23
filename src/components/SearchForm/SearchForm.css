@@ -1,5 +1,5 @@
 .search-form {
-  padding: 55px 0 60px;
+  padding: 55px 0 48px;
 }
 
 .search-form__field {
@@ -88,7 +88,7 @@
   height: 16px;
   border-radius: 50%;
   background-color: #F5F5F5;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, .8);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
   transition: transform .3s ease, background-color .3s ease;
 }
 

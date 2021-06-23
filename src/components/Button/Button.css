@@ -14,3 +14,14 @@
   border-radius: 3px;
   padding: 10px 20px;
 }
+
+.btn_type_more {
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  background-color: #2F2F2F;
+  color: #fff;
+  font-size: 12px;
+  line-height: 120%;
+  font-weight: 500;
+}

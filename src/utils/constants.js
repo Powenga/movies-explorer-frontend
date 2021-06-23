@@ -1,3 +1,5 @@
+import cardImagePath from '../images/cards/card.jpg';
+
 export const footerLinks = [
   {
     title: 'Яндекс.Практикум',
@@ -36,5 +38,54 @@ export const portfolio = [
   {
     title: 'Одностраничное приложение',
     link: 'https://github.com/Powenga/react-mesto-api-full',
+  },
+];
+
+export const initCards = [
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title:
+      'Осуждение и убийство Жана Поля Марата, осуществленные пациентами Чарентонской психбольницы под руководством маркиза де Сада',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
   },
 ];

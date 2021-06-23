@@ -1,0 +1,34 @@
+.movie-card {
+  background-color: #222;
+  box-shadow: 0 16px 24px rgba(0, 0, 0, .05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.movie-card__info {
+  padding: 14px;
+}
+
+.movie-card__img {
+  display: block;
+  width: 100%;
+  object-fit: contain;
+}
+
+.movie-card__title {
+  color: #fff;
+  font-size: 13px;
+  line-height: 120%;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.movie-card__duration {
+  margin: 0;
+  color: #8B8B8B;
+  font-size: 11px;
+  line-height: 120%;
+  font-weight: 400;
+}
