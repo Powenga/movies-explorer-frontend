@@ -16,3 +16,7 @@
   justify-content: space-between;
   align-items: stretch;
 }
+
+.page__main {
+  flex-grow: 1;
+}

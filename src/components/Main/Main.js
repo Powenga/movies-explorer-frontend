@@ -4,9 +4,9 @@ import AboutProject from "../AboutProject/AboutProject";
 import Techs from "../Techs/Techs.js";
 import AboutMe from "../AboutMe/AboutMe";
 
-function Main() {
+function Main({ classes }) {
   return (
-    <main className="main">
+    <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section main__section_type_promo">
         <Promo classes="main__section-inner" />
       </section>
