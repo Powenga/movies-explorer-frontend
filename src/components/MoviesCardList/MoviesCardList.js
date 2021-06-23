@@ -1,4 +1,3 @@
-import Button from '../Button/Button';
 import './MoviesCardList.css';
 
 function MoviesCardList({ card: Component, cardList, classes, children }) {
@@ -10,9 +9,6 @@ function MoviesCardList({ card: Component, cardList, classes, children }) {
           <Component key={index} cardData={card} />
         ))}
       </ul>
-      <Button classes="movie-card-list__more btn_type_more" type="button">
-        Ещё
-      </Button>
     </div>
   );
 }

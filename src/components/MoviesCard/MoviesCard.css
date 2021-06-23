@@ -22,7 +22,7 @@
   margin: 0;
   color: #fff;
   font-size: 13px;
-  line-height: 120%;
+  line-height: 16px;
   font-weight: 500;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -51,6 +51,7 @@
 
 .movie-card__checkbox-pseudo {
   display: block;
+  box-sizing: border-box;
   width: 16px;
   height: 16px;
   background-color: #313131;
