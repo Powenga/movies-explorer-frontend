@@ -9,6 +9,7 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
+import Login from '../Login/Login';
 
 function App() {
   const location = useLocation();
@@ -42,7 +43,9 @@ function App() {
         <Route path="/profile">
           <Profile classes="page__main" />
         </Route>
-        <Route path="/signin"></Route>
+        <Route path="/signin">
+          <Login classes="page__main" />
+        </Route>
         <Route path="/signup">
           <Register classes="page__main" />
         </Route>
