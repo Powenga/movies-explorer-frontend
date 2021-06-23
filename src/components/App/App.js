@@ -6,6 +6,7 @@ import UserWidget from '../UserWidget/UserWidget';
 import Footer from '../Footer/Footer';
 import { matchPath, Route, Switch, useLocation } from 'react-router-dom';
 import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
 
 function App() {
   const location = useLocation();
@@ -24,12 +25,13 @@ function App() {
       )}
       <Switch>
         <Route path="/" exact>
-          <Main classes="page__main"/>
+          <Main classes="page__main" />
         </Route>
         <Route path="/movies">
-          <Movies classes="page__main"/>
+          <Movies classes="page__main" />
         </Route>
         <Route path="/saved-movies">
+          <SavedMovies classes="page__main" />
         </Route>
         <Route path="/profile"></Route>
         <Route path="/signin"></Route>

@@ -1,4 +1,5 @@
 import cardImagePath from '../images/cards/card.jpg';
+import savedCardImagePath from '../images/cards/2.jpg';
 
 export const footerLinks = [
   {
@@ -88,4 +89,24 @@ export const initCards = [
     imageLink: cardImagePath,
     duration: '1ч42м',
   },
+];
+
+export const savedCards = [
+  {
+    title: '33 слова о дизайне',
+    imageLink: savedCardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title:
+      'Осуждение и убийство Жана Поля Марата, осуществленные пациентами Чарентонской психбольницы под руководством маркиза де Сада',
+    imageLink: cardImagePath,
+    duration: '1ч42м',
+  },
+  {
+    title: '33 слова о дизайне',
+    imageLink: savedCardImagePath,
+    duration: '1ч42м',
+  },
+
 ];

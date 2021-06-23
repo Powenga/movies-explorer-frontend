@@ -1,9 +1,9 @@
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
-import MoviesCardWithCheckbox from '../MovieCardWithCheckbox/MovieCardWithCheckbox.js';
-import { initCards } from '../../utils/constants.js';
+import MoviesCardWithDelete from '../MoviesCardWithDelete/MoviesCardWithDelete.js';
+import { savedCards } from '../../utils/constants.js';
 
-function Movies({ classes }) {
+function SavedMovies({ classes }) {
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
@@ -12,12 +12,12 @@ function Movies({ classes }) {
       <section className="main__section">
         <MoviesCardList
           classes="main__section-inner"
-          card={MoviesCardWithCheckbox}
-          cardList={initCards}
+          card={MoviesCardWithDelete}
+          cardList={savedCards}
         />
       </section>
     </main>
   );
 }
 
-export default Movies;
+export default SavedMovies;
