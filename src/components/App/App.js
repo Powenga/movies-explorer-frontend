@@ -7,17 +7,22 @@ import Footer from '../Footer/Footer';
 import { matchPath, Route, Switch, useLocation } from 'react-router-dom';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
 
 function App() {
   const location = useLocation();
-  const isMainRoutes = matchPath(location.pathname, {
+  const isHeader = matchPath(location.pathname, {
+    path: ['/', '/movies', '/saved-movies', '/profile'],
+    exact: true,
+  });
+  const isFooter = matchPath(location.pathname, {
     path: ['/', '/movies', '/saved-movies'],
     exact: true,
   });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
   return (
     <div className="page">
-      {isMainRoutes && (
+      {isHeader && (
         <Header isMain={isMain}>
           <Navigation classes={'header__nav'} />
           <UserWidget loggedIn={true} classes={'header__user'} />
@@ -33,11 +38,15 @@ function App() {
         <Route path="/saved-movies">
           <SavedMovies classes="page__main" />
         </Route>
-        <Route path="/profile"></Route>
-        <Route path="/signin"></Route>
+        <Route path="/profile">
+          <Profile classes="page__main" />
+        </Route>
+        <Route path="/signin">
+
+        </Route>
         <Route path="/signup"></Route>
       </Switch>
-      {isMainRoutes && <Footer />}
+      {isFooter && <Footer />}
     </div>
   );
 }

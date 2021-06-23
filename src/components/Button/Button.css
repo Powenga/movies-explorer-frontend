@@ -31,3 +31,19 @@
 .btn_type_icon {
   font-size: 0;
 }
+
+.btn_type_profile-submit {
+  color: #fff;
+  font-size: 13px;
+  line-height: 120%;
+  font-weight: 400;
+  margin: 0 auto 16px;
+}
+
+.btn_type_profile-logout {
+  color: #EE3465;
+  font-size: 13px;
+  line-height: 120%;
+  font-weight: 400;
+  margin: 0 auto;
+}
