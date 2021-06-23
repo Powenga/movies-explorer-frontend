@@ -1,0 +1,103 @@
+.search-form {
+  padding: 55px 0 60px;
+}
+
+.search-form__field {
+  display: block;
+  position: relative;
+}
+
+.search-form__field::before {
+  content: url(../../images/search-icon.svg);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translate(0, -50%);
+}
+
+.search-form__input {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #424242;
+  padding: 15px 40px;
+  text-align: center;
+  color: #fff;
+  font-size: 28px;
+  line-height: 120%;
+  font-weight: 500;
+  transition: border-bottom .3s ease;
+  margin-bottom: 30px;
+}
+
+.search-form__input:focus {
+  outline: none;
+  border-bottom: 1px solid #fff;
+}
+
+.search-form__input::placeholder {
+  color: #8B8B8B;
+  font-size: 28px;
+  line-height: 120%;
+  font-weight: 500;
+}
+
+.search-form__submit {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+}
+
+.search-form__checkbox-field {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.search-form__checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.search-form__checkbox-pseudo {
+  display: block;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: #EBEBEB;
+  border-radius: 20px;
+  transition: background-color .3s ease;
+  margin-right: 12px;
+}
+
+.search-form__checkbox-pseudo::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  transform: translate(0, -50%);
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #F5F5F5;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .8);
+  transition: transform .3s ease, background-color .3s ease;
+}
+
+.search-form__checkbox:checked + .search-form__checkbox-pseudo {
+  background-color: #2BE080;
+}
+
+.search-form__checkbox:checked + .search-form__checkbox-pseudo::after {
+  background-color: #fff;
+  box-shadow: unset;
+  transform: translate(100%, -50%);
+}

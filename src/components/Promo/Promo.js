@@ -1,5 +1,5 @@
-import "./Promo.css";
-import Button from "../Button/Button";
+import './Promo.css';
+import Button from '../Button/Button';
 
 function Promo({ classes }) {
   return (
@@ -17,7 +17,10 @@ function Promo({ classes }) {
           <div className="promo__pic"></div>
         </div>
       </div>
-      <Button classes="btn_type_promo promo__learn-more">
+      <Button
+        classes="btn_type_promo promo__learn-more"
+        type="button"
+      >
         Узнать больше
       </Button>
     </div>
