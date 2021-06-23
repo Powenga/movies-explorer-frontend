@@ -10,6 +10,7 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
+import NotFound from '../NotFound/NotFound';
 
 function App() {
   const location = useLocation();
@@ -48,6 +49,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <Register classes="page__main" />
+        </Route>
+        <Route path="*">
+          <NotFound classes="page__main not-found"/>
         </Route>
       </Switch>
       {isFooter && <Footer />}
