@@ -12,8 +12,8 @@ function MoviesCard({ classes, cardData, children }) {
         <h2 className="movie-card__title" title={cardData.title}>
           {cardData.title}
         </h2>
-        <p className="movie-card__duration">{cardData.duration}</p>
         {children}
+        <p className="movie-card__duration">{cardData.duration}</p>
       </div>
     </li>
   );

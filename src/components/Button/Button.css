@@ -7,6 +7,7 @@
   line-height: 120%;
   font-weight: 500;
   cursor: pointer;
+  padding: 0;
 }
 
 .btn_type_promo {
@@ -24,4 +25,8 @@
   font-size: 12px;
   line-height: 120%;
   font-weight: 500;
+}
+
+.btn_type_icon {
+  font-size: 0;
 }
