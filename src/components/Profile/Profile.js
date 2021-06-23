@@ -20,7 +20,7 @@ function Profile({ classes }) {
                 type="text"
                 minLength="2"
                 maxLength="30"
-                value={user.name}
+                defaultValue={user.name}
                 required
               />
               <span className="profile__input-label">Имя</span>
@@ -33,7 +33,7 @@ function Profile({ classes }) {
                 type="email"
                 minLength="2"
                 maxLength="30"
-                value={user.email}
+                defaultValue={user.email}
                 required
               />
               <span className="profile__input-label">E-mail</span>

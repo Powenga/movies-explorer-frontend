@@ -13,11 +13,6 @@
   flex-basis: 25%;
 }
 
-.header__logo-link {
-  display: inline-block;
-  font-size: 0;
-}
-
 .header__nav {
   flex-basis: 50%;
 }

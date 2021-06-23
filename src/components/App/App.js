@@ -8,6 +8,7 @@ import { matchPath, Route, Switch, useLocation } from 'react-router-dom';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
+import Register from '../Register/Register';
 
 function App() {
   const location = useLocation();
@@ -41,10 +42,10 @@ function App() {
         <Route path="/profile">
           <Profile classes="page__main" />
         </Route>
-        <Route path="/signin">
-
+        <Route path="/signin"></Route>
+        <Route path="/signup">
+          <Register classes="page__main" />
         </Route>
-        <Route path="/signup"></Route>
       </Switch>
       {isFooter && <Footer />}
     </div>

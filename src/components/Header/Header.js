@@ -1,5 +1,5 @@
+import Logo from "../Logo/Logo";
 import "./Header.css";
-import logoPath from "../../images/logo.svg";
 
 function Header({ classes, isMain, children }) {
   return (
@@ -9,9 +9,7 @@ function Header({ classes, isMain, children }) {
     >
       <div className="header__container">
         <div className="header__logo-wrap">
-          <a className="header__logo-link" href="/" target="_self">
-            <img className="header__logo" src={logoPath} alt="Логотип" />
-          </a>
+          <Logo />
         </div>
         {children}
       </div>
