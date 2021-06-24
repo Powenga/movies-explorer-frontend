@@ -12,7 +12,8 @@ function Footer({ classes, children }) {
         <div className="footer__row">
           <p className="footer__copy">&copy; {new Date().getFullYear()}</p>
           <Social
-            classes="footer__social"
+            classes="social__list_type_column"
+            itemClasses="social__item_type_centered"
             linkClasses="social__link_type_thin"
             links={footerLinks}
           />

@@ -8,7 +8,7 @@
 .footer__title {
   margin: 0 0 20px;
   text-align: center;
-  color: #8B8B8B;
+  color: #8b8b8b;
   font-size: 13px;
   line-height: 120%;
   font-weight: 400;
@@ -32,4 +32,19 @@
   font-weight: 400;
 }
 
-
+@media screen and (max-width: 425px) {
+  .footer__title {
+    margin-bottom: 30px;
+    font-size: 12px;
+  }
+  .footer__row {
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .footer__copy {
+    color: #8B8B8B;
+    font-size: 12px;
+    margin-top: 30px;
+  }
+}

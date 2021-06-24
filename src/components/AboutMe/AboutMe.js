@@ -20,7 +20,7 @@ function AboutMe({ classes, children }) {
             заказы. Сейчас разработка на фрилансе - моя основная сфера
             деятельности. Люблю походы, и хорошие фильмы.
           </p>
-          <Social classes="about-me__social" links={aboutMeLinks} />
+          <Social links={aboutMeLinks} />
         </div>
         <img
             className="about-me__avatar"

@@ -28,3 +28,18 @@
   font-size: 13px;
   font-weight: 400;
 }
+
+@media screen and (max-width: 425px) {
+  .social__link_type_thin {
+    font-size: 12px;
+  }
+  .social__list_type_column {
+    flex-direction: column;
+  }
+  .social__item_type_centered {
+    margin: 0 auto 12px;
+  }
+  .social__item_type_centered:last-child {
+    margin-bottom: 0;
+  }
+}
