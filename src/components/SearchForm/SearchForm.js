@@ -15,12 +15,15 @@ function SeacrchForm({ classes, children }) {
           maxLength="150"
           required
         />
-        <Button classes="btn_type_search search-form__submit" type="submit">
+        <Button
+          classes="btn_type_search search-form__submit transition transiton_type_btn"
+          type="submit"
+        >
           <img src={submitButtonPath} alt="Найти фильмы" />
         </Button>
       </label>
-      <label className="search-form__checkbox-field">
-        <input type="checkbox" className="search-form__checkbox"/>
+      <label className="search-form__checkbox-field transition transiton_type_btn">
+        <input type="checkbox" className="search-form__checkbox" />
         <span className="search-form__checkbox-pseudo"></span>
         Короткометражки
       </label>
