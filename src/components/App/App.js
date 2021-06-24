@@ -23,6 +23,9 @@ function App() {
     exact: true,
   });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
+
+  const isLoading = false;
+
   return (
     <div className="page">
       {isHeader && (
@@ -36,7 +39,7 @@ function App() {
           <Main classes="page__main" />
         </Route>
         <Route path="/movies">
-          <Movies classes="page__main" />
+          <Movies classes="page__main" isLoading={isLoading}/>
         </Route>
         <Route path="/saved-movies">
           <SavedMovies classes="page__main" />
