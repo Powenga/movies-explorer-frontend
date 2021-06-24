@@ -45,6 +45,12 @@
   padding-top: 100%
 }
 
+@media screen and (max-width: 1024px) {
+  .promo__title {
+    font-size: 45px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .promo {
     padding: 140px 0 76px;
@@ -66,7 +72,6 @@
   }
   .promo__title {
     margin: 0 0 22px;
-    color: #fff;
     font-size: 40px;
     line-height: 125%;
     text-align: center;
@@ -82,5 +87,21 @@
   }
   .promo__learn-more {
     margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .promo__title {
+    font-size: 35px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .promo__title {
+    margin: 0 0 22px;
+    font-size: 30px;
+    line-height: 125%;
+    text-align: center;
+    max-width: calc(680 / 768 * 100%);
   }
 }

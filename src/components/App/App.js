@@ -32,7 +32,7 @@ function App() {
       {isHeader && (
         <Header isMain={isMain}>
           <Navigation loggedIn={loggedIn} classes={'header__nav'} />
-          <MobileMenu loggedIn={loggedIn} classes={'header__nav'}/>
+          <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
         </Header>
       )}
       <Switch>
