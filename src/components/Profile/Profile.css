@@ -1,6 +1,7 @@
 .profile {
   padding: 74px 0 70px;
 }
+
 .profile__title {
   text-align: center;
   color: #fff;
@@ -12,7 +13,7 @@
 
 .profile__form {
   margin: 0 auto ;
-  width: calc(410 / 1140 * 100%);
+  max-width: 410px;
 }
 
 .profile__form-field {
@@ -42,7 +43,7 @@
 }
 
 .profile__input-label_style_borderless {
-  border-bottom: none ;
+  border-bottom: 1px solid transparent;
 }
 
 .profile__input:focus {
@@ -59,4 +60,25 @@
   top: 50%;
   transform: translate(0, -50%);
   left: 0;
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    padding: 236px 0 269px;
+  }
+  .profile__title {
+    margin-bottom: 90px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .profile {
+    padding: 70px 0 40px;
+  }
+  .profile__title {
+    margin-bottom: 74px;
+  }
+  .profile__form {
+    max-width: calc(260 / 292 * 100%);
+  }
 }

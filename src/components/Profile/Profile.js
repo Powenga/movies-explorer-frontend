@@ -38,9 +38,9 @@ function Profile({ classes }) {
               />
               <span className="profile__input-label">E-mail</span>
             </label>
-            <Button classes="btn_type_profile-submit" type="submit">Редактировать</Button>
-            <Button classes="btn_type_profile-logout" type="button">Выйти из аккаунта</Button>
+            <Button classes="btn_type_profile-submit transition transition_type_button" type="submit">Редактировать</Button>
           </form>
+           <Button classes="btn_type_profile-logout transition transition_type_button" type="button">Выйти из аккаунта</Button>
         </div>
       </section>
     </main>

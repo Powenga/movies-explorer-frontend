@@ -58,3 +58,13 @@
   font-weight: 500;
   margin: 0 auto 16px;
 }
+
+@media screen and (max-width: 425px) {
+  .btn_type_profile-submit {
+    font-size: 12px;
+  }
+
+  .btn_type_profile-logout {
+    font-size: 12px;
+  }
+}
