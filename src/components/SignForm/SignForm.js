@@ -4,7 +4,7 @@ import './SignForm.css';
 function SignForm({ classes, formTitle, formName, children }) {
   return (
     <div className={`sign-form ${classes ? classes : ''}`}>
-      <Logo />
+      <Logo classes="sign-form__logo"/>
       <h1 className="sign-form__title">{formTitle}</h1>
       <form className="sign-form__form" name={formName}>
         {children}

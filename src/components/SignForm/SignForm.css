@@ -1,6 +1,10 @@
 .sign-form {
   padding: 70px 0 0;
   max-width: 396px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 }
 
 .sign-form__title {
@@ -47,18 +51,47 @@
 
 .sign-form__link-wrap {
   text-align: center;
-  color: #8B8B8B;
-  padding: 13px 15px;
+  color: #8b8b8b;
   font-size: 14px;
   line-height: 120%;
   font-weight: 400;
   border-radius: 3px;
+  margin: 0;
 }
 
 .sign-form__link {
   text-decoration: none;
-  color: #4285F4;
+  color: #4285f4;
   font-size: 14px;
   line-height: 120%;
   font-weight: 400;
+}
+
+@media screen and (max-width: 768px) {
+  .sign-form {
+    padding-top: 232px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .sign-form {
+    padding-top: 56px;
+    width: calc(260 / 292 * 100%);
+  }
+  .sign-form__logo {
+    align-self: center;
+  }
+  .sign-form__title {
+    text-align: center;
+  }
+  .sign-form__field:last-of-type {
+    margin-bottom: 240px;
+  }
+  .sign-form__link {
+    font-size: 12px;
+  }
+  .sign-form__link-wrap {
+    font-size: 12px;
+
+  }
 }

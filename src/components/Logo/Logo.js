@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Logo({ classes }) {
   return (
-    <Link className="logo transition" to="/">
+    <Link className={`logo transition ${classes ? classes : ''}`} to="/">
       <img src={logoPath} alt="Логотип" />
     </Link>
   );
