@@ -38,6 +38,9 @@
   .main__section-inner {
     width: calc(668 / 768 * 100%);
   }
+  .main__section-title_type_techs {
+    margin-bottom: 80px;
+  }
 }
 
 @media screen and (max-width: 425px) {
