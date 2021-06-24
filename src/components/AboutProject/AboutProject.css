@@ -60,3 +60,43 @@
   line-height: 17px;
   font-weight: 500;
 }
+
+@media screen and (max-width: 768px) {
+  .about-project {
+    padding: 90px 0;
+  }
+  .about-project__text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-project__content_wrap {
+    margin-bottom: 93px;
+  }
+  .about-project__timeline {
+    grid-template-columns: calc(140 / 668 * 100%) 1fr;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .about-project {
+    padding: 70px 0;
+  }
+  .about-project__subtitle {
+    margin-bottom: 16px;
+    font-size: 18px;
+    letter-spacing: -.7px;
+  }
+  .about-project__text {
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .about-project__content_wrap {
+    margin-bottom: 60px;
+  }
+  .about-project__timeline {
+    grid-template-columns: calc(100 / 292 * 100%) 1fr;
+  }
+  .about-project__timeline-item {
+    font-size: 11px;
+  }
+}
