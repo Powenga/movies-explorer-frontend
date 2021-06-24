@@ -40,10 +40,10 @@ function App() {
           <Main classes="page__main" />
         </Route>
         <Route path="/movies">
-          <Movies classes="page__main" isLoading={isLoading} />
+          <Movies classes="page__main page__main_type_movies" isLoading={isLoading} />
         </Route>
         <Route path="/saved-movies">
-          <SavedMovies classes="page__main" />
+          <SavedMovies classes="page__main page__main_type_saved-movies" />
         </Route>
         <Route path="/profile">
           <Profile classes="page__main" />

@@ -21,3 +21,10 @@
   flex-grow: 1;
 }
 
+.page__main_type_movies {
+  margin-bottom: 80px;
+}
+
+.page__main_type_saved-movies {
+  margin-bottom: 60px;
+}
