@@ -23,7 +23,7 @@ function MobileMenu({ classes, loggedIn, children }) {
       }`}
     >
       <Button
-        classes="btn_type_icon mobile-menu__btn-open"
+        classes="btn_type_icon mobile-menu__btn-open transition transition_type_btn"
         type="button"
         areaLabel="Открыть меню"
         onClick={openMenu}
@@ -41,7 +41,7 @@ function MobileMenu({ classes, loggedIn, children }) {
               <>
                 <li className="mobile-menu__page-item">
                   <NavLink
-                    className="mobile-menu__page__link"
+                    className="mobile-menu__page__link transition"
                     activeClassName="mobile-menu__page__link_active"
                     to="/"
                     onClick={closeMenu}
@@ -52,7 +52,7 @@ function MobileMenu({ classes, loggedIn, children }) {
                 </li>
                 <li className="mobile-menu__page-item">
                   <NavLink
-                    className="mobile-menu__page__link"
+                    className="mobile-menu__page__link transition"
                     activeClassName="mobile-menu__page__link_active"
                     to="/movies"
                     onClick={closeMenu}
@@ -62,7 +62,7 @@ function MobileMenu({ classes, loggedIn, children }) {
                 </li>
                 <li className="obile-menu__page-item">
                   <NavLink
-                    className="mobile-menu__page__link"
+                    className="mobile-menu__page__link transition"
                     activeClassName="mobile-menu__page__link_active"
                     to="/saved-movies"
                     onClick={closeMenu}
@@ -100,7 +100,7 @@ function MobileMenu({ classes, loggedIn, children }) {
             <UserWidget classes="mobile-menu__profile" onClick={closeMenu} />
           )}
           <Button
-            classes="btn_type_icon mobile-menu__btn-close"
+            classes="btn_type_icon mobile-menu__btn-close transition transition_type_btn"
             type="button"
             areaLabel="Закрыть меню"
             onClick={closeMenu}
