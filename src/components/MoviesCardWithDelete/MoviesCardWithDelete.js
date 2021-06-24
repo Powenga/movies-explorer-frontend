@@ -6,7 +6,7 @@ function MoviesCardWithDelete({ cardData }) {
   return (
     <MoviesCard cardData={cardData}>
       <Button
-        classes="btn_type_icon transition transition_type_button"
+        classes="btn_type_icon"
         type="button"
         areaLabel="Удалить карточку"
       >

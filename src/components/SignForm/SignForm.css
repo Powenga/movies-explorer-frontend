@@ -7,6 +7,10 @@
   align-items: stretch;
 }
 
+.sign-form__form {
+  position: relative;
+}
+
 .sign-form__title {
   margin: 40px 0;
   color: #fff;
@@ -66,23 +70,6 @@
   visibility: visible;
 }
 
-.sign-form__link-wrap {
-  text-align: center;
-  color: #8b8b8b;
-  font-size: 14px;
-  line-height: 120%;
-  font-weight: 400;
-  border-radius: 3px;
-  margin: 0;
-}
-
-.sign-form__link {
-  text-decoration: none;
-  color: #4285f4;
-  font-size: 14px;
-  line-height: 120%;
-  font-weight: 400;
-}
 
 @media screen and (max-width: 768px) {
   .sign-form {
@@ -109,6 +96,5 @@
   }
   .sign-form__link-wrap {
     font-size: 12px;
-
   }
 }

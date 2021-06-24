@@ -16,7 +16,7 @@ function SeacrchForm({ classes, children }) {
           required
         />
         <Button
-          classes="btn_type_search search-form__submit transition transition_type_button"
+          classes="btn_type_search search-form__submit"
           type="submit"
         >
           <img src={submitButtonPath} alt="Найти фильмы" />

@@ -1,4 +1,5 @@
 import Button from '../Button/Button';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import './Profile.css';
 
 function Profile({ classes }) {
@@ -44,14 +45,15 @@ function Profile({ classes }) {
               <span className="profile__input-error"></span>
             </label>
             <Button
-              classes="btn_type_profile-submit transition transition_type_button"
+              classes="btn_type_profile-submit"
               type="submit"
             >
               Редактировать
             </Button>
+            <ErrorMessage classes="error-message_active"/>
           </form>
           <Button
-            classes="btn_type_profile-logout transition transition_type_button"
+            classes="btn_type_profile-logout"
             type="button"
           >
             Выйти из аккаунта

@@ -14,6 +14,7 @@
 .profile__form {
   margin: 0 auto ;
   max-width: 410px;
+  position: relative;
 }
 
 .profile__form-field {

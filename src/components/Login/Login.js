@@ -1,6 +1,6 @@
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
-import { Link } from 'react-router-dom';
+import SignToggleLink from '../SignToggleLink/SignToggleLink';
 
 function Login({ classes }) {
   const user = {
@@ -45,16 +45,18 @@ function Login({ classes }) {
             />
             <span className="sign-form__error"></span>
           </label>
-          <Button classes="btn_type_sign" type="submit">
+          <Button
+            classes="btn_type_sign"
+            type="submit"
+          >
             Войти
           </Button>
-          <p className="sign-form__link-wrap">
-            Ещё не зарегистрированы?&nbsp;
-            <Link to="/signup" className="sign-form__link">
-              Регистрация
-            </Link>
-          </p>
         </SignForm>
+        <SignToggleLink
+          text="Ещё не зарегистрированы?"
+          linkText="Регистрация"
+          link="/signup"
+        />
       </section>
     </main>
   );

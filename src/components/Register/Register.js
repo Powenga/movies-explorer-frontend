@@ -1,6 +1,7 @@
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
-import { Link } from 'react-router-dom';
+import SignToggleLink from '../SignToggleLink/SignToggleLink';
+import './Register.css';
 
 function Register({ classes }) {
   const user = {
@@ -10,7 +11,7 @@ function Register({ classes }) {
   };
   return (
     <main className={`main ${classes ? classes : ''}`}>
-      <section className="main__section">
+      <section className="main__section register">
         <SignForm
           classes="main__section-inner"
           formTitle="Добро пожаловать!"
@@ -58,16 +59,18 @@ function Register({ classes }) {
             />
             <span className="sign-form__error"></span>
           </label>
-          <Button classes="btn_type_sign" type="submit">
+          <Button
+            classes="btn_type_sign"
+            type="submit"
+          >
             Зарегистрироваться
           </Button>
-          <p className="sign-form__link-wrap">
-            Уже зарегистрированы?&nbsp;
-            <Link to="/signin" className="sign-form__link">
-              Войти
-            </Link>
-          </p>
         </SignForm>
+        <SignToggleLink
+          text="Уже зарегистрированы?"
+          linkText="Войти"
+          link="/signin"
+        />
       </section>
     </main>
   );

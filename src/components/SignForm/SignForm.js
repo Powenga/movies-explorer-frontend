@@ -1,3 +1,4 @@
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Logo from '../Logo/Logo';
 import './SignForm.css';
 
@@ -8,6 +9,7 @@ function SignForm({ classes, formTitle, formName, children }) {
       <h1 className="sign-form__title">{formTitle}</h1>
       <form className="sign-form__form" name={formName}>
         {children}
+        <ErrorMessage classes="error-message_active"/>
       </form>
     </div>
   );
