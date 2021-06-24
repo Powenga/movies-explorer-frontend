@@ -23,7 +23,7 @@ function MobileMenu({ classes, loggedIn, children }) {
       }`}
     >
       <Button
-        classes="btn_type_icon mobile-menu__btn-open transition transition_type_btn"
+        classes="btn_type_icon mobile-menu__btn-open transition transition_type_button"
         type="button"
         areaLabel="Открыть меню"
         onClick={openMenu}
@@ -100,7 +100,7 @@ function MobileMenu({ classes, loggedIn, children }) {
             <UserWidget classes="mobile-menu__profile" onClick={closeMenu} />
           )}
           <Button
-            classes="btn_type_icon mobile-menu__btn-close transition transition_type_btn"
+            classes="btn_type_icon mobile-menu__btn-close transition transition_type_button"
             type="button"
             areaLabel="Закрыть меню"
             onClick={closeMenu}

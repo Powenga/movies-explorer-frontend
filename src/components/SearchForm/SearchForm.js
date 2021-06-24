@@ -16,13 +16,13 @@ function SeacrchForm({ classes, children }) {
           required
         />
         <Button
-          classes="btn_type_search search-form__submit transition transiton_type_btn"
+          classes="btn_type_search search-form__submit transition transition_type_button"
           type="submit"
         >
           <img src={submitButtonPath} alt="Найти фильмы" />
         </Button>
       </label>
-      <label className="search-form__checkbox-field transition transiton_type_btn">
+      <label className="search-form__checkbox-field transition transition_type_button">
         <input type="checkbox" className="search-form__checkbox" />
         <span className="search-form__checkbox-pseudo"></span>
         Короткометражки
