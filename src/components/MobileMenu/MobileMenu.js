@@ -75,7 +75,7 @@ function MobileMenu({ classes, loggedIn, children }) {
               <>
                 <li className="mobile-menu__page-item">
                   <NavLink
-                    className="mobile-menu__page__link"
+                    className="mobile-menu__page__link transition"
                     activeClassName="mobile-menu__page__link_active"
                     to="/signin"
                     onClick={closeMenu}
@@ -85,7 +85,7 @@ function MobileMenu({ classes, loggedIn, children }) {
                 </li>
                 <li className="obile-menu__page-item">
                   <NavLink
-                    className="mobile-menu__page__link"
+                    className="mobile-menu__page__link transition"
                     activeClassName="mobile-menu__page__link_active"
                     to="/signup"
                     onClick={closeMenu}

@@ -10,7 +10,7 @@ function Navigation({ loggedIn, classes }) {
           <ul className="navigation__page-container">
             <li className="navigation__page-item">
               <NavLink
-                className="navigation__link"
+                className="navigation__link transition"
                 activeClassName="navigation__link_active"
                 to="/movies"
               >
@@ -19,7 +19,7 @@ function Navigation({ loggedIn, classes }) {
             </li>
             <li className="navigation__page-item">
               <NavLink
-                className="navigation__link"
+                className="navigation__link transition"
                 activeClassName="navigation__link_active"
                 to="/saved-movies"
               >
@@ -32,12 +32,15 @@ function Navigation({ loggedIn, classes }) {
       ) : (
         <ul className="navigation__sign-container">
           <li className="navigation__sign-item">
-            <NavLink className="navigation__sign-up" to="/signup">
+            <NavLink className="navigation__sign-up transition" to="/signup">
               Регистрация
             </NavLink>
           </li>
           <li className="navigation__sign-item">
-            <NavLink className="navigation__sign-in" to="/signin">
+            <NavLink
+              className="navigation__sign-in transition transition_type_button"
+              to="/signin"
+            >
               Войти
             </NavLink>
           </li>

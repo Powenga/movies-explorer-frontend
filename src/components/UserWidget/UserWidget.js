@@ -5,7 +5,7 @@ import avatarPath from '../../images/avatar.svg';
 function UserWidget({ classes, onClick }) {
   return (
     <NavLink
-      className={`user-widget ${classes ? classes : ''}`}
+      className={`user-widget transition ${classes ? classes : ''}`}
       to="/profile"
       onClick={onClick}
     >
