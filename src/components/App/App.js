@@ -10,6 +10,7 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
+import MobileMenu from '../MobileMenu/MobileMenu';
 
 function App() {
   const location = useLocation();
@@ -23,7 +24,7 @@ function App() {
   });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
 
-  const loggedIn = true;
+  const loggedIn = false;
   const isLoading = false;
 
   return (
@@ -31,6 +32,7 @@ function App() {
       {isHeader && (
         <Header isMain={isMain}>
           <Navigation loggedIn={loggedIn} classes={'header__nav'} />
+          <MobileMenu loggedIn={loggedIn} classes={'header__nav'}/>
         </Header>
       )}
       <Switch>

@@ -1,10 +1,10 @@
 import './Navigation.css';
 import { NavLink } from 'react-router-dom';
-import avatarPath from '../../images/avatar.svg';
+import UserWidget from '../UserWidget/UserWidget';
 
 function Navigation({ loggedIn, classes }) {
   return (
-    <nav className={`navigation ${classes}`}>
+    <nav className={`navigation navigation_tablet_hidden ${classes}`}>
       {loggedIn ? (
         <>
           <ul className="navigation__page-container">
@@ -27,16 +27,7 @@ function Navigation({ loggedIn, classes }) {
               </NavLink>
             </li>
           </ul>
-          <NavLink className="navigation__profile" to="/profile">
-            <p className="navigation__profile-text">Аккаунт</p>
-            <div className="navigation__profile-avatar-wrap">
-              <img
-                className="navigation__profile-avatar"
-                src={avatarPath}
-                alt="Аватар пользователя"
-              />
-            </div>
-          </NavLink>
+          <UserWidget />
         </>
       ) : (
         <ul className="navigation__sign-container">

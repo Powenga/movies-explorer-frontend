@@ -1,0 +1,29 @@
+.user-widget {
+  text-decoration: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #202020;
+  border-radius: 40px;
+  box-sizing: border-box;
+  padding: 3px 3px 3px 11px;
+}
+
+.user-widget-text {
+  margin: 0;
+}
+
+.user-widget__avatar-wrap {
+  width: 26px;
+  height: 26px;
+  background-color: #313131;
+  border-radius: 50%;
+  margin-left: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
