@@ -10,7 +10,7 @@ function Profile({ classes }) {
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
         <div className="profile main__section-inner">
-          <h1 className="profile__title">Привет, Виталий!</h1>
+          <h1 className="profile__title">Привет, Username!</h1>
           <form className="profile__form " name="profile">
             <label className="profile__form-field">
               <input
