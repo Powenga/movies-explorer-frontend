@@ -7,7 +7,7 @@ function Social({ classes, linkClasses, links }) {
         {links.map((link, index) => (
           <li key={index} className="social__item">
             <a
-              className={`social__link ${linkClasses ? linkClasses : ''}`}
+              className={`social__link transition ${linkClasses ? linkClasses : ''}`}
               href={link.link}
               target="_blank"
               rel="noreferrer noopener"

@@ -9,7 +9,7 @@ function Portfolio() {
         {portfolio.map((elem, index) => (
           <li key={index} className="porfolio-item">
             <a
-              className="portfolio-link"
+              className="portfolio-link transition"
               href={elem.link}
               target="_blank"
               rel="noreferrer noopener"
