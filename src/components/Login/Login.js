@@ -18,7 +18,7 @@ function Login({ classes }) {
           <label className="sign-form__field">
             Е-mail
             <input
-              className="sign-form__input"
+              className="sign-form__input sign-form__input_type_error"
               id="user-email"
               name="userEmail"
               type="email"
@@ -27,6 +27,9 @@ function Login({ classes }) {
               defaultValue={user.email}
               required
             />
+            <span className="sign-form__error sign-form__error_active">
+              Текст должен быть не короче 8 симв. Длина текста сейчас: 1 символ.
+            </span>
           </label>
           <label className="sign-form__field">
             Имя
@@ -40,6 +43,7 @@ function Login({ classes }) {
               defaultValue={user.pass}
               required
             />
+            <span className="sign-form__error"></span>
           </label>
           <Button classes="btn_type_sign" type="submit">
             Войти

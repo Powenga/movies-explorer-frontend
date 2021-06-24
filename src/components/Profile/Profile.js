@@ -14,7 +14,7 @@ function Profile({ classes }) {
           <form className="profile__form " name="profile">
             <label className="profile__form-field">
               <input
-                className="profile__input"
+                className="profile__input profile__input_type_error"
                 id="user-name"
                 name="userName"
                 type="text"
@@ -24,6 +24,10 @@ function Profile({ classes }) {
                 required
               />
               <span className="profile__input-label">Имя</span>
+              <span className="profile__input-error profile__input-error_active">
+                Текст должен быть не короче 8 симв. Длина текста сейчас: 1
+                символ.
+              </span>
             </label>
             <label className="profile__form-field">
               <input
@@ -37,10 +41,21 @@ function Profile({ classes }) {
                 required
               />
               <span className="profile__input-label">E-mail</span>
+              <span className="profile__input-error"></span>
             </label>
-            <Button classes="btn_type_profile-submit transition transition_type_button" type="submit">Редактировать</Button>
+            <Button
+              classes="btn_type_profile-submit transition transition_type_button"
+              type="submit"
+            >
+              Редактировать
+            </Button>
           </form>
-           <Button classes="btn_type_profile-logout transition transition_type_button" type="button">Выйти из аккаунта</Button>
+          <Button
+            classes="btn_type_profile-logout transition transition_type_button"
+            type="button"
+          >
+            Выйти из аккаунта
+          </Button>
         </div>
       </section>
     </main>

@@ -17,6 +17,7 @@
 
 .sign-form__field {
   display: block;
+  position: relative;
   color: #8b8b8b;
   font-size: 10px;
   line-height: 120%;
@@ -44,9 +45,25 @@
   transition: border-bottom 0.3s ease;
 }
 
+.sign-form__input_type_error {
+  border-bottom: 1px solid #EE3465;
+}
+
 .sign-form__input:focus {
   outline: none;
   border-bottom: 1px solid #fff;
+}
+
+.sign-form__error {
+  color: #EE3465;
+  position: absolute;
+  top: 100%;
+  left: 0%;
+  visibility: hidden;
+}
+
+.sign-form__error_active {
+  visibility: visible;
 }
 
 .sign-form__link-wrap {

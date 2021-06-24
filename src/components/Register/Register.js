@@ -28,6 +28,7 @@ function Register({ classes }) {
               defaultValue={user.name}
               required
             />
+            <span className="sign-form__error"></span>
           </label>
           <label className="sign-form__field">
             Е-mail
@@ -41,6 +42,7 @@ function Register({ classes }) {
               defaultValue={user.email}
               required
             />
+            <span className="sign-form__error"></span>
           </label>
           <label className="sign-form__field">
             Имя
@@ -54,13 +56,16 @@ function Register({ classes }) {
               defaultValue={user.pass}
               required
             />
+            <span className="sign-form__error"></span>
           </label>
           <Button classes="btn_type_sign" type="submit">
             Зарегистрироваться
           </Button>
           <p className="sign-form__link-wrap">
             Уже зарегистрированы?&nbsp;
-            <Link to="/signin" className="sign-form__link">Войти</Link>
+            <Link to="/signin" className="sign-form__link">
+              Войти
+            </Link>
           </p>
         </SignForm>
       </section>

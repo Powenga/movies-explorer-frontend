@@ -19,12 +19,12 @@
 .profile__form-field {
   display: block;
   position: relative;
+  margin-bottom: 10px;
 }
 
 .profile__form-field:last-of-type{
   margin-bottom: 204px;
 }
-
 
 .profile__input {
   display: block;
@@ -46,6 +46,10 @@
   border-bottom: 1px solid transparent;
 }
 
+.profile__input_type_error {
+  border-bottom: 1px solid #ee3465;
+}
+
 .profile__input:focus {
   outline: none;
   border-bottom: 1px solid #fff;
@@ -59,6 +63,14 @@
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
+  left: 0;
+}
+
+.profile__input-error {
+  font-size: 10px;
+  color: #ee3465;
+  position: absolute;
+  top: 100%;
   left: 0;
 }
 
