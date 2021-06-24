@@ -19,7 +19,7 @@
   font-size: 22px;
   line-height: 120%;
   font-weight: 400;
-  border-bottom: 1px solid #DADADA;
+  border-bottom: 1px solid #dadada;
 }
 
 .main__section-title_type_about-project {
@@ -32,4 +32,22 @@
 
 .main__section-title_type_about-me {
   margin-bottom: 66px;
+}
+
+@media screen and (max-width: 768px) {
+  .main__section-inner {
+    width: calc(668 / 768 * 100%);
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .main__section-inner {
+    width: calc(292 / 320 * 100%);
+  }
+  .main__section-title {
+    padding-bottom: 28px;
+  }
+  .main__section-title_type_about-me {
+    margin-bottom: 60px;
+  }
 }
