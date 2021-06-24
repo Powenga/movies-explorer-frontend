@@ -24,8 +24,8 @@ function App() {
   });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
 
-  const loggedIn = false;
-  const isLoading = false;
+  const loggedIn = true;
+  const isLoading = true;
 
   return (
     <div className="page">
