@@ -1,7 +1,7 @@
 import './Promo.css';
 import Button from '../Button/Button';
 
-function Promo({ classes }) {
+function Promo({ onLearnMoreClick, classes }) {
   return (
     <div className={`promo ${classes ? classes : ''}`}>
       <div className="promo__grid">
@@ -20,6 +20,7 @@ function Promo({ classes }) {
       <Button
         classes="btn_type_promo promo__learn-more"
         type="button"
+        onClick={onLearnMoreClick}
       >
         Узнать больше
       </Button>
