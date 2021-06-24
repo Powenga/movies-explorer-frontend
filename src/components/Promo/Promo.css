@@ -80,7 +80,7 @@
   .promo__text {
     margin: 0;
     text-align: center;
-    max-width: calc(260 / 768 * 100%);
+    max-width: 260px;
   }
   .promo__pic-container {
     justify-self: center;
@@ -90,18 +90,24 @@
   }
 }
 
-@media screen and (max-width: 425px) {
+@media screen and (max-width: 660px) {
   .promo__title {
-    font-size: 35px;
+    font-size: 33px;
+    letter-spacing: -.8px;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 425px) {
+  .promo {
+    padding: 70px 0 30px;
+  }
   .promo__title {
     margin: 0 0 22px;
     font-size: 30px;
-    line-height: 125%;
-    text-align: center;
-    max-width: calc(680 / 768 * 100%);
+    letter-spacing: -1.2px;
+    max-width: 100%
+  }
+  .promo__pic-container {
+    width: calc(210 / 292 * 100%);
   }
 }

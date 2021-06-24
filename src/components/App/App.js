@@ -58,7 +58,7 @@ function App() {
           <NotFound classes="page__main not-found" />
         </Route>
       </Switch>
-      {isFooter && <Footer />}
+      {/* {isFooter && <Footer />} */}
     </div>
   );
 }
