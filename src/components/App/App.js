@@ -2,7 +2,6 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Navigation from '../Navigation/Navigation';
-import UserWidget from '../UserWidget/UserWidget';
 import Footer from '../Footer/Footer';
 import { matchPath, Route, Switch, useLocation } from 'react-router-dom';
 import Movies from '../Movies/Movies';
@@ -24,14 +23,14 @@ function App() {
   });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
 
+  const loggedIn = true;
   const isLoading = false;
 
   return (
     <div className="page">
       {isHeader && (
         <Header isMain={isMain}>
-          <Navigation classes={'header__nav'} />
-          <UserWidget loggedIn={true} classes={'header__user'} />
+          <Navigation loggedIn={loggedIn} classes={'header__nav'} />
         </Header>
       )}
       <Switch>
@@ -39,7 +38,7 @@ function App() {
           <Main classes="page__main" />
         </Route>
         <Route path="/movies">
-          <Movies classes="page__main" isLoading={isLoading}/>
+          <Movies classes="page__main" isLoading={isLoading} />
         </Route>
         <Route path="/saved-movies">
           <SavedMovies classes="page__main" />
@@ -54,7 +53,7 @@ function App() {
           <Register classes="page__main" />
         </Route>
         <Route path="*">
-          <NotFound classes="page__main not-found"/>
+          <NotFound classes="page__main not-found" />
         </Route>
       </Switch>
       {isFooter && <Footer />}

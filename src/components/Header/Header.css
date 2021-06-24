@@ -5,18 +5,20 @@
   padding: 18px 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
 }
 
-.header__logo-wrap {
-  flex-basis: 25%;
+.header__nav {
+  flex-grow: 1;
 }
 
-.header__nav {
-  flex-basis: 50%;
+/* .header__logo-wrap {
+  flex-basis: 25%;
 }
 
 .header__user {
   flex-basis: 25%;
-}
+} */
+
+
