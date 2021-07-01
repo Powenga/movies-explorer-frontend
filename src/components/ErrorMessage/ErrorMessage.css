@@ -1,0 +1,22 @@
+.error-message {
+  visibility: hidden;
+  position: absolute;
+  margin: 0;
+  bottom: 80px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  color: #ee3465;
+  font-size: 12px;
+  line-height: 120%;
+  font-weight: 400;
+  text-align: center;
+  width: 100%;
+}
+
+.error-message{
+  opacity: 1;
+}
+
+.error-message_active {
+  visibility: visible;
+}

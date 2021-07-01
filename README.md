@@ -2,4 +2,5 @@
 ## Описание
 Вторая часть дипломной работы по окончании курса __"Веб-разработчик"__ в Яндекс.Практикуме.
 ## Cсылки
-[Ссылка на приложенение](https://pof.di.nomoredomains.icu/)
+[Ссылка на api](https://pof.di.nomoredomains.icu/)  
+[Ссылка на макет](https://www.figma.com/file/OXi0d52IcqMQD8KF93D9vC/Diploma-Copy?node-id=932%3A3593)
