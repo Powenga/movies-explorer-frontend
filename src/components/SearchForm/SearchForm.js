@@ -52,6 +52,7 @@ function SeacrchForm({
         <input
           type="checkbox"
           className="search-form__checkbox"
+          checked={isShortMovie}
           value={isShortMovie}
           onChange={handleShortMovieChange}
         />

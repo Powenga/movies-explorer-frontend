@@ -11,9 +11,10 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import MobileMenu from '../MobileMenu/MobileMenu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import MoviesApi from '../../utils/MoviesApi';
 import { movieListAge } from '../../utils/constants';
+import { filterMovies } from '../../utils/utils';
 
 function App() {
   const location = useLocation();
@@ -37,31 +38,46 @@ function App() {
   function getMovies(keyWord) {
     setIsLoading(true);
     if (!checkMovieList()) {
-      console.log('api fetch');
       MoviesApi.getMovies()
         .then((data) => {
           saveMovies(data);
-          setMovieResultList(filterMovies(keyWord, data, isShortMovie));
+          const resultMoviesList = filterMovies(keyWord, data, isShortMovie);
+          saveLastMovies(resultMoviesList);
+          setResultMovies(resultMoviesList);
         })
         .catch()
         .finally(() => {
           setIsLoading(false);
         });
     } else {
-      setMovieResultList(
-        filterMovies(
-          keyWord,
-          JSON.parse(localStorage.getItem('movieList')),
-          isShortMovie
-        )
+      const resultMoviesList = filterMovies(
+        keyWord,
+        JSON.parse(localStorage.getItem('movieList')),
+        isShortMovie
       );
+      console.log(resultMoviesList);
+      saveLastMovies(resultMoviesList);
+      setResultMovies(resultMoviesList);
       setIsLoading(false);
     }
+  }
+
+  function setResultMovies(resultMoviesList) {
+    setMovieResultList(resultMoviesList);
+    resultMoviesList.length
+      ? setIsCardsNotFound(false)
+      : setIsCardsNotFound(true);
   }
 
   function saveMovies(movieList) {
     localStorage.setItem('movieList', JSON.stringify(movieList));
     localStorage.setItem('movieUpdateDate', new Date());
+  }
+
+  function saveLastMovies(movieList) {
+    localStorage.setItem('lastMovieList', JSON.stringify(movieList));
+    localStorage.setItem('lastKeyword', JSON.stringify(keyWord));
+    localStorage.setItem('isShortMovie', JSON.stringify(isShortMovie));
   }
 
   function checkMovieList() {
@@ -79,27 +95,16 @@ function App() {
     setIsShortMovie(value);
   }
 
-  function filterMovies(keyWord, movieList, isShortMovie) {
-    const lowerKeyWord = keyWord.toLowerCase();
-    const resultCardList = movieList.filter((movie) => {
-      console.log(movie.duration, isShortMovie);
-      if (
-        (movie.nameRU && movie.nameRU.toLowerCase().includes(lowerKeyWord)) ||
-        (movie.nameEN && movie.nameEN.toLowerCase().includes(lowerKeyWord))
-      ) {
-        return isShortMovie && movie.duration <= 40 ? true : !isShortMovie ? true : false;
-      } else {
-        return false;
-      };
-    });
-    if (resultCardList.length) {
-      setIsCardsNotFound(false);
-      return resultCardList;
-    } else {
-      setIsCardsNotFound(true);
-      return [];
+  useEffect(() => {
+    if (
+      localStorage.getItem('lastMovieList') &&
+      localStorage.getItem('lastKeyword')
+    ) {
+      setResultMovies(JSON.parse(localStorage.getItem('lastMovieList')));
+      setKeyWord(JSON.parse(localStorage.getItem('lastKeyword')));
+      setIsShortMovie(JSON.parse(localStorage.getItem('isShortMovie')));
     }
-  }
+  }, []);
 
   return (
     <div className="page">
