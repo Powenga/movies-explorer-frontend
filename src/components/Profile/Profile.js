@@ -2,7 +2,7 @@ import Button from '../Button/Button';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import './Profile.css';
 
-function Profile({ classes }) {
+function Profile({ classes, onLogout }) {
   const user = {
     name: 'Виталий',
     email: 'pochta@yandex.ru',
@@ -55,6 +55,7 @@ function Profile({ classes }) {
           <Button
             classes="btn_type_profile-logout"
             type="button"
+            onClick={onLogout}
           >
             Выйти из аккаунта
           </Button>

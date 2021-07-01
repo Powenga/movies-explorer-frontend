@@ -49,7 +49,7 @@ class Auth {
   }
 
   logout() {
-    return fetch(`${this._baseUrl}/users/me/logout`, {
+    return fetch(`${this._baseUrl}/signout`, {
       headers: {
         'Content-Type': 'application/json',
       },

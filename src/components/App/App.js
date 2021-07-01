@@ -52,6 +52,7 @@ function App() {
 
   const [registerError, setRegisterError] = useState(null);
   const [loginError, setLoginError] = useState(null);
+  const [logoutError, setlogoutError] = useState(null);
   const [movieApiError, setMovieApiError] = useState(null);
 
   const history = useHistory();
@@ -105,7 +106,7 @@ function App() {
         setLoggedIn(false);
       })
       .catch((err) => {
-
+        setlogoutError(err.message)
       });
   }
 
@@ -214,7 +215,7 @@ function App() {
               <SavedMovies classes="page__main page__main_type_saved-movies" />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
-              <Profile classes="page__main" />
+              <Profile classes="page__main" onLogout={handleLogout}/>
             </ProtectedRoute>
             <Route path="/signin">
               <Login classes="page__main" onLogin={handleLogin}/>
