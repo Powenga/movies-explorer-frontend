@@ -1,6 +1,15 @@
 import cardImagePath from '../images/cards/card.jpg';
 import savedCardImagePath from '../images/cards/2.jpg';
 
+export const {
+  REACT_APP_MOVIE_API_URL = 'https://api.nomoreparties.co/beatfilm-movies',
+} = process.env;
+export const {
+
+  REACT_APP_API_URL = 'https://pob.di.nomoredomains.icu/',
+} = process.env;
+
+export const movieListAge = 7 * 24 * 60 * 60 * 1000;
 export const footerLinks = [
   {
     title: 'Яндекс.Практикум',
@@ -108,5 +117,4 @@ export const savedCards = [
     imageLink: savedCardImagePath,
     duration: '1ч42м',
   },
-
 ];

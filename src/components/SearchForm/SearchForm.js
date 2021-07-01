@@ -2,9 +2,24 @@ import Button from '../Button/Button';
 import './SearchForm.css';
 import submitButtonPath from '../../images/search-form-submit.svg';
 
-function SeacrchForm({ classes, children }) {
+function SeacrchForm({ classes, onSubmit, keyWord, onKeyWordChange, children }) {
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onSubmit(keyWord);
+  }
+
+  function handleChange(evt) {
+    const { value } = evt.target;
+    onKeyWordChange(value);
+  }
+
   return (
-    <form className={`search-form ${classes ? classes : ''}`} name="searchForm">
+    <form
+      className={`search-form ${classes ? classes : ''}`}
+      name="searchForm"
+      onSubmit={handleSubmit}
+      noValidate
+    >
       <label className="search-form__field">
         <input
           className="search-form__input"
@@ -13,12 +28,11 @@ function SeacrchForm({ classes, children }) {
           placeholder="Фильм"
           minLength="1"
           maxLength="150"
+          value={keyWord}
+          onChange={handleChange}
           required
         />
-        <Button
-          classes="btn_type_search search-form__submit"
-          type="submit"
-        >
+        <Button classes="btn_type_search search-form__submit" type="submit">
           <img src={submitButtonPath} alt="Найти фильмы" />
         </Button>
       </label>

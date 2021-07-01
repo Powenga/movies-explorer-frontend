@@ -11,6 +11,9 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import MobileMenu from '../MobileMenu/MobileMenu';
+import { useState } from 'react';
+import MoviesApi from '../../utils/MoviesApi';
+import { movieListAge } from '../../utils/constants';
 
 function App() {
   const location = useLocation();
@@ -24,8 +27,59 @@ function App() {
   });
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
 
+  const [keyWord, setKeyWord] = useState('');
+  const [movieResultList, setMovieResultList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const loggedIn = true;
-  const isLoading = false;
+
+  function getMovies(keyWord) {
+    setIsLoading(true);
+    localStorage.getItem('movieUpdateDate');
+    if (!checkMovieList()) {
+      console.log('api fetch');
+      MoviesApi.getMovies()
+        .then((data) => {
+          saveMovies(data);
+          setMovieResultList(filterMovies(keyWord, data));
+        })
+        .catch()
+        .finally(() => {
+          setIsLoading(false);
+        });
+    } else {
+      setMovieResultList(
+        filterMovies(keyWord, JSON.parse(localStorage.getItem('movieList')))
+      );
+      setIsLoading(false);
+    }
+  }
+
+  function saveMovies(movieList) {
+    localStorage.setItem('movieList', JSON.stringify(movieList));
+    localStorage.setItem('movieUpdateDate', new Date());
+  }
+
+  function checkMovieList() {
+    const savedMovieList = JSON.parse(localStorage.getItem('movieList'));
+    return savedMovieList &&
+      savedMovieList.length > 0 &&
+      movieListAge >
+        new Date().getTime() -
+          new Date(localStorage.getItem('movieUpdateDate')).getTime()
+      ? true
+      : false;
+  }
+
+  function filterMovies(keyWord, movieList) {
+    const lowerKeyWord = keyWord.toLowerCase();
+    return movieList.filter((movie) => {
+      return (movie.nameRU &&
+        movie.nameRU.toLowerCase().includes(lowerKeyWord)) ||
+        (movie.nameEN && movie.nameEN.toLowerCase().includes(lowerKeyWord))
+        ? true
+        : false;
+    });
+  }
 
   return (
     <div className="page">
@@ -40,7 +94,14 @@ function App() {
           <Main classes="page__main" />
         </Route>
         <Route path="/movies">
-          <Movies classes="page__main page__main_type_movies" isLoading={isLoading} />
+          <Movies
+            classes="page__main page__main_type_movies"
+            isLoading={isLoading}
+            onMovieFind={getMovies}
+            keyWord={keyWord}
+            onKeyWordChange={setKeyWord}
+            movieResultList={movieResultList}
+          />
         </Route>
         <Route path="/saved-movies">
           <SavedMovies classes="page__main page__main_type_saved-movies" />
