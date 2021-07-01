@@ -18,11 +18,11 @@ class Auth {
     })
   }
 
-  signUp(email, password) {
+  signUp(name, email, password) {
     return fetch(`${this._baseUrl}/signup`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({password, email})
+      body: JSON.stringify({name, email, password})
     })
       .then(this._onError)
   }

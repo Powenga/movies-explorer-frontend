@@ -1,14 +1,27 @@
+import { useState } from 'react';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import './Register.css';
 
-function Register({ classes }) {
-  const user = {
-    name: 'Виталий',
-    email: 'pochta@yandex.ru',
-    pass: 'пароль-король',
-  };
+function Register({ classes, onRegister }) {
+
+  const [userData, setUserData] = useState({
+    userName: '',
+    userEmail: '',
+    userPass: '',
+  });
+
+  function handleChange(evt){
+    const {name, value} = evt.target;
+    setUserData({...userData, [name]: value})
+  }
+
+  function handleSubmit(evt){
+    evt.preventDefault();
+    onRegister(userData.userName, userData.userEmail, userData.userPass);
+  }
+
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section register">
@@ -16,6 +29,7 @@ function Register({ classes }) {
           classes="main__section-inner"
           formTitle="Добро пожаловать!"
           formName="register-form"
+          onSubmit={handleSubmit}
         >
           <label className="sign-form__field">
             Имя
@@ -26,7 +40,8 @@ function Register({ classes }) {
               type="text"
               minLength="2"
               maxLength="30"
-              defaultValue={user.name}
+              value={userData.name}
+              onChange={handleChange}
               required
             />
             <span className="sign-form__error"></span>
@@ -40,13 +55,14 @@ function Register({ classes }) {
               type="email"
               minLength="2"
               maxLength="30"
-              defaultValue={user.email}
+              value={userData.email}
+              onChange={handleChange}
               required
             />
             <span className="sign-form__error"></span>
           </label>
           <label className="sign-form__field">
-            Имя
+            Пароль
             <input
               className="sign-form__input"
               id="user-pass"
@@ -54,15 +70,13 @@ function Register({ classes }) {
               type="password"
               minLength="8"
               maxLength="30"
-              defaultValue={user.pass}
+              value={userData.pass}
+              onChange={handleChange}
               required
             />
             <span className="sign-form__error"></span>
           </label>
-          <Button
-            classes="btn_type_sign"
-            type="submit"
-          >
+          <Button classes="btn_type_sign" type="submit">
             Зарегистрироваться
           </Button>
         </SignForm>

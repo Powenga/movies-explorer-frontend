@@ -24,6 +24,7 @@ import { filterMovies } from '../../utils/utils';
 import auth from '../../utils/auth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 function App() {
   const location = useLocation();
@@ -45,10 +46,13 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
-    name: '',
-    email: '',
-    _id: '',
+    useName: '',
+    userEmail: '',
   });
+
+  const [registerError, setRegisterError] = useState(null);
+  const [loginError, setLoginError] = useState(null);
+  const [movieApiError, setMovieApiError] = useState(null);
 
   const history = useHistory();
 
@@ -62,6 +66,23 @@ function App() {
         setLoggedIn(false);
       });
   }, []);
+
+  function handleRegister(name, email, pass) {
+    auth
+      .signUp(name, email, pass)
+      .then((res) => {
+        if (res) {
+          setRegisterError(null);
+          setCurrentUser({useName: res.name, userEmail: email})
+          history.push("/movies");
+        } else {
+          throw new Error('Что-то пошло не так...')
+        }
+      })
+      .catch((err) => {
+        setRegisterError(err.message);
+      });
+  }
 
   function getMovies(keyWord) {
     setIsLoading(true);
@@ -139,6 +160,9 @@ function App() {
       <CurrentUserContext.Provider
         value={{ currentUser: currentUser, loggedIn: loggedIn }}
       >
+        <ErrorsContext.Provider
+          value={{ registerError, loginError, movieApiError}}
+        >
         {isHeader && (
           <Header isMain={isMain}>
             <Navigation loggedIn={loggedIn} classes={'header__nav'} />
@@ -172,13 +196,14 @@ function App() {
             <Login classes="page__main" />
           </Route>
           <Route path="/signup">
-            <Register classes="page__main" />
+            <Register classes="page__main" onRegister={handleRegister}/>
           </Route>
           <Route path="*">
             <NotFound classes="page__main not-found" />
           </Route>
         </Switch>
         {isFooter && <Footer />}
+        </ErrorsContext.Provider>
       </CurrentUserContext.Provider>
     </div>
   );
