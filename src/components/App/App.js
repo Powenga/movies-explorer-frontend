@@ -3,7 +3,13 @@ import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Navigation from '../Navigation/Navigation';
 import Footer from '../Footer/Footer';
-import { matchPath, Route, Switch, useLocation } from 'react-router-dom';
+import {
+  matchPath,
+  Route,
+  Switch,
+  useHistory,
+  useLocation,
+} from 'react-router-dom';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
@@ -15,6 +21,8 @@ import { useEffect, useState } from 'react';
 import MoviesApi from '../../utils/MoviesApi';
 import { movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
+import auth from '../../utils/auth';
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
   const location = useLocation();
@@ -33,7 +41,27 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
   const [isShortMovie, setIsShortMovie] = useState(false);
-  const loggedIn = true;
+
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    email: '',
+    _id: '',
+  });
+
+  const history = useHistory();
+
+  useEffect(() => {
+    auth
+      .checkAutorization()
+      .then(() => {
+        setLoggedIn(true);
+      })
+      .catch(() => {
+        setLoggedIn(false);
+        history.push('/');
+      });
+  }, [history]);
 
   function getMovies(keyWord) {
     setIsLoading(true);
@@ -108,46 +136,50 @@ function App() {
 
   return (
     <div className="page">
-      {isHeader && (
-        <Header isMain={isMain}>
-          <Navigation loggedIn={loggedIn} classes={'header__nav'} />
-          <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
-        </Header>
-      )}
-      <Switch>
-        <Route path="/" exact>
-          <Main classes="page__main" />
-        </Route>
-        <Route path="/movies">
-          <Movies
-            classes="page__main page__main_type_movies"
-            isLoading={isLoading}
-            onMovieFind={getMovies}
-            keyWord={keyWord}
-            onKeyWordChange={setKeyWord}
-            movieResultList={movieResultList}
-            isCardsNotFound={isCardsNotFound}
-            isShortMovie={isShortMovie}
-            onShortMovieChange={handleShorwMovieChange}
-          />
-        </Route>
-        <Route path="/saved-movies">
-          <SavedMovies classes="page__main page__main_type_saved-movies" />
-        </Route>
-        <Route path="/profile">
-          <Profile classes="page__main" />
-        </Route>
-        <Route path="/signin">
-          <Login classes="page__main" />
-        </Route>
-        <Route path="/signup">
-          <Register classes="page__main" />
-        </Route>
-        <Route path="*">
-          <NotFound classes="page__main not-found" />
-        </Route>
-      </Switch>
-      {isFooter && <Footer />}
+      <CurrentUserContext.Provider
+        value={{ currentUser: currentUser, loggedIn: loggedIn }}
+      >
+        {isHeader && (
+          <Header isMain={isMain}>
+            <Navigation loggedIn={loggedIn} classes={'header__nav'} />
+            <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
+          </Header>
+        )}
+        <Switch>
+          <Route path="/" exact>
+            <Main classes="page__main" />
+          </Route>
+          <Route path="/movies">
+            <Movies
+              classes="page__main page__main_type_movies"
+              isLoading={isLoading}
+              onMovieFind={getMovies}
+              keyWord={keyWord}
+              onKeyWordChange={setKeyWord}
+              movieResultList={movieResultList}
+              isCardsNotFound={isCardsNotFound}
+              isShortMovie={isShortMovie}
+              onShortMovieChange={handleShorwMovieChange}
+            />
+          </Route>
+          <Route path="/saved-movies">
+            <SavedMovies classes="page__main page__main_type_saved-movies" />
+          </Route>
+          <Route path="/profile">
+            <Profile classes="page__main" />
+          </Route>
+          <Route path="/signin">
+            <Login classes="page__main" />
+          </Route>
+          <Route path="/signup">
+            <Register classes="page__main" />
+          </Route>
+          <Route path="*">
+            <NotFound classes="page__main not-found" />
+          </Route>
+        </Switch>
+        {isFooter && <Footer />}
+      </CurrentUserContext.Provider>
     </div>
   );
 }

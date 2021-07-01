@@ -9,7 +9,7 @@ export const {
   REACT_APP_MOVIE_API_URL = 'https://api.nomoreparties.co/beatfilm-movies',
 } = process.env;
 
-export const { REACT_APP_API_URL = 'https://pob.di.nomoredomains.icu/' } =
+export const { REACT_APP_API_URL = 'https://pob.di.nomoredomains.icu' } =
   process.env;
 
 export const movieListAge = 7 * 24 * 60 * 60 * 1000;
