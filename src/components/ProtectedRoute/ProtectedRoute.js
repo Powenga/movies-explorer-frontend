@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function ProtectedRoute({ isDataLoading, children }) {
   const { loggedIn } = useContext(CurrentUserContext);

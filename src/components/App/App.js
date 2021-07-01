@@ -23,7 +23,7 @@ import { movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
 import auth from '../../utils/auth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 function App() {
@@ -61,11 +61,12 @@ function App() {
       .checkAutorization()
       .then(() => {
         setLoggedIn(true);
+        history.push('/movies')
       })
       .catch(() => {
         setLoggedIn(false);
       });
-  }, []);
+  }, [history]);
 
   function handleRegister(name, email, pass) {
     auth
@@ -73,10 +74,11 @@ function App() {
       .then((res) => {
         if (res) {
           setRegisterError(null);
-          setCurrentUser({useName: res.name, userEmail: email})
-          history.push("/movies");
+          setCurrentUser({ useName: res.name, userEmail: email });
+          setLoggedIn(true);
+          history.push('/movies');
         } else {
-          throw new Error('Что-то пошло не так...')
+          throw new Error('Что-то пошло не так...');
         }
       })
       .catch((err) => {
@@ -104,7 +106,6 @@ function App() {
         JSON.parse(localStorage.getItem('movieList')),
         isShortMovie
       );
-      console.log(resultMoviesList);
       saveLastMovies(resultMoviesList);
       setResultMovies(resultMoviesList);
       setIsLoading(false);
@@ -161,48 +162,48 @@ function App() {
         value={{ currentUser: currentUser, loggedIn: loggedIn }}
       >
         <ErrorsContext.Provider
-          value={{ registerError, loginError, movieApiError}}
+          value={{ registerError, loginError, movieApiError }}
         >
-        {isHeader && (
-          <Header isMain={isMain}>
-            <Navigation loggedIn={loggedIn} classes={'header__nav'} />
-            <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
-          </Header>
-        )}
-        <Switch>
-          <Route path="/" exact>
-            <Main classes="page__main" />
-          </Route>
-          <ProtectedRoute path="/movies">
-            <Movies
-              classes="page__main page__main_type_movies"
-              isLoading={isLoading}
-              onMovieFind={getMovies}
-              keyWord={keyWord}
-              onKeyWordChange={setKeyWord}
-              movieResultList={movieResultList}
-              isCardsNotFound={isCardsNotFound}
-              isShortMovie={isShortMovie}
-              onShortMovieChange={handleShorwMovieChange}
-            />
-          </ProtectedRoute>
-          <ProtectedRoute path="/saved-movies">
-            <SavedMovies classes="page__main page__main_type_saved-movies" />
-          </ProtectedRoute>
-          <ProtectedRoute path="/profile">
-            <Profile classes="page__main" />
-          </ProtectedRoute>
-          <Route path="/signin">
-            <Login classes="page__main" />
-          </Route>
-          <Route path="/signup">
-            <Register classes="page__main" onRegister={handleRegister}/>
-          </Route>
-          <Route path="*">
-            <NotFound classes="page__main not-found" />
-          </Route>
-        </Switch>
-        {isFooter && <Footer />}
+          {isHeader && (
+            <Header isMain={isMain}>
+              <Navigation loggedIn={loggedIn} classes={'header__nav'} />
+              <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
+            </Header>
+          )}
+          <Switch>
+            <Route path="/" exact>
+              <Main classes="page__main" />
+            </Route>
+            <ProtectedRoute path="/movies">
+              <Movies
+                classes="page__main page__main_type_movies"
+                isLoading={isLoading}
+                onMovieFind={getMovies}
+                keyWord={keyWord}
+                onKeyWordChange={setKeyWord}
+                movieResultList={movieResultList}
+                isCardsNotFound={isCardsNotFound}
+                isShortMovie={isShortMovie}
+                onShortMovieChange={handleShorwMovieChange}
+              />
+            </ProtectedRoute>
+            <ProtectedRoute path="/saved-movies">
+              <SavedMovies classes="page__main page__main_type_saved-movies" />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile">
+              <Profile classes="page__main" />
+            </ProtectedRoute>
+            <Route path="/signin">
+              <Login classes="page__main" />
+            </Route>
+            <Route path="/signup">
+              <Register classes="page__main" onRegister={handleRegister} />
+            </Route>
+            <Route path="*">
+              <NotFound classes="page__main not-found" />
+            </Route>
+          </Switch>
+          {isFooter && <Footer />}
         </ErrorsContext.Provider>
       </CurrentUserContext.Provider>
     </div>
