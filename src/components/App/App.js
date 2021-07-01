@@ -31,6 +31,7 @@ function App() {
   const [movieResultList, setMovieResultList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
+  const [isShortMovie, setIsShortMovie] = useState(false);
   const loggedIn = true;
 
   function getMovies(keyWord) {
@@ -40,7 +41,7 @@ function App() {
       MoviesApi.getMovies()
         .then((data) => {
           saveMovies(data);
-          setMovieResultList(filterMovies(keyWord, data));
+          setMovieResultList(filterMovies(keyWord, data, isShortMovie));
         })
         .catch()
         .finally(() => {
@@ -48,7 +49,11 @@ function App() {
         });
     } else {
       setMovieResultList(
-        filterMovies(keyWord, JSON.parse(localStorage.getItem('movieList')))
+        filterMovies(
+          keyWord,
+          JSON.parse(localStorage.getItem('movieList')),
+          isShortMovie
+        )
       );
       setIsLoading(false);
     }
@@ -70,17 +75,24 @@ function App() {
       : false;
   }
 
-  function filterMovies(keyWord, movieList) {
-    const lowerKeyWord = keyWord.toLowerCase();
-    const resultCardList =   movieList.filter((movie) => {
-      return (movie.nameRU &&
-        movie.nameRU.toLowerCase().includes(lowerKeyWord)) ||
-        (movie.nameEN && movie.nameEN.toLowerCase().includes(lowerKeyWord))
-        ? true
-        : false;
+  function handleShorwMovieChange(value) {
+    setIsShortMovie(value);
+  }
 
+  function filterMovies(keyWord, movieList, isShortMovie) {
+    const lowerKeyWord = keyWord.toLowerCase();
+    const resultCardList = movieList.filter((movie) => {
+      console.log(movie.duration, isShortMovie);
+      if (
+        (movie.nameRU && movie.nameRU.toLowerCase().includes(lowerKeyWord)) ||
+        (movie.nameEN && movie.nameEN.toLowerCase().includes(lowerKeyWord))
+      ) {
+        return isShortMovie && movie.duration <= 40 ? true : !isShortMovie ? true : false;
+      } else {
+        return false;
+      };
     });
-    if(resultCardList.length) {
+    if (resultCardList.length) {
       setIsCardsNotFound(false);
       return resultCardList;
     } else {
@@ -109,7 +121,9 @@ function App() {
             keyWord={keyWord}
             onKeyWordChange={setKeyWord}
             movieResultList={movieResultList}
-            isCardsNotFound = {isCardsNotFound}
+            isCardsNotFound={isCardsNotFound}
+            isShortMovie={isShortMovie}
+            onShortMovieChange={handleShorwMovieChange}
           />
         </Route>
         <Route path="/saved-movies">

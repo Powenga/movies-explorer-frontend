@@ -2,7 +2,15 @@ import Button from '../Button/Button';
 import './SearchForm.css';
 import submitButtonPath from '../../images/search-form-submit.svg';
 
-function SeacrchForm({ classes, onSubmit, keyWord, onKeyWordChange, children }) {
+function SeacrchForm({
+  classes,
+  onSubmit,
+  keyWord,
+  onKeyWordChange,
+  isShortMovie,
+  onShortMovieChange,
+  children,
+}) {
   function handleSubmit(evt) {
     evt.preventDefault();
     onSubmit(keyWord);
@@ -11,6 +19,10 @@ function SeacrchForm({ classes, onSubmit, keyWord, onKeyWordChange, children }) 
   function handleChange(evt) {
     const { value } = evt.target;
     onKeyWordChange(value);
+  }
+
+  function handleShortMovieChange (evt) {
+    onShortMovieChange(evt.target.checked);
   }
 
   return (
@@ -37,7 +49,12 @@ function SeacrchForm({ classes, onSubmit, keyWord, onKeyWordChange, children }) 
         </Button>
       </label>
       <label className="search-form__checkbox-field transition transition_type_button">
-        <input type="checkbox" className="search-form__checkbox" />
+        <input
+          type="checkbox"
+          className="search-form__checkbox"
+          value={isShortMovie}
+          onChange={handleShortMovieChange}
+        />
         <span className="search-form__checkbox-pseudo"></span>
         Короткометражки
       </label>

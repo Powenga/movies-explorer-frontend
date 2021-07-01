@@ -14,6 +14,8 @@ function Movies({
   onMovieFind,
   movieResultList,
   isCardsNotFound,
+  isShortMovie,
+  onShortMovieChange
 }) {
   const [renderedCardList, setRenderedCardList] = useState([]);
   const [storedCardList, setStoredCardList] = useState([]);
@@ -68,6 +70,8 @@ function Movies({
           keyWord={keyWord}
           onKeyWordChange={onKeyWordChange}
           onSubmit={onMovieFind}
+          isShortMovie={isShortMovie}
+          onShortMovieChange = {onShortMovieChange}
         />
       </section>
       <section className="main__section">
@@ -80,7 +84,7 @@ function Movies({
               card={MoviesCardWithCheckbox}
               cardList={renderedCardList}
             />
-            {storedCardList.length && (
+            {storedCardList.length ? (
               <>
                 <div className="main__section-inner">
                   <Button
@@ -92,7 +96,7 @@ function Movies({
                   </Button>
                 </div>
               </>
-            )}
+            ) : (<></>)}
           </>
         ) : (
           isCardsNotFound &&
