@@ -15,7 +15,8 @@ function Movies({
   movieResultList,
   isCardsNotFound,
   isShortMovie,
-  onShortMovieChange
+  onShortMovieChange,
+  onCardSave,
 }) {
   const [renderedCardList, setRenderedCardList] = useState([]);
   const [storedCardList, setStoredCardList] = useState([]);
@@ -83,6 +84,7 @@ function Movies({
               classes="main__section-inner"
               card={MoviesCardWithCheckbox}
               cardList={renderedCardList}
+              onCardSave={onCardSave}
             />
             {storedCardList.length ? (
               <>

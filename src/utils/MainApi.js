@@ -57,10 +57,19 @@ class Api {
       .then(this._onError)
   }
 
-  likeCard(cardId, like) {
-    const method = like ? 'PUT' : 'DELETE';
-    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
-      method: method,
+  saveCard(data) {
+    return fetch(`${this._baseUrl}/movies`, {
+      method: 'POST',
+      headers: this._headers,
+      body: JSON.stringify(data),
+      credentials: 'include',
+    })
+      .then(this._onError)
+  }
+
+  deleteCard(data) {
+    return fetch(`${this._baseUrl}/movies/${data._id}`, {
+      method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
     })

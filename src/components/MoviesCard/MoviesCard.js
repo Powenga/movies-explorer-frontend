@@ -5,14 +5,14 @@ function MoviesCard({ classes, cardData, children }) {
   return (
     <li className={`movie-card ${classes ? classes : ''}`}>
       <a
-        href={cardData.trailerLink}
+        href={cardData.trailer}
         target="_blank"
         rel="noreferrer noopener"
         className="movie-card__trailer-link transition"
       >
         <img
           className="movie-card__img"
-          src={`${REACT_APP_SERVER_URL}${cardData.image.url}`}
+          src={`${REACT_APP_SERVER_URL}${cardData.image}`}
           alt={cardData.nameRU}
         />
       </a>
