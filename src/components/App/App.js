@@ -22,7 +22,8 @@ import MoviesApi from '../../utils/MoviesApi';
 import { movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
 import auth from '../../utils/auth';
-import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ProtectedRoute from '../ProtectedRoute';
 
 function App() {
   const location = useLocation();
@@ -59,9 +60,8 @@ function App() {
       })
       .catch(() => {
         setLoggedIn(false);
-        history.push('/');
       });
-  }, [history]);
+  }, []);
 
   function getMovies(keyWord) {
     setIsLoading(true);
@@ -149,7 +149,7 @@ function App() {
           <Route path="/" exact>
             <Main classes="page__main" />
           </Route>
-          <Route path="/movies">
+          <ProtectedRoute path="/movies">
             <Movies
               classes="page__main page__main_type_movies"
               isLoading={isLoading}
@@ -161,13 +161,13 @@ function App() {
               isShortMovie={isShortMovie}
               onShortMovieChange={handleShorwMovieChange}
             />
-          </Route>
-          <Route path="/saved-movies">
+          </ProtectedRoute>
+          <ProtectedRoute path="/saved-movies">
             <SavedMovies classes="page__main page__main_type_saved-movies" />
-          </Route>
-          <Route path="/profile">
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile">
             <Profile classes="page__main" />
-          </Route>
+          </ProtectedRoute>
           <Route path="/signin">
             <Login classes="page__main" />
           </Route>
