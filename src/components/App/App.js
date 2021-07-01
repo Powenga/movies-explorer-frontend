@@ -62,7 +62,7 @@ function App() {
   function checkMovieList() {
     const savedMovieList = JSON.parse(localStorage.getItem('movieList'));
     return savedMovieList &&
-      savedMovieList.length > 0 &&
+      savedMovieList.length &&
       movieListAge >
         new Date().getTime() -
           new Date(localStorage.getItem('movieUpdateDate')).getTime()

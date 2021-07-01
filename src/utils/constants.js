@@ -2,14 +2,40 @@ import cardImagePath from '../images/cards/card.jpg';
 import savedCardImagePath from '../images/cards/2.jpg';
 
 export const {
+  REACT_APP_SERVER_URL = 'https://api.nomoreparties.co',
+} = process.env;
+
+export const {
   REACT_APP_MOVIE_API_URL = 'https://api.nomoreparties.co/beatfilm-movies',
 } = process.env;
-export const {
 
-  REACT_APP_API_URL = 'https://pob.di.nomoredomains.icu/',
-} = process.env;
+export const { REACT_APP_API_URL = 'https://pob.di.nomoredomains.icu/' } =
+  process.env;
 
 export const movieListAge = 7 * 24 * 60 * 60 * 1000;
+
+export const cardNumber = {
+  desktop: {
+    renderCardNumber: 12,
+    addCardNumber: 4
+  },
+  tabletLandscape: {
+    resolution: 1024,
+    renderCardNumber: 9,
+    addCardNumber: 3,
+  },
+  tabletPortrait: {
+    resolution: 802,
+    renderCardNumber: 8,
+    addCardNumber: 2,
+  },
+  mobile: {
+    resolution: 557,
+    renderCardNumber: 5,
+    addCardNumber: 2,
+  },
+}
+
 export const footerLinks = [
   {
     title: 'Яндекс.Практикум',
