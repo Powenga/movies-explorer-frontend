@@ -30,11 +30,11 @@ function App() {
   const [keyWord, setKeyWord] = useState('');
   const [movieResultList, setMovieResultList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isCardsNotFound, setIsCardsNotFound] = useState(false);
   const loggedIn = true;
 
   function getMovies(keyWord) {
     setIsLoading(true);
-    localStorage.getItem('movieUpdateDate');
     if (!checkMovieList()) {
       console.log('api fetch');
       MoviesApi.getMovies()
@@ -72,13 +72,21 @@ function App() {
 
   function filterMovies(keyWord, movieList) {
     const lowerKeyWord = keyWord.toLowerCase();
-    return movieList.filter((movie) => {
+    const resultCardList =   movieList.filter((movie) => {
       return (movie.nameRU &&
         movie.nameRU.toLowerCase().includes(lowerKeyWord)) ||
         (movie.nameEN && movie.nameEN.toLowerCase().includes(lowerKeyWord))
         ? true
         : false;
+
     });
+    if(resultCardList.length) {
+      setIsCardsNotFound(false);
+      return resultCardList;
+    } else {
+      setIsCardsNotFound(true);
+      return [];
+    }
   }
 
   return (
@@ -101,6 +109,7 @@ function App() {
             keyWord={keyWord}
             onKeyWordChange={setKeyWord}
             movieResultList={movieResultList}
+            isCardsNotFound = {isCardsNotFound}
           />
         </Route>
         <Route path="/saved-movies">

@@ -16,22 +16,26 @@ export const movieListAge = 7 * 24 * 60 * 60 * 1000;
 
 export const cardNumber = {
   desktop: {
-    renderCardNumber: 12,
+    renderCardRows: 3,
+    rowCardNumber: 4,
     addCardNumber: 4
   },
   tabletLandscape: {
     resolution: 1024,
-    renderCardNumber: 9,
+    renderCardRows: 3,
+    rowCardNumber: 3,
     addCardNumber: 3,
   },
   tabletPortrait: {
     resolution: 802,
-    renderCardNumber: 8,
+    renderCardRows: 4,
+    rowCardNumber: 2,
     addCardNumber: 2,
   },
   mobile: {
     resolution: 557,
-    renderCardNumber: 5,
+    renderCardRows: 1,
+    rowCardNumber: 5,
     addCardNumber: 2,
   },
 }
