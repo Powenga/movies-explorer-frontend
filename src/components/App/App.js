@@ -86,6 +86,29 @@ function App() {
       });
   }
 
+  function handleLogin(email, pass) {
+    auth
+      .signIn(email, pass)
+      .then((res) => {
+        !loggedIn && setLoggedIn(true);
+        history.push('/movies');
+      })
+      .catch((err) => {
+        setLoginError(err.message);
+      });
+  }
+
+  function handleLogout() {
+    auth
+      .logout()
+      .then(() => {
+        setLoggedIn(false);
+      })
+      .catch((err) => {
+
+      });
+  }
+
   function getMovies(keyWord) {
     setIsLoading(true);
     if (!checkMovieList()) {
@@ -194,13 +217,13 @@ function App() {
               <Profile classes="page__main" />
             </ProtectedRoute>
             <Route path="/signin">
-              <Login classes="page__main" />
+              <Login classes="page__main" onLogin={handleLogin}/>
             </Route>
             <Route path="/signup">
               <Register classes="page__main" onRegister={handleRegister} />
             </Route>
             <Route path="*">
-              <NotFound classes="page__main not-found" />
+              <NotFound classes="page__main not-found"/>
             </Route>
           </Switch>
           {isFooter && <Footer />}

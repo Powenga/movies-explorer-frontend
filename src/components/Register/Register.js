@@ -1,23 +1,26 @@
+import { useContext } from 'react';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { useState } from 'react';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import './Register.css';
 
 function Register({ classes, onRegister }) {
-
+  const { registerError } = useContext(ErrorsContext);
   const [userData, setUserData] = useState({
     userName: '',
     userEmail: '',
     userPass: '',
   });
 
-  function handleChange(evt){
-    const {name, value} = evt.target;
-    setUserData({...userData, [name]: value})
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    setUserData({ ...userData, [name]: value });
   }
 
-  function handleSubmit(evt){
+  function handleSubmit(evt) {
     evt.preventDefault();
     onRegister(userData.userName, userData.userEmail, userData.userPass);
   }
@@ -79,6 +82,9 @@ function Register({ classes, onRegister }) {
           <Button classes="btn_type_sign" type="submit">
             Зарегистрироваться
           </Button>
+          {registerError && (
+            <ErrorMessage classes="error-message_active" text={registerError} />
+          )}
         </SignForm>
         <SignToggleLink
           text="Уже зарегистрированы?"

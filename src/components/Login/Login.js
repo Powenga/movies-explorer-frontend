@@ -1,12 +1,27 @@
+import { useContext } from 'react';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
+import { useState } from 'react';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
-function Login({ classes }) {
-  const user = {
-    email: 'pochta@yandex.ru',
-    pass: 'пароль-король',
-  };
+function Login({ classes, onLogin }) {
+  const { loginError } = useContext(ErrorsContext);
+  const [userData, setUserData] = useState({
+    userEmail: '',
+    userPass: '',
+  });
+
+  function handleChange(evt) {
+    const { name, value } = evt.target;
+    setUserData({ ...userData, [name]: value });
+  }
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onLogin(userData.userEmail, userData.userPass);
+  }
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
@@ -14,25 +29,25 @@ function Login({ classes }) {
           classes="main__section-inner"
           formTitle="Рады видеть!"
           formName="login-form"
+          onSubmit={handleSubmit}
         >
           <label className="sign-form__field">
             Е-mail
             <input
-              className="sign-form__input sign-form__input_type_error"
+              className="sign-form__input"
               id="user-email"
               name="userEmail"
               type="email"
               minLength="2"
               maxLength="30"
-              defaultValue={user.email}
+              value={userData.userEmail}
+              onChange={handleChange}
               required
             />
-            <span className="sign-form__error sign-form__error_active">
-              Текст должен быть не короче 8 симв. Длина текста сейчас: 1 символ.
-            </span>
+            <span className="sign-form__error"></span>
           </label>
           <label className="sign-form__field">
-            Имя
+            Пароль
             <input
               className="sign-form__input"
               id="user-pass"
@@ -40,17 +55,18 @@ function Login({ classes }) {
               type="password"
               minLength="8"
               maxLength="30"
-              defaultValue={user.pass}
+              value={userData.userPass}
+              onChange={handleChange}
               required
             />
             <span className="sign-form__error"></span>
           </label>
-          <Button
-            classes="btn_type_sign"
-            type="submit"
-          >
+          <Button classes="btn_type_sign" type="submit">
             Войти
           </Button>
+          {loginError && (
+            <ErrorMessage classes="error-message_active" text={loginError} />
+          )}
         </SignForm>
         <SignToggleLink
           text="Ещё не зарегистрированы?"
