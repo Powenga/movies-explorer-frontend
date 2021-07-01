@@ -22,6 +22,7 @@ import MoviesApi from '../../utils/MoviesApi';
 import { movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
 import auth from '../../utils/auth';
+import MainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
@@ -53,16 +54,22 @@ function App() {
   const [registerError, setRegisterError] = useState(null);
   const [loginError, setLoginError] = useState(null);
   const [logoutError, setlogoutError] = useState(null);
+  const [profileError, setProfileError] = useState(null);
   const [movieApiError, setMovieApiError] = useState(null);
 
   const history = useHistory();
 
+  function setUserData({ name, email }) {
+    setCurrentUser({ userName: name, userEmail: email });
+  }
+
   useEffect(() => {
     auth
       .checkAutorization()
-      .then(() => {
+      .then((res) => {
         setLoggedIn(true);
-        history.push('/movies')
+        setUserData(res);
+        history.push('/movies');
       })
       .catch(() => {
         setLoggedIn(false);
@@ -75,7 +82,7 @@ function App() {
       .then((res) => {
         if (res) {
           setRegisterError(null);
-          setCurrentUser({ useName: res.name, userEmail: email });
+          setUserData(res);
           setLoggedIn(true);
           history.push('/movies');
         } else {
@@ -92,6 +99,7 @@ function App() {
       .signIn(email, pass)
       .then((res) => {
         !loggedIn && setLoggedIn(true);
+        setUserData(res);
         history.push('/movies');
       })
       .catch((err) => {
@@ -106,7 +114,21 @@ function App() {
         setLoggedIn(false);
       })
       .catch((err) => {
-        setlogoutError(err.message)
+        setlogoutError(err.message);
+      });
+  }
+
+  function handleProfileChange(name, email) {
+    MainApi
+      .editProfile({name, email})
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        setProfileError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -186,7 +208,7 @@ function App() {
         value={{ currentUser: currentUser, loggedIn: loggedIn }}
       >
         <ErrorsContext.Provider
-          value={{ registerError, loginError, movieApiError }}
+          value={{ registerError, loginError, movieApiError, profileError }}
         >
           {isHeader && (
             <Header isMain={isMain}>
@@ -215,16 +237,20 @@ function App() {
               <SavedMovies classes="page__main page__main_type_saved-movies" />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
-              <Profile classes="page__main" onLogout={handleLogout}/>
+              <Profile
+                classes="page__main"
+                onLogout={handleLogout}
+                onProfileChange={handleProfileChange}
+              />
             </ProtectedRoute>
             <Route path="/signin">
-              <Login classes="page__main" onLogin={handleLogin}/>
+              <Login classes="page__main" onLogin={handleLogin} />
             </Route>
             <Route path="/signup">
               <Register classes="page__main" onRegister={handleRegister} />
             </Route>
             <Route path="*">
-              <NotFound classes="page__main not-found"/>
+              <NotFound classes="page__main not-found" />
             </Route>
           </Switch>
           {isFooter && <Footer />}
