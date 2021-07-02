@@ -1,8 +1,5 @@
 import './App.css';
-import Header from '../Header/Header';
-import Main from '../Main/Main';
-import Navigation from '../Navigation/Navigation';
-import Footer from '../Footer/Footer';
+import { useCallback, useEffect, useState } from 'react';
 import {
   matchPath,
   Route,
@@ -10,6 +7,10 @@ import {
   useHistory,
   useLocation,
 } from 'react-router-dom';
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import Navigation from '../Navigation/Navigation';
+import Footer from '../Footer/Footer';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
@@ -17,14 +18,13 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import MobileMenu from '../MobileMenu/MobileMenu';
-import { useCallback, useEffect, useState } from 'react';
-import MoviesApi from '../../utils/MoviesApi';
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import auth from '../../utils/auth';
+import mainApi from '../../utils/MainApi';
+import moviesApi from '../../utils/MoviesApi';
 import { movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
-import auth from '../../utils/auth';
-import MainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 function App() {
@@ -44,6 +44,8 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
   const [isShortMovie, setIsShortMovie] = useState(false);
+
+  const [savedCards, setSavedCards] = useState([]);
 
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
@@ -120,7 +122,7 @@ function App() {
   }
 
   function handleProfileChange(name, email) {
-    MainApi.editProfile({ name, email })
+    mainApi.editProfile({ name, email })
       .then((res) => {
         setCurrentUser(res);
       })
@@ -135,7 +137,7 @@ function App() {
   function getMovies(keyWord) {
     setIsLoading(true);
     if (!checkMovieList()) {
-      MoviesApi.getMovies()
+      moviesApi.getMovies()
         .then((data) => {
           const trandformedMoviesList = transformMovies(data);
           saveAllMovies(data);
@@ -177,15 +179,17 @@ function App() {
 
   function handleSaveMovie(status, data) {
     if (status) {
-      MainApi.saveCard(data).then((movie) => {
+      mainApi.saveCard(data).then((movie) => {
         setMovieResultList((state) =>
-          state.map((s) => s.movieId === movie.movieId ? movie : s)
+          state.map((s) => (s.movieId === movie.movieId ? movie : s))
         );
       });
     } else {
-      MainApi.deleteCard(data).then(() => {
+      mainApi.deleteCard(data).then(() => {
         setMovieResultList((state) =>
-          state.map((s) => s.movieId === data.movieId ? {...data, owner: ''} : s)
+          state.map((s) =>
+            s.movieId === data.movieId ? { ...data, owner: '' } : s
+          )
         );
       });
     }
@@ -271,7 +275,12 @@ function App() {
               />
             </ProtectedRoute>
             <ProtectedRoute path="/saved-movies">
-              <SavedMovies classes="page__main page__main_type_saved-movies" />
+              <SavedMovies
+                classes="page__main page__main_type_saved-movies"
+                onCardDelete={handleSaveMovie}
+                savedCards={savedCards}
+                setSavedCards={setSavedCards}
+              />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">
               <Profile

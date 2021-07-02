@@ -1,5 +1,5 @@
-import Button from '../Button/Button';
 import './SearchForm.css';
+import Button from '../Button/Button';
 import submitButtonPath from '../../images/search-form-submit.svg';
 
 function SeacrchForm({
@@ -21,7 +21,7 @@ function SeacrchForm({
     onKeyWordChange(value);
   }
 
-  function handleShortMovieChange (evt) {
+  function handleShortMovieChange(evt) {
     onShortMovieChange(evt.target.checked);
   }
 

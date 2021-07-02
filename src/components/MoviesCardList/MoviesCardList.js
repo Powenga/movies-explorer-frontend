@@ -1,11 +1,23 @@
 import './MoviesCardList.css';
 
-function MoviesCardList({ card: Component, cardList, classes, onCardSave, children }) {
+function MoviesCardList({
+  card: Component,
+  cardList,
+  classes,
+  onCardSave,
+  onCardDelete,
+  children,
+}) {
   return (
     <div className={`movies-card-list ${classes ? classes : ''}`}>
       <ul className="movies-card-list__container">
         {cardList.map((card, index) => (
-          <Component key={index} cardData={card} onCardSave={onCardSave}/>
+          <Component
+            key={index}
+            cardData={card}
+            onCardSave={onCardSave}
+            onCardDelete={onCardDelete}
+          />
         ))}
       </ul>
     </div>

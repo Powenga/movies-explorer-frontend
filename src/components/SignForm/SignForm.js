@@ -1,5 +1,5 @@
-import Logo from '../Logo/Logo';
 import './SignForm.css';
+import Logo from '../Logo/Logo';
 
 function SignForm({ classes, formTitle, formName, onSubmit, children }) {
   return (

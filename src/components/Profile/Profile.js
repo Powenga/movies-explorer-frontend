@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
-import { ErrorsContext } from '../../contexts/ErrorsContext';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import './Profile.css';
 import Button from '../Button/Button';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import './Profile.css';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ classes, onLogout, onProfileChange }) {
   const { profileError } = useContext(ErrorsContext);
@@ -29,7 +29,11 @@ function Profile({ classes, onLogout, onProfileChange }) {
       <section className="main__section">
         <div className="profile main__section-inner">
           <h1 className="profile__title">Привет, Username!</h1>
-          <form className="profile__form " name="profile" onSubmit={handleSubmit}>
+          <form
+            className="profile__form "
+            name="profile"
+            onSubmit={handleSubmit}
+          >
             <label className="profile__form-field">
               <input
                 className="profile__input"

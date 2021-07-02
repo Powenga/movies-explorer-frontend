@@ -1,9 +1,9 @@
+import { useEffect, useState } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
 import MoviesCardWithCheckbox from '../MovieCardWithCheckbox/MovieCardWithCheckbox.js';
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
-import { useEffect, useState } from 'react';
 import { cardNumber } from '../../utils/constants';
 
 function Movies({
@@ -72,7 +72,7 @@ function Movies({
           onKeyWordChange={onKeyWordChange}
           onSubmit={onMovieFind}
           isShortMovie={isShortMovie}
-          onShortMovieChange = {onShortMovieChange}
+          onShortMovieChange={onShortMovieChange}
         />
       </section>
       <section className="main__section">
@@ -98,11 +98,16 @@ function Movies({
                   </Button>
                 </div>
               </>
-            ) : (<></>)}
+            ) : (
+              <></>
+            )}
           </>
         ) : (
-          isCardsNotFound &&
-          <p className="main__section-inner card-not-found-message">Ничего не найдено</p>
+          isCardsNotFound && (
+            <p className="main__section-inner card-not-found-message">
+              Ничего не найдено
+            </p>
+          )
         )}
       </section>
     </main>

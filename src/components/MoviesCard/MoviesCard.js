@@ -1,5 +1,5 @@
-import { REACT_APP_SERVER_URL } from '../../utils/constants';
 import './MoviesCard.css';
+import { REACT_APP_SERVER_URL } from '../../utils/constants';
 
 function MoviesCard({ classes, cardData, children }) {
   return (

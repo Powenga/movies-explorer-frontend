@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
 import MoviesCardWithDelete from '../MoviesCardWithDelete/MoviesCardWithDelete.js';
-import { savedCards } from '../../utils/constants.js';
+import MainApi from '../../utils/MainApi';
 
-function SavedMovies({ classes }) {
+function SavedMovies({ classes, savedCards, setSavedCards, onCardDelete }) {
+  useEffect(() => {
+    MainApi.getSavedCards()
+      .then((res) => {
+        setSavedCards(res);
+      })
+      .catch(() => {});
+  }, [setSavedCards]);
+
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
@@ -14,6 +23,7 @@ function SavedMovies({ classes }) {
           classes="main__section-inner"
           card={MoviesCardWithDelete}
           cardList={savedCards}
+          onCardDelete={onCardDelete}
         />
       </section>
     </main>

@@ -1,31 +1,29 @@
 import { REACT_APP_API_URL as BASE_URL } from '../utils/constants';
 
 class Api {
-  constructor({baseUrl, headers}) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
   _onError(res) {
-    return res.json()
-    .then(data => {
-      if(res.ok) {
-        return Promise.resolve(data)
+    return res.json().then((data) => {
+      if (res.ok) {
+        return Promise.resolve(data);
       }
-      if(data.message === 'celebrate request validation failed') {
+      if (data.message === 'celebrate request validation failed') {
         console.log(data);
         data = data.validation.body;
       }
       return Promise.reject(data);
-    })
+    });
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
+  getSavedCards() {
+    return fetch(`${this._baseUrl}/movies`, {
       headers: this._headers,
-      credentials: 'include'
-    })
-      .then(this._onError)
+      credentials: 'include',
+    }).then(this._onError);
   }
 
   editProfile(data) {
@@ -34,27 +32,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify(data),
       credentials: 'include',
-    })
-      .then(this._onError)
-  }
-
-  addCard(data) {
-    return fetch(`${this._baseUrl}/cards`, {
-      method: 'POST',
-      headers: this._headers,
-      body: JSON.stringify(data),
-      credentials: 'include',
-    })
-      .then(this._onError)
-  }
-
-  removeCard(data) {
-    return fetch(`${this._baseUrl}/cards/${data._id}`, {
-      method: 'DELETE',
-      headers: this._headers,
-      credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this._onError);
   }
 
   saveCard(data) {
@@ -63,8 +41,7 @@ class Api {
       headers: this._headers,
       body: JSON.stringify(data),
       credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this._onError);
   }
 
   deleteCard(data) {
@@ -72,27 +49,13 @@ class Api {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
-    })
-      .then(this._onError)
-  }
-
-  editAvatar(data) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
-      method: 'PATCH',
-      headers: this._headers,
-      body: JSON.stringify(data),
-      credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this._onError);
   }
 }
 
 export default new Api({
   baseUrl: BASE_URL,
   headers: {
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
-
-
-

@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function MoviesCardWithCheckbox({ cardData, onCardSave }) {
   const { currentUser } = useContext(CurrentUserContext);
@@ -9,7 +9,7 @@ function MoviesCardWithCheckbox({ cardData, onCardSave }) {
   }
 
   let isSaved = false;
-  if(cardData.owner) {
+  if (cardData.owner) {
     isSaved = currentUser.userId === cardData.owner;
   }
 

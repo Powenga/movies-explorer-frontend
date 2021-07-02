@@ -1,5 +1,5 @@
-import Social from '../Social/Social';
 import './Footer.css';
+import Social from '../Social/Social';
 import { footerLinks } from '../../utils/constants.js';
 
 function Footer({ classes, children }) {

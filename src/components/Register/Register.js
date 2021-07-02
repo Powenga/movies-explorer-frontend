@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { ErrorsContext } from '../../contexts/ErrorsContext';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import './Register.css';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import './Register.css';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 function Register({ classes, onRegister }) {
   const { registerError } = useContext(ErrorsContext);

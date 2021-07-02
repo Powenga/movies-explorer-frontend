@@ -1,10 +1,10 @@
-import Button from '../Button/Button';
 import './MobileMenu.css';
-import menuPath from '../../images/mobile-menu-icon.svg';
-import closeMenuPath from '../../images/mobile-menu-icon-close.svg';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import Button from '../Button/Button';
 import UserWidget from '../UserWidget/UserWidget';
+import menuPath from '../../images/mobile-menu-icon.svg';
+import closeMenuPath from '../../images/mobile-menu-icon-close.svg';
 
 function MobileMenu({ classes, loggedIn, children }) {
   const [isVisible, setIsVisible] = useState(false);

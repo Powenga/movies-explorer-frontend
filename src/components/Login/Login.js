@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import { ErrorsContext } from '../../contexts/ErrorsContext';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 
 function Login({ classes, onLogin }) {
   const { loginError } = useContext(ErrorsContext);
