@@ -19,7 +19,7 @@ function ProtectedRoute({ children }) {
             text={userCheckError}
           />
         ) : (
-          <Route>{loggedIn ? children : <Redirect to="/signin" />}</Route>
+          <Route>{loggedIn ? children : <Redirect to="/" />}</Route>
         )
       ) : (
         <div className="preloader-wrapper">
