@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useContext } from 'react';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
@@ -6,7 +6,6 @@ import MoviesCardWithCheckbox from '../MovieCardWithCheckbox/MovieCardWithCheckb
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import { cardNumber } from '../../utils/constants';
 
 function Movies({
   movieIsLoading,
@@ -14,57 +13,15 @@ function Movies({
   keyWord,
   onKeyWordChange,
   onMovieFind,
-  movieResultList,
+  movieList,
+  hiddenMovieListLength,
   isCardsNotFound,
   isShortMovie,
   onShortMovieChange,
   onCardSave,
+  onMoreClick,
 }) {
   const { movieApiError } = useContext(ErrorsContext);
-  const [renderedCardList, setRenderedCardList] = useState([]);
-  const [storedCardList, setStoredCardList] = useState([]);
-  const [moreCardNumber, setMoreCardNumber] = useState(0);
-
-  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
-
-  function handleMoreClick() {
-    setRenderedCardList([
-      ...renderedCardList,
-      ...storedCardList.slice(0, moreCardNumber),
-    ]);
-    setStoredCardList(storedCardList.slice(moreCardNumber, -1));
-  }
-
-  window.addEventListener('resize', () => {
-    setTimeout(() => {
-      setViewportWidth(window.innerWidth);
-    }, 1000);
-  });
-
-  useEffect(() => {
-    let renderCardNumber = 0;
-    if (viewportWidth <= cardNumber.mobile.resolution) {
-      renderCardNumber =
-        cardNumber.mobile.renderCardRows * cardNumber.mobile.rowCardNumber;
-      setMoreCardNumber(cardNumber.mobile.addCardNumber);
-    } else if (viewportWidth <= cardNumber.tabletPortrait.resolution) {
-      renderCardNumber =
-        cardNumber.tabletPortrait.renderCardRows *
-        cardNumber.tabletPortrait.rowCardNumber;
-      setMoreCardNumber(cardNumber.tabletPortrait.addCardNumber);
-    } else if (viewportWidth <= cardNumber.tabletLandscape.resolution) {
-      renderCardNumber =
-        cardNumber.tabletLandscape.renderCardRows *
-        cardNumber.tabletLandscape.rowCardNumber;
-      setMoreCardNumber(cardNumber.tabletLandscape.addCardNumber);
-    } else {
-      renderCardNumber =
-        cardNumber.desktop.renderCardRows * cardNumber.desktop.rowCardNumber;
-      setMoreCardNumber(cardNumber.desktop.addCardNumber);
-    }
-    setRenderedCardList(movieResultList.slice(0, renderCardNumber));
-    setStoredCardList(movieResultList.slice(renderCardNumber, -1));
-  }, [movieResultList, viewportWidth]);
 
   return (
     <main className={`main ${classes ? classes : ''}`}>
@@ -84,16 +41,16 @@ function Movies({
             <MoviesCardList
               classes="main__section-inner"
               card={MoviesCardWithCheckbox}
-              cardList={renderedCardList}
+              cardList={movieList}
               onCardSave={onCardSave}
             />
-            {storedCardList.length > 0 && (
+            {hiddenMovieListLength > 0 && (
               <>
                 <div className="main__section-inner">
                   <Button
                     classes="btn_type_more"
                     type="button"
-                    onClick={handleMoreClick}
+                    onClick={onMoreClick}
                   >
                     Ещё
                   </Button>

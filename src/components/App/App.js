@@ -26,6 +26,7 @@ import {
   errorMessages,
   localStorageObj,
   movieListAge,
+  cardNumber
 } from '../../utils/constants';
 import { findMovies, filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -47,12 +48,20 @@ function App() {
   const [isShortMovie, setIsShortMovie] = useState(false);
   const [movieResultList, setMovieResultList] = useState([]);
   const [movieRenderedList, setMovieRenderedList] = useState([]);
+  const [movieShownList, setMovieShownList] = useState([]);
+  const [movieHiddenList, setMovieHiddenList] = useState([])
+  const [movieShownNumber, setMovieShownNumber] = useState(0);
+  const [movieAddedNumber, setMovieAddedNumber] = useState(0);
+
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
   const [movieIsLoading, setMovieIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [userMoviesList, setUserMoviesList] = useState([]);
+  const [userMovieIsLoading, setUserMovieIsLoading] = useState(true);
 
-  const [savedCards, setSavedCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [isUserChecking, setIsUserChecking] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
@@ -68,6 +77,8 @@ function App() {
   const [logoutError, setlogoutError] = useState(null);
   const [profileError, setProfileError] = useState(null);
   const [movieApiError, setMovieApiError] = useState(null);
+  const [saveMovieError, setSaveMovieError] = useState(null);
+  const [deleteMovieError, setDeleteMovieError] = useState(null);
 
   const history = useHistory();
 
@@ -190,21 +201,47 @@ function App() {
     localStorage.setItem(localStorageObj.movieListUpdateDate, new Date());
   }, []);
 
+  function handleMoreClick() {
+    setMovieShownNumber(movieShownNumber + movieAddedNumber);
+    setMovieShownList([
+      ...movieShownList,
+      ...movieHiddenList.slice(0, movieAddedNumber),
+    ]);
+    setMovieHiddenList(movieHiddenList.slice(movieAddedNumber, -1));
+
+  }
+
   function handleSaveMovie(status, data) {
     if (status) {
-      mainApi.saveCard(data).then((movie) => {
-        setMovieResultList((state) =>
-          state.map((s) => (s.movieId === movie.movieId ? movie : s))
-        );
-      });
+      mainApi
+        .saveCard(data)
+        .then((movie) => {
+          setMovieResultList((state) =>
+            state.map((s) => (s.movieId === movie.movieId ? movie : s))
+          );
+          setUserMoviesList([...userMoviesList, movie]);
+        })
+        .catch((err) => {
+          setSaveMovieError(err.message);
+        });
     } else {
-      mainApi.deleteCard(data).then(() => {
-        setMovieResultList((state) =>
-          state.map((s) =>
-            s.movieId === data.movieId ? { ...data, owner: '' } : s
-          )
-        );
-      });
+      mainApi
+        .deleteCard(data)
+        .then(() => {
+          setMovieResultList((state) =>
+            state.map((s) =>
+              s.movieId === data.movieId ? { ...data, owner: '' } : s
+            )
+          );
+          setUserMoviesList((state) =>
+            state.filter((s) =>
+              s.movieId === data.movieId ? false : true
+            )
+          );
+        })
+        .catch((err) => {
+          setDeleteMovieError(err.message);
+        });
     }
   }
 
@@ -217,7 +254,7 @@ function App() {
       : setIsCardsNotFound(true);
   }
 
-  function handleShorMovieChange(value) {
+  function handleShortMovieChange(value) {
     setIsShortMovie(value);
   }
 
@@ -255,7 +292,9 @@ function App() {
         JSON.parse(localStorage.getItem(localStorageObj.lastMovieList))
       );
       setKeyWord(JSON.parse(localStorage.getItem(localStorageObj.lastKeyword)));
-      setIsShortMovie(JSON.parse(localStorage.getItem(localStorageObj.isShortMovie)));
+      setIsShortMovie(
+        JSON.parse(localStorage.getItem(localStorageObj.isShortMovie))
+      );
     }
   }, []);
 
@@ -276,6 +315,59 @@ function App() {
     }
     saveLastMovies(movieResultList);
   }, [movieResultList, keyWord, isShortMovie]);
+
+  useEffect(() => {
+    mainApi
+      .getSavedCards()
+      .then((res) => {
+        setUserMoviesList(res);
+      })
+      .catch(() => {})
+      .finally(() => {
+        setUserMovieIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (
+      viewportWidth <= cardNumber.mobile.resolution &&
+      movieAddedNumber >
+        cardNumber.mobile.renderCardRows * cardNumber.mobile.rowCardNumber
+    ) {
+      setMovieShownNumber(
+        cardNumber.mobile.renderCardRows * cardNumber.mobile.rowCardNumber
+      );
+      setMovieAddedNumber(cardNumber.mobile.addCardNumber);
+    } else if (viewportWidth <= cardNumber.tabletPortrait.resolution) {
+      setMovieShownNumber(
+        cardNumber.tabletPortrait.renderCardRows *
+          cardNumber.tabletPortrait.rowCardNumber
+      );
+      setMovieAddedNumber(cardNumber.tabletPortrait.addCardNumber);
+    } else if (viewportWidth <= cardNumber.tabletLandscape.resolution) {
+      setMovieShownNumber(
+        cardNumber.tabletLandscape.renderCardRows *
+          cardNumber.tabletLandscape.rowCardNumber
+      );
+      setMovieAddedNumber(cardNumber.tabletLandscape.addCardNumber);
+    } else {
+      setMovieShownNumber(
+        cardNumber.desktop.renderCardRows * cardNumber.desktop.rowCardNumber
+      );
+      setMovieAddedNumber(cardNumber.desktop.addCardNumber);
+    }
+  }, [viewportWidth, movieAddedNumber]);
+
+  useEffect(() => {
+    setMovieShownList(movieRenderedList.slice(0, movieShownNumber));
+    setMovieHiddenList(movieRenderedList.slice(movieShownNumber, -1));
+  }, [movieRenderedList, movieShownNumber]);
+
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      setViewportWidth(window.innerWidth);
+    }, 1000);
+  });
 
   return (
     <div className="page">
@@ -299,6 +391,8 @@ function App() {
             loginError,
             movieApiError,
             profileError,
+            saveMovieError,
+            deleteMovieError
           }}
         >
           <Switch>
@@ -312,19 +406,21 @@ function App() {
                 onMovieFind={getMovies}
                 keyWord={keyWord}
                 onKeyWordChange={setKeyWord}
-                movieResultList={movieRenderedList}
+                movieList={movieShownList}
+                hiddenMovieListLength={movieHiddenList.length}
                 isCardsNotFound={isCardsNotFound}
                 isShortMovie={isShortMovie}
-                onShortMovieChange={handleShorMovieChange}
+                onShortMovieChange={handleShortMovieChange}
                 onCardSave={handleSaveMovie}
+                onMoreClick={handleMoreClick}
               />
             </ProtectedRoute>
             <ProtectedRoute path="/saved-movies">
               <SavedMovies
                 classes="page__main page__main_type_saved-movies"
+                userMoviesList={userMoviesList}
+                userMovieIsLoading={userMovieIsLoading}
                 onCardDelete={handleSaveMovie}
-                savedCards={savedCards}
-                setSavedCards={setSavedCards}
               />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">

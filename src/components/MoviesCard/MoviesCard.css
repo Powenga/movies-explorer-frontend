@@ -63,6 +63,7 @@
 
 .movie-card__checkbox-pseudo {
   display: block;
+  position: relative;
   box-sizing: border-box;
   width: 16px;
   height: 16px;
@@ -74,3 +75,4 @@
 .movie-card__checkbox:checked + .movie-card__checkbox-pseudo {
   background-color: #2BE080
 }
+
