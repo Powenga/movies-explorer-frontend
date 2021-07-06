@@ -1,13 +1,13 @@
 import { Route, Redirect } from 'react-router-dom';
+import { useContext } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Preloader from '../Preloader/Preloader';
 
-function ProtectedRoute({
-  loggedIn,
-  isUserChecking,
-  userCheckError,
-  children,
-}) {
+function ProtectedRoute({ children }) {
+  const { loggedIn, isUserChecking, userCheckError } =
+    useContext(CurrentUserContext);
+
   return (
     <>
       {!isUserChecking ? (
@@ -20,7 +20,9 @@ function ProtectedRoute({
           <Route>{loggedIn ? children : <Redirect to="/signin" />}</Route>
         )
       ) : (
-        <Preloader />
+        <div className="preloader-wrapper">
+          <Preloader />
+        </div>
       )}
     </>
   );

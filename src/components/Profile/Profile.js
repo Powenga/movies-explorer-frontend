@@ -8,7 +8,6 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 function Profile({ classes, onLogout, onProfileChange }) {
   const { profileError } = useContext(ErrorsContext);
   const { currentUser } = useContext(CurrentUserContext);
-  console.log(currentUser);
   const [userData, setUserData] = useState({
     userName: currentUser.userName,
     userEmail: currentUser.userEmail,

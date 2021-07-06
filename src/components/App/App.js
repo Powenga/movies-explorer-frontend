@@ -258,13 +258,19 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider value={{ currentUser: currentUser }}>
+      <CurrentUserContext.Provider
+        value={{
+          currentUser: currentUser,
+          isUserChecking: isUserChecking,
+          loggedIn: loggedIn,
+        }}
+      >
         <ErrorsContext.Provider
           value={{ registerError, loginError, movieApiError, profileError }}
         >
           {isHeader && (
             <Header isMain={isMain}>
-              <Navigation loggedIn={loggedIn} classes={'header__nav'} />
+              <Navigation classes={'header__nav'} />
               <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
             </Header>
           )}
@@ -273,9 +279,6 @@ function App() {
               <Main classes="page__main" />
             </Route>
             <ProtectedRoute
-              isUserChecking={isUserChecking}
-              userCheckError={userCheckError}
-              loggedIn={loggedIn}
               path="/movies"
             >
               <Movies
@@ -292,9 +295,6 @@ function App() {
               />
             </ProtectedRoute>
             <ProtectedRoute
-              isUserChecking={isUserChecking}
-              userCheckError={userCheckError}
-              loggedIn={loggedIn}
               path="/saved-movies"
             >
               <SavedMovies
@@ -304,7 +304,9 @@ function App() {
                 setSavedCards={setSavedCards}
               />
             </ProtectedRoute>
-            <ProtectedRoute path="/profile">
+            <ProtectedRoute
+              path="/profile"
+            >
               <Profile
                 classes="page__main"
                 onLogout={handleLogout}
