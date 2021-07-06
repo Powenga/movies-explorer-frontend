@@ -1,6 +1,3 @@
-import cardImagePath from '../images/cards/card.jpg';
-import savedCardImagePath from '../images/cards/2.jpg';
-
 export const { REACT_APP_SERVER_URL = 'https://api.nomoreparties.co' } =
   process.env;
 
@@ -85,5 +82,6 @@ export const errorMessages = {
     Возможно, проблема с соединением или сервер недоступен.
     Подождите немного и попробуйте ещё раз`,
   unauthorized: 'Необходима авторизация!',
+  userNotFound: 'Пользователь не найден!',
 
 };

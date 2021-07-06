@@ -1,13 +1,28 @@
-import { useContext } from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import Preloader from '../Preloader/Preloader';
 
-function ProtectedRoute({ isDataLoading, children }) {
-  const { loggedIn } = useContext(CurrentUserContext);
+function ProtectedRoute({
+  loggedIn,
+  isUserChecking,
+  userCheckError,
+  children,
+}) {
   return (
-    <Route>
-      {loggedIn ? children : <Redirect to="/signin" />}
-    </Route>
+    <>
+      {!isUserChecking ? (
+        userCheckError ? (
+          <ErrorMessage
+            classes={'error-message_active error-message_position_center'}
+            text={userCheckError}
+          />
+        ) : (
+          <Route>{loggedIn ? children : <Redirect to="/signin" />}</Route>
+        )
+      ) : (
+        <Preloader />
+      )}
+    </>
   );
 }
 

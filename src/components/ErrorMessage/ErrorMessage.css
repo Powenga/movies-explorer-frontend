@@ -13,8 +13,8 @@
   width: 100%;
 }
 
-.error-message_position_main-page {
-  top: 100px;
+.error-message_position_center {
+  top: 50%;
 }
 
 .error-message_active {

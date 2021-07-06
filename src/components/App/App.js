@@ -49,7 +49,7 @@ function App() {
 
   const [savedCards, setSavedCards] = useState([]);
 
-  const [isUserChecking, setIsUserChecking] = useState(false);
+  const [isUserChecking, setIsUserChecking] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
     useName: '',
@@ -216,7 +216,6 @@ function App() {
   }
 
   useEffect(() => {
-    setIsUserChecking(true);
     auth
       .checkAutorization()
       .then((res) => {
@@ -225,7 +224,10 @@ function App() {
       })
       .catch((err) => {
         setLoggedIn(false);
-        if (err.message !== errorMessages.unauthorized) {
+        if (
+          err.message !== errorMessages.unauthorized &&
+          err.message !== errorMessages.userNotFound
+        ) {
           setUserCheckError(errorMessages.serverNotAvalible);
         }
       })
@@ -256,77 +258,72 @@ function App() {
 
   return (
     <div className="page">
-      {!isUserChecking ? (
-        userCheckError ? (
-          <div className="error-container">
-            <ErrorMessage
-              classes={'error-message_active error-message_position_main-page'}
-              text={userCheckError}
-            />
-          </div>
-        ) : (
-          <CurrentUserContext.Provider
-            value={{ currentUser: currentUser, loggedIn: loggedIn }}
-          >
-            <ErrorsContext.Provider
-              value={{ registerError, loginError, movieApiError, profileError }}
+      <CurrentUserContext.Provider value={{ currentUser: currentUser }}>
+        <ErrorsContext.Provider
+          value={{ registerError, loginError, movieApiError, profileError }}
+        >
+          {isHeader && (
+            <Header isMain={isMain}>
+              <Navigation loggedIn={loggedIn} classes={'header__nav'} />
+              <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
+            </Header>
+          )}
+          <Switch>
+            <Route path="/" exact>
+              <Main classes="page__main" />
+            </Route>
+            <ProtectedRoute
+              isUserChecking={isUserChecking}
+              userCheckError={userCheckError}
+              loggedIn={loggedIn}
+              path="/movies"
             >
-              {isHeader && (
-                <Header isMain={isMain}>
-                  <Navigation loggedIn={loggedIn} classes={'header__nav'} />
-                  <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
-                </Header>
-              )}
-              <Switch>
-                <Route path="/" exact>
-                  <Main classes="page__main" />
-                </Route>
-                <ProtectedRoute path="/movies">
-                  <Movies
-                    classes="page__main page__main_type_movies"
-                    isLoading={isLoading}
-                    onMovieFind={getMovies}
-                    keyWord={keyWord}
-                    onKeyWordChange={setKeyWord}
-                    movieResultList={movieResultList}
-                    isCardsNotFound={isCardsNotFound}
-                    isShortMovie={isShortMovie}
-                    onShortMovieChange={handleShorwMovieChange}
-                    onCardSave={handleSaveMovie}
-                  />
-                </ProtectedRoute>
-                <ProtectedRoute path="/saved-movies">
-                  <SavedMovies
-                    classes="page__main page__main_type_saved-movies"
-                    onCardDelete={handleSaveMovie}
-                    savedCards={savedCards}
-                    setSavedCards={setSavedCards}
-                  />
-                </ProtectedRoute>
-                <ProtectedRoute path="/profile">
-                  <Profile
-                    classes="page__main"
-                    onLogout={handleLogout}
-                    onProfileChange={handleProfileChange}
-                  />
-                </ProtectedRoute>
-                <Route path="/signin">
-                  <Login classes="page__main" onLogin={handleLogin} />
-                </Route>
-                <Route path="/signup">
-                  <Register classes="page__main" onRegister={handleRegister} />
-                </Route>
-                <Route path="*">
-                  <NotFound classes="page__main not-found" />
-                </Route>
-              </Switch>
-              {isFooter && <Footer />}
-            </ErrorsContext.Provider>
-          </CurrentUserContext.Provider>
-        )
-      ) : (
-        <Preloader />
-      )}
+              <Movies
+                classes="page__main page__main_type_movies"
+                isLoading={isLoading}
+                onMovieFind={getMovies}
+                keyWord={keyWord}
+                onKeyWordChange={setKeyWord}
+                movieResultList={movieResultList}
+                isCardsNotFound={isCardsNotFound}
+                isShortMovie={isShortMovie}
+                onShortMovieChange={handleShorwMovieChange}
+                onCardSave={handleSaveMovie}
+              />
+            </ProtectedRoute>
+            <ProtectedRoute
+              isUserChecking={isUserChecking}
+              userCheckError={userCheckError}
+              loggedIn={loggedIn}
+              path="/saved-movies"
+            >
+              <SavedMovies
+                classes="page__main page__main_type_saved-movies"
+                onCardDelete={handleSaveMovie}
+                savedCards={savedCards}
+                setSavedCards={setSavedCards}
+              />
+            </ProtectedRoute>
+            <ProtectedRoute path="/profile">
+              <Profile
+                classes="page__main"
+                onLogout={handleLogout}
+                onProfileChange={handleProfileChange}
+              />
+            </ProtectedRoute>
+            <Route path="/signin">
+              <Login classes="page__main" onLogin={handleLogin} />
+            </Route>
+            <Route path="/signup">
+              <Register classes="page__main" onRegister={handleRegister} />
+            </Route>
+            <Route path="*">
+              <NotFound classes="page__main not-found" />
+            </Route>
+          </Switch>
+          {isFooter && <Footer />}
+        </ErrorsContext.Provider>
+      </CurrentUserContext.Provider>
     </div>
   );
 }
