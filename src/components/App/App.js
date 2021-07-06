@@ -22,8 +22,12 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import auth from '../../utils/auth';
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
-import { errorMessages, movieListAge } from '../../utils/constants';
-import { filterMovies } from '../../utils/utils';
+import {
+  errorMessages,
+  localStorageObj,
+  movieListAge,
+} from '../../utils/constants';
+import { findMovies, filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 
@@ -41,8 +45,11 @@ function App() {
 
   const [keyWord, setKeyWord] = useState('');
   const [movieResultList, setMovieResultList] = useState([]);
+  const [movieRenderedList, setMovieRenderedList] = useState([]);
+  const [movieIsLoading, setMovieIsLoading] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
+
   const [isShortMovie, setIsShortMovie] = useState(false);
 
   const [savedCards, setSavedCards] = useState([]);
@@ -125,35 +132,43 @@ function App() {
   }
 
   function getMovies(keyWord) {
-    setIsLoading(true);
-    if (!checkMovieList()) {
+    setMovieIsLoading(true);
+    if (!checkSavedMovieList()) {
       moviesApi
         .getMovies()
         .then((data) => {
           const trandformedMoviesList = transformMovies(data);
-          saveAllMovies(data);
-          const resultMoviesList = filterMovies(
-            keyWord,
-            trandformedMoviesList,
-            isShortMovie
-          );
-          setResultMovies(resultMoviesList);
+          saveAllMovies(trandformedMoviesList);
+          const findedMovieList = findMovies(keyWord, trandformedMoviesList);
+          showMovies(findedMovieList);
         })
-        .catch()
+        .catch() //ERROR!!
         .finally(() => {
-          setIsLoading(false);
+          setMovieIsLoading(false);
         });
     } else {
-      const resultMoviesList = transformMovies(
-        filterMovies(
-          keyWord,
-          JSON.parse(localStorage.getItem('movieList')),
-          isShortMovie
-        )
+      const findedMovieList = findMovies(
+        keyWord,
+        JSON.parse(localStorage.getItem(localStorageObj.movieList))
       );
-      setResultMovies(resultMoviesList);
-      setIsLoading(false);
+      showMovies(findedMovieList);
+      setMovieIsLoading(false);
     }
+  }
+
+  function checkSavedMovieList() {
+    const savedMovieList = JSON.parse(
+      localStorage.getItem(localStorageObj.movieList)
+    );
+    return savedMovieList &&
+      savedMovieList.length &&
+      movieListAge >
+        new Date().getTime() -
+          new Date(
+            localStorage.getItem(localStorageObj.movieListUpdateDate)
+          ).getTime()
+      ? true
+      : false;
   }
 
   function transformMovies(movieList) {
@@ -167,6 +182,11 @@ function App() {
       };
     });
   }
+
+  const saveAllMovies = useCallback((movieList) => {
+    localStorage.setItem(localStorageObj.movieList, JSON.stringify(movieList));
+    localStorage.setItem(localStorageObj.movieListUpdateDate, new Date());
+  }, []);
 
   function handleSaveMovie(status, data) {
     if (status) {
@@ -186,30 +206,16 @@ function App() {
     }
   }
 
-  function setResultMovies(resultMoviesList) {
-    setMovieResultList(resultMoviesList);
-    resultMoviesList.length
+  function showMovies(findedMovieList) {
+    setMovieResultList(findedMovieList);
+    const filteredMovieList = filterMovies(isShortMovie, findedMovieList);
+    setMovieRenderedList(filteredMovieList);
+    filteredMovieList.length
       ? setIsCardsNotFound(false)
       : setIsCardsNotFound(true);
   }
 
-  const saveAllMovies = useCallback((movieList) => {
-    localStorage.setItem('movieList', JSON.stringify(movieList));
-    localStorage.setItem('movieUpdateDate', new Date());
-  }, []);
-
-  function checkMovieList() {
-    const savedMovieList = JSON.parse(localStorage.getItem('movieList'));
-    return savedMovieList &&
-      savedMovieList.length &&
-      movieListAge >
-        new Date().getTime() -
-          new Date(localStorage.getItem('movieUpdateDate')).getTime()
-      ? true
-      : false;
-  }
-
-  function handleShorwMovieChange(value) {
+  function handleShorMovieChange(value) {
     setIsShortMovie(value);
   }
 
@@ -235,24 +241,36 @@ function App() {
   }, []);
 
   useEffect(() => {
+    setMovieRenderedList(filterMovies(isShortMovie, movieResultList));
+    // setMovieIsLoading(false);
+  }, [isShortMovie, movieResultList]);
+
+  useEffect(() => {
     if (
-      localStorage.getItem('lastMovieList') &&
-      localStorage.getItem('lastKeyword')
+      localStorage.getItem(localStorageObj.lastMovieList) &&
+      localStorage.getItem(localStorageObj.lastKeyword)
     ) {
-      setResultMovies(JSON.parse(localStorage.getItem('lastMovieList')));
-      setKeyWord(JSON.parse(localStorage.getItem('lastKeyword')));
-      setIsShortMovie(JSON.parse(localStorage.getItem('isShortMovie')));
+      setMovieResultList(
+        JSON.parse(localStorage.getItem(localStorageObj.lastMovieList))
+      );
+      setKeyWord(JSON.parse(localStorage.getItem(localStorageObj.lastKeyword)));
+      // setIsShortMovie(JSON.parse(localStorage.getItem(localStorageObj.isShortMovie)));
     }
   }, []);
 
   useEffect(() => {
     function saveLastMovies(movieList) {
-      localStorage.setItem('lastMovieList', JSON.stringify(movieList));
-      localStorage.setItem('lastKeyword', JSON.stringify(keyWord));
-      localStorage.setItem('isShortMovie', JSON.stringify(isShortMovie));
+      localStorage.setItem(
+        localStorageObj.lastMovieList,
+        JSON.stringify(movieList)
+      );
+      localStorage.setItem(
+        localStorageObj.lastKeyword,
+        JSON.stringify(keyWord)
+      );
     }
     saveLastMovies(movieResultList);
-  }, [movieResultList, isShortMovie, keyWord]);
+  }, [movieResultList, keyWord]);
 
   return (
     <div className="page">
@@ -285,14 +303,14 @@ function App() {
             <ProtectedRoute path="/movies">
               <Movies
                 classes="page__main page__main_type_movies"
-                isLoading={isLoading}
+                movieIsLoading={movieIsLoading}
                 onMovieFind={getMovies}
                 keyWord={keyWord}
                 onKeyWordChange={setKeyWord}
-                movieResultList={movieResultList}
+                movieResultList={movieRenderedList}
                 isCardsNotFound={isCardsNotFound}
                 isShortMovie={isShortMovie}
-                onShortMovieChange={handleShorwMovieChange}
+                onShortMovieChange={handleShorMovieChange}
                 onCardSave={handleSaveMovie}
               />
             </ProtectedRoute>

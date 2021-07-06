@@ -7,7 +7,7 @@ import Preloader from '../Preloader/Preloader';
 import { cardNumber } from '../../utils/constants';
 
 function Movies({
-  isLoading,
+  movieIsLoading,
   classes,
   keyWord,
   onKeyWordChange,
@@ -76,7 +76,7 @@ function Movies({
         />
       </section>
       <section className="main__section">
-        {isLoading ? (
+        {movieIsLoading ? (
           <Preloader />
         ) : renderedCardList.length && !isCardsNotFound ? (
           <>

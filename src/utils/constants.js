@@ -85,3 +85,11 @@ export const errorMessages = {
   userNotFound: 'Пользователь не найден!',
 
 };
+
+export const localStorageObj = {
+  movieList: 'savedMovieList',
+  movieListUpdateDate: 'movieListUpdateDate',
+  lastMovieList: 'lastMovieList',
+  lastKeyword: 'lastKeyword',
+  isShortMovie: 'isShortMovie',
+};
