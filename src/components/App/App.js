@@ -22,10 +22,12 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import auth from '../../utils/auth';
 import mainApi from '../../utils/MainApi';
 import moviesApi from '../../utils/MoviesApi';
-import { movieListAge } from '../../utils/constants';
+import { errorMessages, movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
+import Preloader from '../Preloader/Preloader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function App() {
   const location = useLocation();
@@ -47,6 +49,7 @@ function App() {
 
   const [savedCards, setSavedCards] = useState([]);
 
+  const [isUserChecking, setIsUserChecking] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
     useName: '',
@@ -54,6 +57,7 @@ function App() {
     userId: '',
   });
 
+  const [userCheckError, setUserCheckError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
   const [loginError, setLoginError] = useState(null);
   const [logoutError, setlogoutError] = useState(null);
@@ -65,19 +69,6 @@ function App() {
   function setUserData({ name, email, userId }) {
     setCurrentUser({ userName: name, userEmail: email, userId });
   }
-
-  useEffect(() => {
-    auth
-      .checkAutorization()
-      .then((res) => {
-        setLoggedIn(true);
-        setUserData(res);
-        history.push('/movies');
-      })
-      .catch(() => {
-        setLoggedIn(false);
-      });
-  }, [history]);
 
   function handleRegister(name, email, pass) {
     auth
@@ -122,7 +113,8 @@ function App() {
   }
 
   function handleProfileChange(name, email) {
-    mainApi.editProfile({ name, email })
+    mainApi
+      .editProfile({ name, email })
       .then((res) => {
         setCurrentUser(res);
       })
@@ -137,7 +129,8 @@ function App() {
   function getMovies(keyWord) {
     setIsLoading(true);
     if (!checkMovieList()) {
-      moviesApi.getMovies()
+      moviesApi
+        .getMovies()
         .then((data) => {
           const trandformedMoviesList = transformMovies(data);
           saveAllMovies(data);
@@ -223,6 +216,25 @@ function App() {
   }
 
   useEffect(() => {
+    setIsUserChecking(true);
+    auth
+      .checkAutorization()
+      .then((res) => {
+        setLoggedIn(true);
+        setUserData(res);
+      })
+      .catch((err) => {
+        setLoggedIn(false);
+        if (err.message !== errorMessages.unauthorized) {
+          setUserCheckError(errorMessages.serverNotAvalible);
+        }
+      })
+      .finally(() => {
+        setIsUserChecking(false);
+      });
+  }, []);
+
+  useEffect(() => {
     if (
       localStorage.getItem('lastMovieList') &&
       localStorage.getItem('lastKeyword')
@@ -244,66 +256,78 @@ function App() {
 
   return (
     <div className="page">
-      <CurrentUserContext.Provider
-        value={{ currentUser: currentUser, loggedIn: loggedIn }}
-      >
-        <ErrorsContext.Provider
-          value={{ registerError, loginError, movieApiError, profileError }}
-        >
-          {isHeader && (
-            <Header isMain={isMain}>
-              <Navigation loggedIn={loggedIn} classes={'header__nav'} />
-              <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
-            </Header>
-          )}
-          <Switch>
-            <Route path="/" exact>
-              <Main classes="page__main" />
-            </Route>
-            <ProtectedRoute path="/movies">
-              <Movies
-                classes="page__main page__main_type_movies"
-                isLoading={isLoading}
-                onMovieFind={getMovies}
-                keyWord={keyWord}
-                onKeyWordChange={setKeyWord}
-                movieResultList={movieResultList}
-                isCardsNotFound={isCardsNotFound}
-                isShortMovie={isShortMovie}
-                onShortMovieChange={handleShorwMovieChange}
-                onCardSave={handleSaveMovie}
-              />
-            </ProtectedRoute>
-            <ProtectedRoute path="/saved-movies">
-              <SavedMovies
-                classes="page__main page__main_type_saved-movies"
-                onCardDelete={handleSaveMovie}
-                savedCards={savedCards}
-                setSavedCards={setSavedCards}
-              />
-            </ProtectedRoute>
-            <ProtectedRoute path="/profile">
-              <Profile
-                classes="page__main"
-                onLogout={handleLogout}
-                onProfileChange={handleProfileChange}
-              />
-            </ProtectedRoute>
-            <Route path="/signin">
-              <Login classes="page__main" onLogin={handleLogin} />
-            </Route>
-            <Route path="/signup">
-              <Register classes="page__main" onRegister={handleRegister} />
-            </Route>
-            <Route path="*">
-              <NotFound classes="page__main not-found" />
-            </Route>
-          </Switch>
-          {isFooter && <Footer />}
-        </ErrorsContext.Provider>
-      </CurrentUserContext.Provider>
+      {!isUserChecking ? (
+        userCheckError ? (
+          <div className="error-container">
+            <ErrorMessage
+              classes={'error-message_active error-message_position_main-page'}
+              text={userCheckError}
+            />
+          </div>
+        ) : (
+          <CurrentUserContext.Provider
+            value={{ currentUser: currentUser, loggedIn: loggedIn }}
+          >
+            <ErrorsContext.Provider
+              value={{ registerError, loginError, movieApiError, profileError }}
+            >
+              {isHeader && (
+                <Header isMain={isMain}>
+                  <Navigation loggedIn={loggedIn} classes={'header__nav'} />
+                  <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
+                </Header>
+              )}
+              <Switch>
+                <Route path="/" exact>
+                  <Main classes="page__main" />
+                </Route>
+                <ProtectedRoute path="/movies">
+                  <Movies
+                    classes="page__main page__main_type_movies"
+                    isLoading={isLoading}
+                    onMovieFind={getMovies}
+                    keyWord={keyWord}
+                    onKeyWordChange={setKeyWord}
+                    movieResultList={movieResultList}
+                    isCardsNotFound={isCardsNotFound}
+                    isShortMovie={isShortMovie}
+                    onShortMovieChange={handleShorwMovieChange}
+                    onCardSave={handleSaveMovie}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute path="/saved-movies">
+                  <SavedMovies
+                    classes="page__main page__main_type_saved-movies"
+                    onCardDelete={handleSaveMovie}
+                    savedCards={savedCards}
+                    setSavedCards={setSavedCards}
+                  />
+                </ProtectedRoute>
+                <ProtectedRoute path="/profile">
+                  <Profile
+                    classes="page__main"
+                    onLogout={handleLogout}
+                    onProfileChange={handleProfileChange}
+                  />
+                </ProtectedRoute>
+                <Route path="/signin">
+                  <Login classes="page__main" onLogin={handleLogin} />
+                </Route>
+                <Route path="/signup">
+                  <Register classes="page__main" onRegister={handleRegister} />
+                </Route>
+                <Route path="*">
+                  <NotFound classes="page__main not-found" />
+                </Route>
+              </Switch>
+              {isFooter && <Footer />}
+            </ErrorsContext.Provider>
+          </CurrentUserContext.Provider>
+        )
+      ) : (
+        <Preloader />
+      )}
     </div>
   );
 }
-
 export default App;

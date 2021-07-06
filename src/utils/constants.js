@@ -1,9 +1,8 @@
 import cardImagePath from '../images/cards/card.jpg';
 import savedCardImagePath from '../images/cards/2.jpg';
 
-export const {
-  REACT_APP_SERVER_URL = 'https://api.nomoreparties.co',
-} = process.env;
+export const { REACT_APP_SERVER_URL = 'https://api.nomoreparties.co' } =
+  process.env;
 
 export const {
   REACT_APP_MOVIE_API_URL = 'https://api.nomoreparties.co/beatfilm-movies',
@@ -18,7 +17,7 @@ export const cardNumber = {
   desktop: {
     renderCardRows: 3,
     rowCardNumber: 4,
-    addCardNumber: 4
+    addCardNumber: 4,
   },
   tabletLandscape: {
     resolution: 1024,
@@ -38,7 +37,7 @@ export const cardNumber = {
     rowCardNumber: 5,
     addCardNumber: 2,
   },
-}
+};
 
 export const footerLinks = [
   {
@@ -81,70 +80,10 @@ export const portfolio = [
   },
 ];
 
-export const initCards = [
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title:
-      'Осуждение и убийство Жана Поля Марата, осуществленные пациентами Чарентонской психбольницы под руководством маркиза де Сада',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-];
+export const errorMessages = {
+  serverNotAvalible: `Во время запроса произошла ошибка.
+    Возможно, проблема с соединением или сервер недоступен.
+    Подождите немного и попробуйте ещё раз`,
+  unauthorized: 'Необходима авторизация!',
 
-export const savedCards = [
-  {
-    title: '33 слова о дизайне',
-    imageLink: savedCardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title:
-      'Осуждение и убийство Жана Поля Марата, осуществленные пациентами Чарентонской психбольницы под руководством маркиза де Сада',
-    imageLink: cardImagePath,
-    duration: '1ч42м',
-  },
-  {
-    title: '33 слова о дизайне',
-    imageLink: savedCardImagePath,
-    duration: '1ч42м',
-  },
-];
+};
