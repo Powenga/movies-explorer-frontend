@@ -143,7 +143,6 @@ function App() {
           showMovies(findedMovieList);
         })
         .catch(() => {
-          console.log('jibkjflkdj');
           setMovieApiError(errorMessages.serverNotAvalible);
         })
         .finally(() => {
@@ -245,7 +244,6 @@ function App() {
 
   useEffect(() => {
     setMovieRenderedList(filterMovies(isShortMovie, movieResultList));
-    // setMovieIsLoading(false);
   }, [isShortMovie, movieResultList]);
 
   useEffect(() => {
@@ -257,7 +255,7 @@ function App() {
         JSON.parse(localStorage.getItem(localStorageObj.lastMovieList))
       );
       setKeyWord(JSON.parse(localStorage.getItem(localStorageObj.lastKeyword)));
-      // setIsShortMovie(JSON.parse(localStorage.getItem(localStorageObj.isShortMovie)));
+      setIsShortMovie(JSON.parse(localStorage.getItem(localStorageObj.isShortMovie)));
     }
   }, []);
 
@@ -271,9 +269,13 @@ function App() {
         localStorageObj.lastKeyword,
         JSON.stringify(keyWord)
       );
+      localStorage.setItem(
+        localStorageObj.isShortMovie,
+        JSON.stringify(isShortMovie)
+      );
     }
     saveLastMovies(movieResultList);
-  }, [movieResultList, keyWord]);
+  }, [movieResultList, keyWord, isShortMovie]);
 
   return (
     <div className="page">
