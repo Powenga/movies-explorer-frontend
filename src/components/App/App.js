@@ -26,8 +26,6 @@ import { errorMessages, movieListAge } from '../../utils/constants';
 import { filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
-import Preloader from '../Preloader/Preloader';
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
 
 function App() {
   const location = useLocation();
@@ -265,22 +263,26 @@ function App() {
           loggedIn: loggedIn,
         }}
       >
+        {isHeader && (
+          <Header isMain={isMain}>
+            <Navigation classes={'header__nav'} />
+            <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
+          </Header>
+        )}
         <ErrorsContext.Provider
-          value={{ registerError, loginError, movieApiError, profileError }}
+          value={{
+            userCheckError,
+            registerError,
+            loginError,
+            movieApiError,
+            profileError,
+          }}
         >
-          {isHeader && (
-            <Header isMain={isMain}>
-              <Navigation classes={'header__nav'} />
-              <MobileMenu loggedIn={loggedIn} classes={'header__nav'} />
-            </Header>
-          )}
           <Switch>
             <Route path="/" exact>
               <Main classes="page__main" />
             </Route>
-            <ProtectedRoute
-              path="/movies"
-            >
+            <ProtectedRoute path="/movies">
               <Movies
                 classes="page__main page__main_type_movies"
                 isLoading={isLoading}
@@ -294,9 +296,7 @@ function App() {
                 onCardSave={handleSaveMovie}
               />
             </ProtectedRoute>
-            <ProtectedRoute
-              path="/saved-movies"
-            >
+            <ProtectedRoute path="/saved-movies">
               <SavedMovies
                 classes="page__main page__main_type_saved-movies"
                 onCardDelete={handleSaveMovie}
@@ -304,9 +304,7 @@ function App() {
                 setSavedCards={setSavedCards}
               />
             </ProtectedRoute>
-            <ProtectedRoute
-              path="/profile"
-            >
+            <ProtectedRoute path="/profile">
               <Profile
                 classes="page__main"
                 onLogout={handleLogout}
@@ -323,8 +321,8 @@ function App() {
               <NotFound classes="page__main not-found" />
             </Route>
           </Switch>
-          {isFooter && <Footer />}
         </ErrorsContext.Provider>
+        {isFooter && <Footer />}
       </CurrentUserContext.Provider>
     </div>
   );

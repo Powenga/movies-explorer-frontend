@@ -1,12 +1,14 @@
 import { Route, Redirect } from 'react-router-dom';
 import { useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import Preloader from '../Preloader/Preloader';
 
 function ProtectedRoute({ children }) {
-  const { loggedIn, isUserChecking, userCheckError } =
+  const { loggedIn, isUserChecking } =
     useContext(CurrentUserContext);
+  const {userCheckError} = useContext(ErrorsContext);
 
   return (
     <>
