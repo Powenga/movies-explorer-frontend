@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import { ErrorsContext } from '../../contexts/ErrorsContext';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
 import MoviesCardWithCheckbox from '../MovieCardWithCheckbox/MovieCardWithCheckbox.js';
 import Button from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
+import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { cardNumber } from '../../utils/constants';
 
 function Movies({
@@ -18,6 +20,7 @@ function Movies({
   onShortMovieChange,
   onCardSave,
 }) {
+  const { movieApiError } = useContext(ErrorsContext);
   const [renderedCardList, setRenderedCardList] = useState([]);
   const [storedCardList, setStoredCardList] = useState([]);
   const [moreCardNumber, setMoreCardNumber] = useState(0);
@@ -76,9 +79,7 @@ function Movies({
         />
       </section>
       <section className="main__section">
-        {movieIsLoading ? (
-          <Preloader />
-        ) : renderedCardList.length && !isCardsNotFound ? (
+        {!movieIsLoading && !isCardsNotFound && !movieApiError ? (
           <>
             <MoviesCardList
               classes="main__section-inner"
@@ -86,7 +87,7 @@ function Movies({
               cardList={renderedCardList}
               onCardSave={onCardSave}
             />
-            {storedCardList.length ? (
+            {storedCardList.length > 0 && (
               <>
                 <div className="main__section-inner">
                   <Button
@@ -98,16 +99,19 @@ function Movies({
                   </Button>
                 </div>
               </>
-            ) : (
-              <></>
             )}
           </>
+        ) : isCardsNotFound ? (
+          <p className="main__section-inner card-not-found-message">
+            Ничего не найдено
+          </p>
+        ) : movieApiError ? (
+          <ErrorMessage
+            classes="error-message_active error-message_position_center"
+            text={movieApiError}
+          />
         ) : (
-          isCardsNotFound && (
-            <p className="main__section-inner card-not-found-message">
-              Ничего не найдено
-            </p>
-          )
+          movieIsLoading && <Preloader />
         )}
       </section>
     </main>

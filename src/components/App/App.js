@@ -44,13 +44,13 @@ function App() {
   const isMain = matchPath(location.pathname, { path: '/', exact: true });
 
   const [keyWord, setKeyWord] = useState('');
+  const [isShortMovie, setIsShortMovie] = useState(false);
   const [movieResultList, setMovieResultList] = useState([]);
   const [movieRenderedList, setMovieRenderedList] = useState([]);
   const [movieIsLoading, setMovieIsLoading] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
 
-  const [isShortMovie, setIsShortMovie] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [savedCards, setSavedCards] = useState([]);
 
@@ -142,7 +142,10 @@ function App() {
           const findedMovieList = findMovies(keyWord, trandformedMoviesList);
           showMovies(findedMovieList);
         })
-        .catch() //ERROR!!
+        .catch(() => {
+          console.log('jibkjflkdj');
+          setMovieApiError(errorMessages.serverNotAvalible);
+        })
         .finally(() => {
           setMovieIsLoading(false);
         });
