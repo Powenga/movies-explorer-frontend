@@ -1,10 +1,11 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import './Register.css';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
+import { useValidation } from '../../hooks/useValidation';
 
 function Register({ classes, onRegister }) {
   const { registerError } = useContext(ErrorsContext);
@@ -13,8 +14,11 @@ function Register({ classes, onRegister }) {
     userEmail: '',
     userPass: '',
   });
+  const { errors, isValid, handleValidation } = useValidation();
+  const formRef = useRef(null);
 
   function handleChange(evt) {
+    handleValidation(evt, formRef.current);
     const { name, value } = evt.target;
     setUserData({ ...userData, [name]: value });
   }
@@ -28,6 +32,7 @@ function Register({ classes, onRegister }) {
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section register">
         <SignForm
+          formRef={formRef}
           classes="main__section-inner"
           formTitle="Добро пожаловать!"
           formName="register-form"
@@ -46,7 +51,9 @@ function Register({ classes, onRegister }) {
               onChange={handleChange}
               required
             />
-            <span className="sign-form__error"></span>
+            {errors.userName && (
+              <span className="sign-form__error">{errors.userName}</span>
+            )}
           </label>
           <label className="sign-form__field">
             Е-mail
@@ -61,7 +68,9 @@ function Register({ classes, onRegister }) {
               onChange={handleChange}
               required
             />
-            <span className="sign-form__error"></span>
+            {errors.userEmail && (
+              <span className="sign-form__error">{errors.userEmail}</span>
+            )}
           </label>
           <label className="sign-form__field">
             Пароль
@@ -76,9 +85,15 @@ function Register({ classes, onRegister }) {
               onChange={handleChange}
               required
             />
-            <span className="sign-form__error"></span>
+            {errors.userPass && (
+              <span className="sign-form__error">{errors.userPass}</span>
+            )}
           </label>
-          <Button classes="btn_type_sign" type="submit">
+          <Button
+            classes={`btn_type_sign ${!isValid && 'btn_disabled'}`}
+            type="submit"
+            disabled={!isValid}
+          >
             Зарегистрироваться
           </Button>
           {registerError && (

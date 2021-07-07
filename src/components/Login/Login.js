@@ -70,7 +70,7 @@ function Login({ classes, onLogin }) {
             )}
           </label>
           <Button
-            classes={`btn_type_sign ${isValid && 'btn_type_sign_active'}`}
+            classes={`btn_type_sign ${!isValid && 'btn_disabled'}`}
             type="submit"
             disabled={!isValid}
           >
