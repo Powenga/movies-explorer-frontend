@@ -13,7 +13,7 @@ function MoviesCardList({
       <ul className="movies-card-list__container">
         {cardList.map((card, index) => (
           <Component
-            key={index}
+            key={card.movieId}
             cardData={card}
             onCardSave={onCardSave}
             onCardDelete={onCardDelete}
