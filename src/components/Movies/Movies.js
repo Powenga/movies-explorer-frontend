@@ -21,7 +21,7 @@ function Movies({
   onCardSave,
   onMoreClick,
 }) {
-  const { movieApiError, saveMovieError, deleteMovieError } =
+  const { movieApiError, saveMovieError, deleteMovieError, getUserMovieError } =
     useContext(ErrorsContext);
 
   return (
@@ -50,7 +50,10 @@ function Movies({
             />
           )
         )}
-        {!movieIsLoading && !isCardsNotFound && !movieApiError ? (
+        {!movieIsLoading &&
+        !isCardsNotFound &&
+        !movieApiError &&
+        !getUserMovieError ? (
           <>
             <MoviesCardList
               classes="main__section-inner"
@@ -80,6 +83,11 @@ function Movies({
           <ErrorMessage
             classes="error-message_active error-message_position_center"
             text={movieApiError}
+          />
+        ) : getUserMovieError ? (
+          <ErrorMessage
+            classes="error-message_active error-message_position_center"
+            text={getUserMovieError}
           />
         ) : (
           movieIsLoading && <Preloader />

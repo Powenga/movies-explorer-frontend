@@ -12,7 +12,7 @@ function SavedMovies({
   userMovieIsLoading,
   onCardDelete,
 }) {
-  const {deleteMovieError} = useContext(ErrorsContext);
+  const { deleteMovieError, getUserMovieError } = useContext(ErrorsContext);
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
@@ -25,15 +25,20 @@ function SavedMovies({
             text={deleteMovieError}
           />
         )}
-        {!userMovieIsLoading ? (
+        {!userMovieIsLoading && !getUserMovieError ? (
           <MoviesCardList
             classes="main__section-inner"
             card={MoviesCardWithDelete}
             cardList={userMoviesList}
             onCardDelete={onCardDelete}
           />
+        ) : getUserMovieError ? (
+          <ErrorMessage
+            classes="error-message_active error-message_position_top"
+            text={getUserMovieError}
+          />
         ) : (
-          <Preloader />
+          userMovieIsLoading && <Preloader />
         )}
       </section>
     </main>
