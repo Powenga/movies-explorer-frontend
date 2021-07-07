@@ -6,7 +6,7 @@ import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Profile({ classes, onLogout, onProfileChange }) {
-  const { profileError } = useContext(ErrorsContext);
+  const { profileError, logoutError } = useContext(ErrorsContext);
   const { currentUser } = useContext(CurrentUserContext);
   const [userData, setUserData] = useState({
     userName: currentUser.userName,
@@ -66,11 +66,18 @@ function Profile({ classes, onLogout, onProfileChange }) {
             <Button classes="btn_type_profile-submit" type="submit">
               Редактировать
             </Button>
-            {profileError && (
+            {profileError ? (
               <ErrorMessage
                 classes="error-message_active"
                 text={profileError}
               />
+            ) : (
+              logoutError && (
+                <ErrorMessage
+                classes="error-message_active"
+                text={logoutError}
+              />
+              )
             )}
           </form>
           <Button
