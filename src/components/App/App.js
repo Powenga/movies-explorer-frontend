@@ -146,7 +146,7 @@ function App() {
     mainApi
       .editProfile({ name, email })
       .then((res) => {
-        setCurrentUser(res);
+        setUserData(res);
       })
       .catch((err) => {
         setProfileError(err.message);

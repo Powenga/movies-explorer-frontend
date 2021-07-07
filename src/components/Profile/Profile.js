@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef, useEffect } from 'react';
 import './Profile.css';
 import Button from '../Button/Button';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { useValidation } from '../../hooks/useValidation';
 
 function Profile({ classes, onLogout, onProfileChange }) {
   const { profileError, logoutError } = useContext(ErrorsContext);
@@ -12,8 +13,13 @@ function Profile({ classes, onLogout, onProfileChange }) {
     userName: currentUser.userName,
     userEmail: currentUser.userEmail,
   });
+  console.log(userData, currentUser);
+  const { errors, isValid, handleValidation } = useValidation();
+  const formRef = useRef(null);
+  const [isFormValid, setIsFormValid] = useState(isValid);
 
   function handleChange(evt) {
+    handleValidation(evt, formRef.current);
     const { name, value } = evt.target;
     setUserData({ ...userData, [name]: value });
   }
@@ -23,15 +29,28 @@ function Profile({ classes, onLogout, onProfileChange }) {
     onProfileChange(userData.userName, userData.userEmail);
   }
 
+  useEffect(() => {
+    if (
+      userData.userName === currentUser.userName &&
+      userData.userEmail === currentUser.userEmail
+    ) {
+      setIsFormValid(false);
+    } else {
+      setIsFormValid(isValid);
+    }
+  }, [userData, currentUser, isValid]);
+
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
         <div className="profile main__section-inner">
           <h1 className="profile__title">Привет, Username!</h1>
           <form
+            ref={formRef}
             className="profile__form "
             name="profile"
             onSubmit={handleSubmit}
+            noValidate
           >
             <label className="profile__form-field">
               <input
@@ -46,7 +65,9 @@ function Profile({ classes, onLogout, onProfileChange }) {
                 required
               />
               <span className="profile__input-label">Имя</span>
-              <span className="profile__input-error"></span>
+              {errors.userName && (
+                <span className="profile__input-error">{errors.userName}</span>
+              )}
             </label>
             <label className="profile__form-field">
               <input
@@ -61,9 +82,15 @@ function Profile({ classes, onLogout, onProfileChange }) {
                 required
               />
               <span className="profile__input-label">E-mail</span>
-              <span className="profile__input-error"></span>
+              {errors.userEmail && (
+                <span className="profile__input-error">{errors.userEmail}</span>
+              )}
             </label>
-            <Button classes="btn_type_profile-submit" type="submit">
+            <Button
+              classes={`btn_type_profile-submit ${!isFormValid && 'btn_disabled'}`}
+              type="submit"
+              disabled={!isFormValid}
+            >
               Редактировать
             </Button>
             {profileError ? (
@@ -74,9 +101,9 @@ function Profile({ classes, onLogout, onProfileChange }) {
             ) : (
               logoutError && (
                 <ErrorMessage
-                classes="error-message_active"
-                text={logoutError}
-              />
+                  classes="error-message_active"
+                  text={logoutError}
+                />
               )
             )}
           </form>
