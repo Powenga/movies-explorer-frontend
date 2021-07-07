@@ -191,6 +191,14 @@ function App() {
       .logout()
       .then(() => {
         setlogoutError(null);
+        setCurrentUser({
+          useName: '',
+          userEmail: '',
+          userId: '',
+        });
+        setMovieResultList([]);
+        setKeyWord('');
+        setIsShortMovie(false);
         setLoggedIn(false);
       })
       .catch((err) => {
@@ -425,7 +433,7 @@ function App() {
       };
       localStorage.setItem(currentUser.userId, JSON.stringify(savedData));
     }
-    saveLastMovies(movieResultList);
+    currentUser.userId && saveLastMovies(movieResultList);
   }, [movieResultList, keyWord, isShortMovie, currentUser]);
 
   useEffect(() => {
