@@ -38,13 +38,19 @@ function SavedMovies({
             text={deleteMovieError}
           />
         )}
-        {!userMovieIsLoading && !getUserMovieError ? (
+        {!userMovieIsLoading &&
+        !getUserMovieError &&
+        !isCardsNotFound ? (
           <MoviesCardList
             classes="main__section-inner"
             card={MoviesCardWithDelete}
             cardList={userMoviesList}
             onCardDelete={onCardDelete}
           />
+        ) : isCardsNotFound ? (
+          <p className="main__section-inner card-not-found-message">
+          Ничего не найдено
+        </p>
         ) : getUserMovieError ? (
           <ErrorMessage
             classes="error-message_active error-message_position_top"

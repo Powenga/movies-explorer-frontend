@@ -56,13 +56,14 @@ function App() {
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
   const [movieIsLoading, setMovieIsLoading] = useState(false);
-  const [isCardsNotFound, setIsCardsNotFound] = useState(false);
+  const [moviesNotFound, setMoviesNotFound] = useState(false);
 
   const [userMoviesKeyword, setUserMoviesKeyword] = useState('');
   const [userMovieIsShort, setUserMovieIsShort] = useState(false);
   const [userMoviesList, setUserMoviesList] = useState([]);
   const [userMoviesRenderedList, setUserMoviesRenderedList] = useState([]);
   const [userMovieIsLoading, setUserMovieIsLoading] = useState(true);
+  const [userMoviesNotFound, setUserMoviesNotFound] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -252,8 +253,8 @@ function App() {
     const filteredMovieList = filterMovies(isShortMovie, movieResultWithMark);
     setMovieRenderedList(filteredMovieList);
     filteredMovieList.length
-      ? setIsCardsNotFound(false)
-      : setIsCardsNotFound(true);
+      ? setMoviesNotFound(false)
+      : setMoviesNotFound(true);
   }
 
   function handleShortMovieChange(value) {
@@ -278,12 +279,14 @@ function App() {
   }
 
   function getUserMovie(userMoviesKeyword) {
-    setUserMoviesRenderedList(
-      filterMovies(
-        userMovieIsShort,
-        findMovies(userMoviesKeyword, userMoviesList)
-      )
+    const userShownMovies = filterMovies(
+      userMovieIsShort,
+      findMovies(userMoviesKeyword, userMoviesList)
     );
+    setUserMoviesRenderedList(userShownMovies);
+    !userShownMovies.length
+      ? setUserMoviesNotFound(true)
+      : setUserMoviesNotFound(false);
   }
 
   useEffect(() => {
@@ -449,7 +452,7 @@ function App() {
                 onKeyWordChange={setKeyWord}
                 movieList={movieShownList}
                 hiddenMovieListLength={movieHiddenList.length}
-                isCardsNotFound={isCardsNotFound}
+                isCardsNotFound={moviesNotFound}
                 isShortMovie={isShortMovie}
                 onShortMovieChange={handleShortMovieChange}
                 onCardSave={handleSaveMovie}
@@ -464,7 +467,7 @@ function App() {
                 onCardDelete={handleSaveMovie}
                 keyWord={userMoviesKeyword}
                 onKeyWordChange={setUserMoviesKeyword}
-                isCardsNotFound={isCardsNotFound}
+                isCardsNotFound={userMoviesNotFound}
                 isShortMovie={userMovieIsShort}
                 onShortMovieChange={handleUserMovieIsShortChange}
                 onMovieFind={getUserMovie}
