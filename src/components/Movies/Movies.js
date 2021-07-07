@@ -20,6 +20,7 @@ function Movies({
   onShortMovieChange,
   onCardSave,
   onMoreClick,
+  keyWordError,
 }) {
   const { movieApiError, saveMovieError, deleteMovieError, getUserMovieError } =
     useContext(ErrorsContext);
@@ -34,6 +35,7 @@ function Movies({
           onSubmit={onMovieFind}
           isShortMovie={isShortMovie}
           onShortMovieChange={onShortMovieChange}
+          keyWordError={keyWordError}
         />
       </section>
       <section className="main__section error-wrapper">

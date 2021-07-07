@@ -75,6 +75,7 @@ function App() {
     userId: '',
   });
 
+  const [keyWordError, setkeyWordError] = useState(null);
   const [userCheckError, setUserCheckError] = useState(null);
   const [registerError, setRegisterError] = useState(null);
   const [loginError, setLoginError] = useState(null);
@@ -160,30 +161,35 @@ function App() {
   }
 
   function getMovies(keyWord) {
-    setMovieIsLoading(true);
-    if (!checkSavedMovieList()) {
-      moviesApi
-        .getMovies()
-        .then((data) => {
-          setMovieApiError(null);
-          const trandformedMoviesList = transformMovies(data);
-          saveAllMovies(trandformedMoviesList);
-          const findedMovieList = findMovies(keyWord, trandformedMoviesList);
-          showMovies(findedMovieList);
-        })
-        .catch(() => {
-          setMovieApiError(errorMessages.serverNotAvalible);
-        })
-        .finally(() => {
-          setMovieIsLoading(false);
-        });
+    if (!keyWord) {
+      setkeyWordError(errorMessages.keyWordRequired);
     } else {
-      const findedMovieList = findMovies(
-        keyWord,
-        JSON.parse(localStorage.getItem(localStorageObj.movieList))
-      );
-      showMovies(findedMovieList);
-      setMovieIsLoading(false);
+      setkeyWordError(null);
+      setMovieIsLoading(true);
+      if (!checkSavedMovieList()) {
+        moviesApi
+          .getMovies()
+          .then((data) => {
+            setMovieApiError(null);
+            const trandformedMoviesList = transformMovies(data);
+            saveAllMovies(trandformedMoviesList);
+            const findedMovieList = findMovies(keyWord, trandformedMoviesList);
+            showMovies(findedMovieList);
+          })
+          .catch(() => {
+            setMovieApiError(errorMessages.serverNotAvalible);
+          })
+          .finally(() => {
+            setMovieIsLoading(false);
+          });
+      } else {
+        const findedMovieList = findMovies(
+          keyWord,
+          JSON.parse(localStorage.getItem(localStorageObj.movieList))
+        );
+        showMovies(findedMovieList);
+        setMovieIsLoading(false);
+      }
     }
   }
 
@@ -475,6 +481,7 @@ function App() {
                 onShortMovieChange={handleShortMovieChange}
                 onCardSave={handleSaveMovie}
                 onMoreClick={handleMoreClick}
+                keyWordError={keyWordError}
               />
             </ProtectedRoute>
             <ProtectedRoute path="/saved-movies">

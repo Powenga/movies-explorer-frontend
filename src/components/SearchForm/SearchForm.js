@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import Button from '../Button/Button';
 import submitButtonPath from '../../images/search-form-submit.svg';
-import { errorMessages } from '../../utils/constants';
 import './SearchForm.css';
 
 function SeacrchForm({
@@ -11,24 +9,17 @@ function SeacrchForm({
   onKeyWordChange,
   isShortMovie,
   onShortMovieChange,
+  keyWordError,
   children,
 }) {
 
-  const [error, setError] = useState('')
-
   function handleSubmit(evt) {
     evt.preventDefault();
-    if(keyWord) {
-      onSubmit(keyWord);
-    } else {
-      setError(errorMessages.keyWordRequired);
-    }
-
+    onSubmit(keyWord);
   }
 
   function handleChange(evt) {
     const { value } = evt.target;
-    value && setError('');
     onKeyWordChange(value);
   }
 
@@ -55,8 +46,8 @@ function SeacrchForm({
           onChange={handleChange}
           required
         />
-        {error && (
-          <span className="search-form__error">{error}</span>
+        {keyWordError && (
+          <span className="search-form__error">{keyWordError}</span>
         )}
         <Button classes="btn_type_search search-form__submit" type="submit">
           <img src={submitButtonPath} alt="Найти фильмы" />
