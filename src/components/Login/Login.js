@@ -1,9 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import Button from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
+import { useValidation } from '../../hooks/useValidation';
 
 function Login({ classes, onLogin }) {
   const { loginError } = useContext(ErrorsContext);
@@ -11,8 +12,11 @@ function Login({ classes, onLogin }) {
     userEmail: '',
     userPass: '',
   });
+  const { errors, isValid, handleValidation } = useValidation();
+  const formRef = useRef(null);
 
   function handleChange(evt) {
+    handleValidation(evt, formRef.current);
     const { name, value } = evt.target;
     setUserData({ ...userData, [name]: value });
   }
@@ -25,6 +29,7 @@ function Login({ classes, onLogin }) {
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
         <SignForm
+          formRef={formRef}
           classes="main__section-inner"
           formTitle="Рады видеть!"
           formName="login-form"
@@ -43,7 +48,9 @@ function Login({ classes, onLogin }) {
               onChange={handleChange}
               required
             />
-            <span className="sign-form__error"></span>
+            {errors.userEmail && (
+              <span className="sign-form__error">{errors.userEmail}</span>
+            )}
           </label>
           <label className="sign-form__field">
             Пароль
@@ -58,9 +65,15 @@ function Login({ classes, onLogin }) {
               onChange={handleChange}
               required
             />
-            <span className="sign-form__error"></span>
+            {errors.userPass && (
+              <span className="sign-form__error">{errors.userPass}</span>
+            )}
           </label>
-          <Button classes="btn_type_sign" type="submit">
+          <Button
+            classes={`btn_type_sign ${isValid && 'btn_type_sign_active'}`}
+            type="submit"
+            disabled={!isValid}
+          >
             Войти
           </Button>
           {loginError && (

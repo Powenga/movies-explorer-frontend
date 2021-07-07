@@ -57,6 +57,11 @@
   line-height: 120%;
   font-weight: 500;
   margin: 0 auto 16px;
+  opacity: .4;
+}
+
+.btn_type_sign_active {
+  opacity: 1;
 }
 
 @media screen and (max-width: 425px) {

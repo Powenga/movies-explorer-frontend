@@ -63,13 +63,7 @@
   position: absolute;
   top: 100%;
   left: 0%;
-  visibility: hidden;
 }
-
-.sign-form__error_active {
-  visibility: visible;
-}
-
 
 @media screen and (max-width: 768px) {
   .sign-form {
