@@ -83,7 +83,7 @@ export const errorMessages = {
     Подождите немного и попробуйте ещё раз`,
   unauthorized: 'Необходима авторизация!',
   userNotFound: 'Пользователь не найден!',
-
+  userMoviesNotFound: 'Сохраненные фильмы не найдены!',
 };
 
 export const localStorageObj = {

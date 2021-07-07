@@ -26,7 +26,7 @@ import {
   errorMessages,
   localStorageObj,
   movieListAge,
-  cardNumber
+  cardNumber,
 } from '../../utils/constants';
 import { findMovies, filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
@@ -49,7 +49,7 @@ function App() {
   const [movieResultList, setMovieResultList] = useState([]);
   const [movieRenderedList, setMovieRenderedList] = useState([]);
   const [movieShownList, setMovieShownList] = useState([]);
-  const [movieHiddenList, setMovieHiddenList] = useState([])
+  const [movieHiddenList, setMovieHiddenList] = useState([]);
   const [movieShownNumber, setMovieShownNumber] = useState(0);
   const [movieAddedNumber, setMovieAddedNumber] = useState(0);
 
@@ -79,6 +79,7 @@ function App() {
   const [movieApiError, setMovieApiError] = useState(null);
   const [saveMovieError, setSaveMovieError] = useState(null);
   const [deleteMovieError, setDeleteMovieError] = useState(null);
+  const [getUserMovieError, setGetUserMovieError] = useState(null);
 
   const history = useHistory();
 
@@ -208,7 +209,6 @@ function App() {
       ...movieHiddenList.slice(0, movieAddedNumber),
     ]);
     setMovieHiddenList(movieHiddenList.slice(movieAddedNumber, -1));
-
   }
 
   function handleSaveMovie(status, data) {
@@ -234,9 +234,7 @@ function App() {
             )
           );
           setUserMoviesList((state) =>
-            state.filter((s) =>
-              s.movieId === data.movieId ? false : true
-            )
+            state.filter((s) => (s.movieId === data.movieId ? false : true))
           );
         })
         .catch((err) => {
@@ -246,8 +244,9 @@ function App() {
   }
 
   function showMovies(findedMovieList) {
-    setMovieResultList(findedMovieList);
-    const filteredMovieList = filterMovies(isShortMovie, findedMovieList);
+    const movieResultWithMark = setUserMark(userMoviesList, findedMovieList)
+    setMovieResultList(movieResultWithMark);
+    const filteredMovieList = filterMovies(isShortMovie, movieResultWithMark);
     setMovieRenderedList(filteredMovieList);
     filteredMovieList.length
       ? setIsCardsNotFound(false)
@@ -256,6 +255,19 @@ function App() {
 
   function handleShortMovieChange(value) {
     setIsShortMovie(value);
+  }
+
+  function setUserMark(userMovieList, movieList) {
+      return movieList.map((s) => {
+        const isMovie = userMovieList.find(
+          (userMovie) => userMovie.movieId === s.movieId
+        );
+        if (isMovie) {
+          return isMovie;
+        } else {
+          return s;
+        }
+      });
   }
 
   useEffect(() => {
@@ -317,16 +329,23 @@ function App() {
   }, [movieResultList, keyWord, isShortMovie]);
 
   useEffect(() => {
-    mainApi
-      .getSavedCards()
-      .then((res) => {
-        setUserMoviesList(res);
-      })
-      .catch(() => {})
-      .finally(() => {
-        setUserMovieIsLoading(false);
-      });
-  }, []);
+    if (loggedIn) {
+      mainApi
+        .getSavedCards()
+        .then((userMovieList) => {
+          setMovieResultList(state => setUserMark(userMovieList, state));
+          setUserMoviesList(userMovieList);
+        })
+        .catch((err) => {
+          if(err.message !== errorMessages.userMoviesNotFound){
+            setGetUserMovieError(err.message);
+          }
+        })
+        .finally(() => {
+          setUserMovieIsLoading(false);
+        })
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
     if (
@@ -389,10 +408,12 @@ function App() {
             userCheckError,
             registerError,
             loginError,
+            logoutError,
             movieApiError,
             profileError,
             saveMovieError,
-            deleteMovieError
+            deleteMovieError,
+            getUserMovieError,
           }}
         >
           <Switch>
