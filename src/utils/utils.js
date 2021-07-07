@@ -1,5 +1,4 @@
 export function findMovies(keyWord, movieList) {
-  console.log(keyWord);
   const lowerKeyWord = keyWord.toLowerCase();
   return movieList.filter((movie) => {
     if (

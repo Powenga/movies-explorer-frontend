@@ -11,7 +11,6 @@ class Auth {
         return Promise.resolve(data)
       }
       if(data.message === 'celebrate request validation failed') {
-        console.log(data);
         data = data.validation.body;
       }
       return Promise.reject(data);
