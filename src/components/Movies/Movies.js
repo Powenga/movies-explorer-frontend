@@ -21,7 +21,8 @@ function Movies({
   onCardSave,
   onMoreClick,
 }) {
-  const { movieApiError } = useContext(ErrorsContext);
+  const { movieApiError, saveMovieError, deleteMovieError } =
+    useContext(ErrorsContext);
 
   return (
     <main className={`main ${classes ? classes : ''}`}>
@@ -35,7 +36,20 @@ function Movies({
           onShortMovieChange={onShortMovieChange}
         />
       </section>
-      <section className="main__section">
+      <section className="main__section error-wrapper">
+        {saveMovieError ? (
+          <ErrorMessage
+            classes="error-message_active error-message_position_top"
+            text={saveMovieError}
+          />
+        ) : (
+          deleteMovieError && (
+            <ErrorMessage
+              classes="error-message_active error-message_position_top"
+              text={deleteMovieError}
+            />
+          )
+        )}
         {!movieIsLoading && !isCardsNotFound && !movieApiError ? (
           <>
             <MoviesCardList

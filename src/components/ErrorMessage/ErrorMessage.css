@@ -17,6 +17,10 @@
   top: 50%;
 }
 
+.error-message_position_top {
+  top: 10px
+}
+
 .error-message_active {
   visibility: visible;
 }
