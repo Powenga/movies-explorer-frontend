@@ -84,6 +84,7 @@ export const errorMessages = {
   unauthorized: 'Необходима авторизация!',
   userNotFound: 'Пользователь не найден!',
   userMoviesNotFound: 'Сохраненные фильмы не найдены!',
+  keyWordRequired: 'Нужно ввести ключевое слово!'
 };
 
 export const localStorageObj = {
