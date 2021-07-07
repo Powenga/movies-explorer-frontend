@@ -118,6 +118,7 @@ function App() {
     auth
       .signIn(email, pass)
       .then((res) => {
+        setLoginError(null);
         !loggedIn && setLoggedIn(true);
         setUserData(res);
         history.push('/movies');
@@ -134,6 +135,7 @@ function App() {
     auth
       .logout()
       .then(() => {
+        setlogoutError(null);
         setLoggedIn(false);
       })
       .catch((err) => {
@@ -146,6 +148,7 @@ function App() {
     mainApi
       .editProfile({ name, email })
       .then((res) => {
+        setProfileError(null);
         setUserData(res);
       })
       .catch((err) => {
@@ -162,6 +165,7 @@ function App() {
       moviesApi
         .getMovies()
         .then((data) => {
+          setMovieApiError(null);
           const trandformedMoviesList = transformMovies(data);
           saveAllMovies(trandformedMoviesList);
           const findedMovieList = findMovies(keyWord, trandformedMoviesList);
@@ -229,6 +233,7 @@ function App() {
       mainApi
         .saveCard(data)
         .then((movie) => {
+          setSaveMovieError(null);
           setMovieResultList((state) =>
             state.map((s) => (s.movieId === movie.movieId ? movie : s))
           );
@@ -241,6 +246,7 @@ function App() {
       mainApi
         .deleteCard(data)
         .then(() => {
+          setDeleteMovieError(null);
           setMovieResultList((state) =>
             state.map((s) =>
               s.movieId === data.movieId ? { ...data, owner: '' } : s
@@ -302,6 +308,7 @@ function App() {
     auth
       .checkAutorization()
       .then((res) => {
+        setUserCheckError(null);
         setLoggedIn(true);
         setUserData(res);
       })
@@ -361,6 +368,7 @@ function App() {
       mainApi
         .getSavedCards()
         .then((userMovieList) => {
+          setGetUserMovieError(null);
           setMovieResultList((state) => setUserMark(userMovieList, state));
           setUserMoviesList(userMovieList);
         })
