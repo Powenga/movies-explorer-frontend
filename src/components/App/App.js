@@ -92,6 +92,7 @@ function App() {
   }
 
   function handleRegister(name, email, pass) {
+    setIsLoading(true);
     auth
       .signUp(name, email, pass)
       .then((res) => {
@@ -106,10 +107,14 @@ function App() {
       })
       .catch((err) => {
         setRegisterError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleLogin(email, pass) {
+    setIsLoading(true);
     auth
       .signIn(email, pass)
       .then((res) => {
@@ -119,6 +124,9 @@ function App() {
       })
       .catch((err) => {
         setLoginError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -134,6 +142,7 @@ function App() {
   }
 
   function handleProfileChange(name, email) {
+    setIsLoading(true);
     mainApi
       .editProfile({ name, email })
       .then((res) => {
