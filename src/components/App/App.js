@@ -58,7 +58,10 @@ function App() {
   const [movieIsLoading, setMovieIsLoading] = useState(false);
   const [isCardsNotFound, setIsCardsNotFound] = useState(false);
 
+  const [userMoviesKeyword, setUserMoviesKeyword] = useState('');
+  const [userMovieIsShort, setUserMovieIsShort] = useState(false);
   const [userMoviesList, setUserMoviesList] = useState([]);
+  const [userMoviesRenderedList, setUserMoviesRenderedList] = useState([]);
   const [userMovieIsLoading, setUserMovieIsLoading] = useState(true);
 
   const [isLoading, setIsLoading] = useState(false);
@@ -244,7 +247,7 @@ function App() {
   }
 
   function showMovies(findedMovieList) {
-    const movieResultWithMark = setUserMark(userMoviesList, findedMovieList)
+    const movieResultWithMark = setUserMark(userMoviesList, findedMovieList);
     setMovieResultList(movieResultWithMark);
     const filteredMovieList = filterMovies(isShortMovie, movieResultWithMark);
     setMovieRenderedList(filteredMovieList);
@@ -257,17 +260,30 @@ function App() {
     setIsShortMovie(value);
   }
 
+  function handleUserMovieIsShortChange(value) {
+    setUserMovieIsShort(value);
+  }
+
   function setUserMark(userMovieList, movieList) {
-      return movieList.map((s) => {
-        const isMovie = userMovieList.find(
-          (userMovie) => userMovie.movieId === s.movieId
-        );
-        if (isMovie) {
-          return isMovie;
-        } else {
-          return s;
-        }
-      });
+    return movieList.map((s) => {
+      const isMovie = userMovieList.find(
+        (userMovie) => userMovie.movieId === s.movieId
+      );
+      if (isMovie) {
+        return isMovie;
+      } else {
+        return s;
+      }
+    });
+  }
+
+  function getUserMovie(userMoviesKeyword) {
+    setUserMoviesRenderedList(
+      filterMovies(
+        userMovieIsShort,
+        findMovies(userMoviesKeyword, userMoviesList)
+      )
+    );
   }
 
   useEffect(() => {
@@ -333,19 +349,23 @@ function App() {
       mainApi
         .getSavedCards()
         .then((userMovieList) => {
-          setMovieResultList(state => setUserMark(userMovieList, state));
+          setMovieResultList((state) => setUserMark(userMovieList, state));
           setUserMoviesList(userMovieList);
         })
         .catch((err) => {
-          if(err.message !== errorMessages.userMoviesNotFound){
+          if (err.message !== errorMessages.userMoviesNotFound) {
             setGetUserMovieError(err.message);
           }
         })
         .finally(() => {
           setUserMovieIsLoading(false);
-        })
+        });
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    setUserMoviesRenderedList(filterMovies(userMovieIsShort, userMoviesList));
+  }, [userMoviesList, userMovieIsShort]);
 
   useEffect(() => {
     if (
@@ -439,9 +459,15 @@ function App() {
             <ProtectedRoute path="/saved-movies">
               <SavedMovies
                 classes="page__main page__main_type_saved-movies"
-                userMoviesList={userMoviesList}
+                userMoviesList={userMoviesRenderedList}
                 userMovieIsLoading={userMovieIsLoading}
                 onCardDelete={handleSaveMovie}
+                keyWord={userMoviesKeyword}
+                onKeyWordChange={setUserMoviesKeyword}
+                isCardsNotFound={isCardsNotFound}
+                isShortMovie={userMovieIsShort}
+                onShortMovieChange={handleUserMovieIsShortChange}
+                onMovieFind={getUserMovie}
               />
             </ProtectedRoute>
             <ProtectedRoute path="/profile">

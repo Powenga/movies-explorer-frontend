@@ -11,12 +11,25 @@ function SavedMovies({
   userMoviesList,
   userMovieIsLoading,
   onCardDelete,
+  keyWord,
+  onKeyWordChange,
+  isCardsNotFound,
+  isShortMovie,
+  onShortMovieChange,
+  onMovieFind,
 }) {
   const { deleteMovieError, getUserMovieError } = useContext(ErrorsContext);
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section">
-        <SeacrchForm classes="main__section-inner" />
+        <SeacrchForm
+          classes="main__section-inner"
+          keyWord={keyWord}
+          onKeyWordChange={onKeyWordChange}
+          onSubmit={onMovieFind}
+          isShortMovie={isShortMovie}
+          onShortMovieChange={onShortMovieChange}
+        />
       </section>
       <section className="main__section error-wrapper">
         {deleteMovieError && (
