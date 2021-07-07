@@ -327,7 +327,10 @@ function App() {
   }
 
   function showMovies(findedMovieList) {
-    const movieResultWithMark = setUserMark(userMovies.userMovieList, findedMovieList);
+    const movieResultWithMark = setUserMark(
+      userMovies.userMovieList,
+      findedMovieList
+    );
     setMovieResultList(movieResultWithMark);
     const filteredMovieList = filterMovies(isShortMovie, movieResultWithMark);
     setMovieRenderedList(filteredMovieList);
@@ -349,7 +352,7 @@ function App() {
       type: 'filterUserMovies',
       isShort: userMovieIsShort,
     });
-  }, [userMovieIsShort])
+  }, [userMovieIsShort]);
 
   function setUserMark(userMovieList, movieList) {
     return movieList.map((s) => {
@@ -405,37 +408,25 @@ function App() {
   }, [isShortMovie, movieResultList]);
 
   useEffect(() => {
-    if (
-      localStorage.getItem(localStorageObj.lastMovieList) &&
-      localStorage.getItem(localStorageObj.lastKeyword)
-    ) {
-      setMovieResultList(
-        JSON.parse(localStorage.getItem(localStorageObj.lastMovieList))
-      );
-      setKeyWord(JSON.parse(localStorage.getItem(localStorageObj.lastKeyword)));
-      setIsShortMovie(
-        JSON.parse(localStorage.getItem(localStorageObj.isShortMovie))
-      );
+    if (localStorage.getItem(currentUser.userId)) {
+      const savedData = JSON.parse(localStorage.getItem(currentUser.userId));
+      setMovieResultList(savedData.lastMovies);
+      setKeyWord(savedData.lastKeyword);
+      setIsShortMovie(savedData.isShortMovie);
     }
-  }, []);
+  }, [currentUser]);
 
   useEffect(() => {
     function saveLastMovies(movieList) {
-      localStorage.setItem(
-        localStorageObj.lastMovieList,
-        JSON.stringify(movieList)
-      );
-      localStorage.setItem(
-        localStorageObj.lastKeyword,
-        JSON.stringify(keyWord)
-      );
-      localStorage.setItem(
-        localStorageObj.isShortMovie,
-        JSON.stringify(isShortMovie)
-      );
+      const savedData = {
+        lastMovies: movieList,
+        lastKeyword: keyWord,
+        isShortMovie: isShortMovie,
+      };
+      localStorage.setItem(currentUser.userId, JSON.stringify(savedData));
     }
     saveLastMovies(movieResultList);
-  }, [movieResultList, keyWord, isShortMovie]);
+  }, [movieResultList, keyWord, isShortMovie, currentUser]);
 
   useEffect(() => {
     if (loggedIn) {
