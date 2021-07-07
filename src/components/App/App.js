@@ -138,7 +138,7 @@ function App() {
           ),
         };
       default:
-        return userMovies;
+        return {userMovieList:[], userMovieRenderedList:[]};
     }
   }
 
@@ -196,10 +196,11 @@ function App() {
           userEmail: '',
           userId: '',
         });
+        userMovieDispatch({});
+        setLoggedIn(false);
         setMovieResultList([]);
         setKeyWord('');
         setIsShortMovie(false);
-        setLoggedIn(false);
       })
       .catch((err) => {
         setlogoutError(err.message);
@@ -437,7 +438,7 @@ function App() {
   }, [movieResultList, keyWord, isShortMovie, currentUser]);
 
   useEffect(() => {
-    if (loggedIn) {
+    if (loggedIn && currentUser.userId) {
       mainApi
         .getSavedCards()
         .then((userMovieList) => {
@@ -446,6 +447,7 @@ function App() {
         })
         .catch((err) => {
           if (err.message !== errorMessages.userMoviesNotFound) {
+            console.log(err);
             setGetUserMovieError(err.message);
           }
         })
@@ -453,7 +455,7 @@ function App() {
           setUserMovieIsLoading(false);
         });
     }
-  }, [loggedIn]);
+  }, [loggedIn, currentUser]);
 
   useEffect(() => {
     if (
