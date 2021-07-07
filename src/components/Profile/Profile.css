@@ -69,10 +69,10 @@
 
 .profile__input-error {
   font-size: 10px;
-  color: #ee3465;
+  color: #EE3465;
   position: absolute;
   top: 100%;
-  left: 0;
+  left: 0%;
 }
 
 @media screen and (max-width: 768px) {

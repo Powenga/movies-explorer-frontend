@@ -1,6 +1,6 @@
-import logoPath from '../../images/logo.svg';
 import './Logo.css';
 import { Link } from 'react-router-dom';
+import logoPath from '../../images/logo.svg';
 
 function Logo({ classes }) {
   return (

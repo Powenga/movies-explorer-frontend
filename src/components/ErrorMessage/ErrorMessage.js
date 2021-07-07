@@ -1,8 +1,8 @@
 import './ErrorMessage.css';
 
-function ErrorMessage({classes}){
+function ErrorMessage({classes, text}){
   return (
-    <p className={`error-message ${classes ? classes : ''}`}>Что-то пошло не так...</p>
+    <p className={`error-message ${classes ? classes : ''}`}>{text}</p>
   );
 }
 

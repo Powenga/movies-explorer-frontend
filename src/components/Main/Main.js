@@ -1,20 +1,23 @@
-import "./Main.css";
-import Promo from "../Promo/Promo.js";
-import AboutProject from "../AboutProject/AboutProject";
-import Techs from "../Techs/Techs.js";
-import AboutMe from "../AboutMe/AboutMe";
-import { useRef } from "react";
+import { useRef } from 'react';
+import './Main.css';
+import Promo from '../Promo/Promo.js';
+import AboutProject from '../AboutProject/AboutProject';
+import Techs from '../Techs/Techs.js';
+import AboutMe from '../AboutMe/AboutMe';
 
 function Main({ classes }) {
   const aboutProjectRef = useRef(null);
 
-  function learnMoreHandler(){
-    aboutProjectRef.current.scrollIntoView({behavior: 'smooth'});
+  function learnMoreHandler() {
+    aboutProjectRef.current.scrollIntoView({ behavior: 'smooth' });
   }
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <section className="main__section main__section_type_promo">
-        <Promo onLearnMoreClick={learnMoreHandler} classes="main__section-inner" />
+        <Promo
+          onLearnMoreClick={learnMoreHandler}
+          classes="main__section-inner"
+        />
       </section>
       <section ref={aboutProjectRef} className="main__section">
         <AboutProject classes="main__section-inner">
