@@ -1,5 +1,5 @@
 import './App.css';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import {
   matchPath,
   Route,
@@ -60,8 +60,10 @@ function App() {
 
   const [userMoviesKeyword, setUserMoviesKeyword] = useState('');
   const [userMovieIsShort, setUserMovieIsShort] = useState(false);
-  const [userMoviesList, setUserMoviesList] = useState([]);
-  const [userMoviesRenderedList, setUserMoviesRenderedList] = useState([]);
+  const [userMovies, userMovieDispatch] = useReducer(setUserMovies, {
+    userMovieList: [],
+    userMovieRenderedList: [],
+  });
   const [userMovieIsLoading, setUserMovieIsLoading] = useState(true);
   const [userMoviesNotFound, setUserMoviesNotFound] = useState(false);
 
@@ -87,6 +89,58 @@ function App() {
   const [getUserMovieError, setGetUserMovieError] = useState(null);
 
   const history = useHistory();
+
+  function setUserMovies(userMovies, action) {
+    switch (action.type) {
+      case 'setUserMovies':
+        return {
+          userMovieList: action.userMovieList,
+          userMovieRenderedList: filterMovies(
+            userMovieIsShort,
+            findMovies(userMoviesKeyword, action.userMovieList)
+          ),
+        };
+      case 'findUserMovies':
+        return {
+          userMovieList: action.userMovieList,
+          userMovieRenderedList: filterMovies(
+            userMovieIsShort,
+            findMovies(action.keyWord, action.userMovieList)
+          ),
+        };
+      case 'filterUserMovies':
+        return {
+          userMovieList: userMovies.userMovieList,
+          userMovieRenderedList: filterMovies(
+            action.isShort,
+            findMovies(userMoviesKeyword, userMovies.userMovieList)
+          ),
+        };
+      case 'addUserMovie':
+        const newMovieList = [...userMovies.userMovieList, action.movie];
+        return {
+          userMovieList: newMovieList,
+          userMovieRenderedList: filterMovies(
+            userMovieIsShort,
+            findMovies(userMoviesKeyword, newMovieList)
+          ),
+        };
+
+      case 'removeUserMovie':
+        const filterdMovieList = userMovies.userMovieList.filter((s) =>
+          s.movieId === action.movie.movieId ? false : true
+        );
+        return {
+          userMovieList: filterdMovieList,
+          userMovieRenderedList: filterMovies(
+            userMovieIsShort,
+            findMovies(userMoviesKeyword, filterdMovieList)
+          ),
+        };
+      default:
+        return userMovies;
+    }
+  }
 
   function setUserData({ name, email, userId }) {
     setCurrentUser({ userName: name, userEmail: email, userId });
@@ -243,7 +297,10 @@ function App() {
           setMovieResultList((state) =>
             state.map((s) => (s.movieId === movie.movieId ? movie : s))
           );
-          setUserMoviesList([...userMoviesList, movie]);
+          userMovieDispatch({
+            type: 'addUserMovie',
+            movie,
+          });
         })
         .catch((err) => {
           setSaveMovieError(err.message);
@@ -258,9 +315,10 @@ function App() {
               s.movieId === data.movieId ? { ...data, owner: '' } : s
             )
           );
-          setUserMoviesList((state) =>
-            state.filter((s) => (s.movieId === data.movieId ? false : true))
-          );
+          userMovieDispatch({
+            type: 'removeUserMovie',
+            movie: data,
+          });
         })
         .catch((err) => {
           setDeleteMovieError(err.message);
@@ -269,7 +327,7 @@ function App() {
   }
 
   function showMovies(findedMovieList) {
-    const movieResultWithMark = setUserMark(userMoviesList, findedMovieList);
+    const movieResultWithMark = setUserMark(userMovies.userMovieList, findedMovieList);
     setMovieResultList(movieResultWithMark);
     const filteredMovieList = filterMovies(isShortMovie, movieResultWithMark);
     setMovieRenderedList(filteredMovieList);
@@ -286,6 +344,13 @@ function App() {
     setUserMovieIsShort(value);
   }
 
+  useEffect(() => {
+    userMovieDispatch({
+      type: 'filterUserMovies',
+      isShort: userMovieIsShort,
+    });
+  }, [userMovieIsShort])
+
   function setUserMark(userMovieList, movieList) {
     return movieList.map((s) => {
       const isMovie = userMovieList.find(
@@ -300,15 +365,18 @@ function App() {
   }
 
   function getUserMovie(userMoviesKeyword) {
-    const userShownMovies = filterMovies(
-      userMovieIsShort,
-      findMovies(userMoviesKeyword, userMoviesList)
-    );
-    setUserMoviesRenderedList(userShownMovies);
-    !userShownMovies.length
+    userMovieDispatch({
+      type: 'findUserMovies',
+      userMovieList: userMovies.userMovieList,
+      keyWord: userMoviesKeyword,
+    });
+  }
+
+  useEffect(() => {
+    !userMovies.userMovieRenderedList.length
       ? setUserMoviesNotFound(true)
       : setUserMoviesNotFound(false);
-  }
+  }, [userMovies]);
 
   useEffect(() => {
     auth
@@ -375,8 +443,7 @@ function App() {
         .getSavedCards()
         .then((userMovieList) => {
           setGetUserMovieError(null);
-          setMovieResultList((state) => setUserMark(userMovieList, state));
-          setUserMoviesList(userMovieList);
+          userMovieDispatch({ type: 'setUserMovies', userMovieList });
         })
         .catch((err) => {
           if (err.message !== errorMessages.userMoviesNotFound) {
@@ -388,11 +455,6 @@ function App() {
         });
     }
   }, [loggedIn]);
-
-  useEffect(() => {
-    console.log(userMovieIsShort, userMoviesList, userMoviesRenderedList);
-    setUserMoviesRenderedList(filterMovies(userMovieIsShort, userMoviesList));
-  }, [userMoviesList, userMovieIsShort]);
 
   useEffect(() => {
     if (
@@ -487,7 +549,7 @@ function App() {
             <ProtectedRoute path="/saved-movies">
               <SavedMovies
                 classes="page__main page__main_type_saved-movies"
-                userMoviesList={userMoviesRenderedList}
+                userMoviesList={userMovies.userMovieRenderedList}
                 userMovieIsLoading={userMovieIsLoading}
                 onCardDelete={handleSaveMovie}
                 keyWord={userMoviesKeyword}

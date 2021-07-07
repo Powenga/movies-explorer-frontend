@@ -54,7 +54,7 @@ function Register({ classes, onRegister, isLoading }) {
                   type="text"
                   minLength="2"
                   maxLength="30"
-                  value={userData.name}
+                  value={userData.userName}
                   onChange={handleChange}
                   required
                 />
@@ -71,7 +71,7 @@ function Register({ classes, onRegister, isLoading }) {
                   type="email"
                   minLength="2"
                   maxLength="30"
-                  value={userData.email}
+                  value={userData.userEmail}
                   onChange={handleChange}
                   required
                 />
@@ -88,7 +88,7 @@ function Register({ classes, onRegister, isLoading }) {
                   type="password"
                   minLength="8"
                   maxLength="30"
-                  value={userData.pass}
+                  value={userData.userPass}
                   onChange={handleChange}
                   required
                 />
