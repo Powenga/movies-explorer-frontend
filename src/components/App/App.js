@@ -384,6 +384,7 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
+    console.log(userMovieIsShort, userMoviesList, userMoviesRenderedList);
     setUserMoviesRenderedList(filterMovies(userMovieIsShort, userMoviesList));
   }, [userMoviesList, userMovieIsShort]);
 
@@ -495,13 +496,22 @@ function App() {
                 classes="page__main"
                 onLogout={handleLogout}
                 onProfileChange={handleProfileChange}
+                isLoading={isLoading}
               />
             </ProtectedRoute>
             <Route path="/signin">
-              <Login classes="page__main" onLogin={handleLogin} />
+              <Login
+                classes="page__main"
+                onLogin={handleLogin}
+                isLoading={isLoading}
+              />
             </Route>
             <Route path="/signup">
-              <Register classes="page__main" onRegister={handleRegister} />
+              <Register
+                classes="page__main"
+                onRegister={handleRegister}
+                isLoading={isLoading}
+              />
             </Route>
             <Route path="*">
               <NotFound classes="page__main not-found" />
