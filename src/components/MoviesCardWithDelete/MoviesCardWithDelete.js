@@ -1,14 +1,19 @@
 import MoviesCard from '../MoviesCard/MoviesCard';
-import deleteBtmPath from '../../images/card-delete-btn.svg';
 import Button from '../Button/Button';
+import deleteBtmPath from '../../images/card-delete-btn.svg';
 
-function MoviesCardWithDelete({ cardData }) {
+function MoviesCardWithDelete({ cardData, onCardDelete }) {
+  function handleDelete(evt) {
+    onCardDelete(false, cardData);
+  }
+
   return (
     <MoviesCard cardData={cardData}>
       <Button
         classes="btn_type_icon"
         type="button"
         areaLabel="Удалить карточку"
+        onClick={handleDelete}
       >
         <img src={deleteBtmPath} alt="" />
       </Button>

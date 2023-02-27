@@ -57,6 +57,16 @@
   line-height: 120%;
   font-weight: 500;
   margin: 0 auto 16px;
+  opacity: 1;
+}
+
+.btn_disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.btn_disabled:hover {
+  opacity: .4;
 }
 
 @media screen and (max-width: 425px) {

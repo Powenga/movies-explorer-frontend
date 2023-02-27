@@ -1,15 +1,19 @@
-import ErrorMessage from '../ErrorMessage/ErrorMessage';
-import Logo from '../Logo/Logo';
 import './SignForm.css';
+import Logo from '../Logo/Logo';
 
-function SignForm({ classes, formTitle, formName, children }) {
+function SignForm({ classes, formTitle, formName, onSubmit, children, formRef }) {
   return (
     <div className={`sign-form ${classes ? classes : ''}`}>
-      <Logo classes="sign-form__logo"/>
+      <Logo classes="sign-form__logo" />
       <h1 className="sign-form__title">{formTitle}</h1>
-      <form className="sign-form__form" name={formName}>
+      <form
+        ref={formRef}
+        className="sign-form__form"
+        name={formName}
+        noValidate
+        onSubmit={onSubmit}
+      >
         {children}
-        <ErrorMessage classes="error-message_active"/>
       </form>
     </div>
   );

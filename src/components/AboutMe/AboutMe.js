@@ -1,8 +1,8 @@
 import "./AboutMe.css";
-import { aboutMeLinks } from "../../utils/constants";
 import avatarPath from "../../images/about-me-avatar.jpg";
 import Social from "../Social/Social";
 import Portfolio from "../Portfolio/Portfolio";
+import { aboutMeLinks } from "../../utils/constants";
 
 function AboutMe({ classes, children }) {
   return (

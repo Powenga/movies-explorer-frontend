@@ -10,11 +10,15 @@
   line-height: 120%;
   font-weight: 400;
   text-align: center;
-  width: 100%;
+  width: 95%;
 }
 
-.error-message{
-  opacity: 1;
+.error-message_position_center {
+  top: 50%;
+}
+
+.error-message_position_top {
+  top: 10px
 }
 
 .error-message_active {
