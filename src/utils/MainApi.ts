@@ -1,4 +1,4 @@
-import { REACT_APP_API_URL as BASE_URL } from '../utils/constants';
+import { REACT_APP_API_URL as BASE_URL } from './constants';
 
 class Api {
   constructor({ baseUrl, headers }) {
