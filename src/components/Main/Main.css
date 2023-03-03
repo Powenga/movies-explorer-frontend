@@ -1,0 +1,60 @@
+.main__section_type_promo {
+  background-color: #073042;
+}
+
+.main__section_type_techs {
+  background-color: #272727;
+}
+
+.main__section-inner {
+  max-width: 1140px;
+  width: calc(1140 / 1280 * 100%);
+  margin: 0 auto;
+}
+
+.main__section-title {
+  margin: 0;
+  padding-bottom: 23px;
+  color: #fff;
+  font-size: 22px;
+  line-height: 120%;
+  letter-spacing: -.9px;
+  font-weight: 400;
+  border-bottom: 1px solid #dadada;
+}
+
+.main__section-title_type_about-project {
+  margin-bottom: 70px;
+}
+
+.main__section-title_type_techs {
+  margin-bottom: 90px;
+}
+
+.main__section-title_type_about-me {
+  margin-bottom: 66px;
+}
+
+@media screen and (max-width: 768px) {
+  .main__section-inner {
+    width: calc(668 / 768 * 100%);
+  }
+  .main__section-title_type_techs {
+    margin-bottom: 80px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .main__section-inner {
+    width: calc(292 / 320 * 100%);
+  }
+  .main__section-title {
+    padding-bottom: 28px;
+  }
+  .main__section-title_type_about-project {
+    margin-bottom: 60px;
+  }
+  .main__section-title_type_about-me {
+    margin-bottom: 60px;
+  }
+}

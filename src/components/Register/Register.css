@@ -1,0 +1,26 @@
+.sign-toggle-link__inner {
+  text-align: center;
+  color: #8b8b8b;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 400;
+  border-radius: 3px;
+  margin: 0;
+}
+
+.sign-toggle-link__link {
+  text-decoration: none;
+  color: #4285f4;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 425px) {
+  .sign-toggle-link__inner {
+    font-size: 12px;
+  }
+  .sign-toggle-link__link {
+    font-size: 12px;
+  }
+}

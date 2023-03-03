@@ -1,0 +1,84 @@
+.btn {
+  display: block;
+  border: none;
+  background-color: transparent;
+  color: #fff;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn_type_promo {
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 3px;
+  padding: 10px 20px;
+}
+
+.btn_type_more {
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  background-color: #2f2f2f;
+  color: #fff;
+  font-size: 12px;
+  line-height: 120%;
+  font-weight: 500;
+  width: 100%;
+}
+
+.btn_type_icon {
+  font-size: 0;
+}
+
+.btn_type_profile-submit {
+  color: #fff;
+  font-size: 13px;
+  line-height: 120%;
+  font-weight: 400;
+  margin: 0 auto 16px;
+}
+
+.btn_type_profile-logout {
+  color: #ee3465;
+  font-size: 13px;
+  line-height: 120%;
+  font-weight: 400;
+  margin: 0 auto;
+}
+
+.btn_type_sign {
+  color: #fff;
+  background-color: #4285f4;
+  width: 100%;
+  padding: 13px 15px;
+  font-size: 14px;
+  line-height: 120%;
+  font-weight: 500;
+  margin: 0 auto 16px;
+  opacity: 1;
+}
+
+.btn_disabled {
+  opacity: .4;
+  cursor: default;
+}
+
+.btn_disabled:hover {
+  opacity: .4;
+}
+
+@media screen and (max-width: 425px) {
+  .btn_type_profile-submit {
+    font-size: 12px;
+  }
+  .btn_type_profile-logout {
+    font-size: 12px;
+  }
+  .btn_type_sign {
+    font-size: 12px;
+    padding: 15px;
+    margin-bottom: 14px;
+  }
+}
