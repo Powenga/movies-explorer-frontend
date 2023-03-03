@@ -1,13 +1,28 @@
-import './Header.css';
 import Logo from '../Logo/Logo';
+import { FC, PropsWithChildren } from 'react';
+import cn from 'classnames';
+import block from 'bem-css-modules';
+import styles from './Header.module.css';
 
-function Header({ classes, isMain, children }) {
+const b = block(styles);
+
+export enum HeaderStyle {
+  main = 'main',
+}
+
+interface Props {
+  classes?: string;
+  style?: HeaderStyle;
+}
+
+const Header: FC<PropsWithChildren<Props>> = ({
+  classes = undefined,
+  style,
+  children,
+}) => {
   return (
-    <header
-      className={`header ${classes ? classes : ''}`}
-      style={isMain && { background: '#073042' }}
-    >
-      <div className="header__container">
+    <header className={cn(b({ style }), classes)}>
+      <div className={b('container')}>
         <div className="header__logo-wrap">
           <Logo />
         </div>
@@ -15,6 +30,6 @@ function Header({ classes, isMain, children }) {
       </div>
     </header>
   );
-}
+};
 
 export default Header;
