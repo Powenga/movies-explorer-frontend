@@ -1,7 +1,0 @@
-@import url(./vendor/normalize.css);
-@import url(./vendor/fonts/fonts.css);
-
-@import url(./blocks/transition/transition.css);
-@import url(./blocks/card-not-found-message/card-not-found-message.css);
-@import url(./blocks/preloader-wrapper/preloader-wrapper.css);
-@import url(./blocks/error-wrapper/error-wrapper.css);
