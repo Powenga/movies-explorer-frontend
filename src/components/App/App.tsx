@@ -24,7 +24,7 @@ import {
 // import { findMovies, filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
-import { router } from '../../utils/routes';
+import { router } from '../../config/routes';
 
 function App() {
   const [keyWord, setKeyWord] = useState('');
