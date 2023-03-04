@@ -43,10 +43,10 @@ function App() {
 
   const [userMoviesKeyword, setUserMoviesKeyword] = useState('');
   const [userMovieIsShort, setUserMovieIsShort] = useState(false);
-  const [userMovies, userMovieDispatch] = useReducer(setUserMovies, {
-    userMovieList: [],
-    userMovieRenderedList: [],
-  });
+  // const [userMovies, userMovieDispatch] = useReducer(setUserMovies, {
+  //   userMovieList: [],
+  //   userMovieRenderedList: [],
+  // });
   const [userMovieIsLoading, setUserMovieIsLoading] = useState(true);
   const [userMoviesNotFound, setUserMoviesNotFound] = useState(false);
 
