@@ -1,5 +1,12 @@
-import { useContext, useState, useRef } from 'react';
-import Button from '../Button/Button';
+import {
+  useContext,
+  useState,
+  useRef,
+  FC,
+  ChangeEvent,
+  SyntheticEvent,
+} from 'react';
+import Button, { ButtonType } from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
@@ -7,7 +14,17 @@ import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { useValidation } from '../../hooks/useValidation';
 import Preloader from '../Preloader/Preloader';
 
-function Login({ classes, onLogin, isLoading }) {
+const EMAIL_MIN_LENGTH = 2;
+const PASSWORD_MIN_LENGTH = 8;
+const INPUT_MAX_LENGTH = 30;
+
+interface Props {
+  classes?: string;
+  onLogin: (userEmail: string, userPass: string) => void;
+  isLoading: boolean;
+}
+
+const Login: FC<Props> = ({ classes, onLogin, isLoading }) => {
   const { loginError } = useContext(ErrorsContext);
   const [userData, setUserData] = useState({
     userEmail: '',
@@ -16,13 +33,13 @@ function Login({ classes, onLogin, isLoading }) {
   const { errors, isValid, handleValidation } = useValidation();
   const formRef = useRef(null);
 
-  function handleChange(evt) {
+  function handleChange(evt: ChangeEvent<HTMLInputElement>) {
     handleValidation(evt, formRef.current);
     const { name, value } = evt.target;
     setUserData({ ...userData, [name]: value });
   }
 
-  function handleSubmit(evt) {
+  function handleSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
     onLogin(userData.userEmail, userData.userPass);
   }
@@ -49,8 +66,8 @@ function Login({ classes, onLogin, isLoading }) {
                   id="user-email"
                   name="userEmail"
                   type="email"
-                  minLength="2"
-                  maxLength="30"
+                  minLength={EMAIL_MIN_LENGTH}
+                  maxLength={INPUT_MAX_LENGTH}
                   value={userData.userEmail}
                   onChange={handleChange}
                   required
@@ -66,8 +83,8 @@ function Login({ classes, onLogin, isLoading }) {
                   id="user-pass"
                   name="userPass"
                   type="password"
-                  minLength="8"
-                  maxLength="30"
+                  minLength={PASSWORD_MIN_LENGTH}
+                  maxLength={INPUT_MAX_LENGTH}
                   value={userData.userPass}
                   onChange={handleChange}
                   required
@@ -78,7 +95,7 @@ function Login({ classes, onLogin, isLoading }) {
               </label>
               <Button
                 classes={`btn_type_sign ${!isValid && 'btn_disabled'}`}
-                type="submit"
+                type={ButtonType.submit}
                 disabled={!isValid}
               >
                 Войти
@@ -100,6 +117,6 @@ function Login({ classes, onLogin, isLoading }) {
       )}
     </>
   );
-}
+};
 
 export default Login;

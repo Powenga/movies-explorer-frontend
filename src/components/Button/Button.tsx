@@ -5,21 +5,22 @@ import styles from './Button.module.css';
 
 const b = block(styles);
 
-export enum ButtoStyle {
+export enum ButtonType {
   button = 'button',
+  submit = 'submit',
 }
 
 interface Props {
   classes?: string;
-  type?: ButtoStyle;
-  areaLabel: string;
-  onClick: () => void;
+  type?: ButtonType;
+  areaLabel?: string;
+  onClick?: () => void;
   disabled?: boolean;
 }
 
 const Button: FC<PropsWithChildren<Props>> = ({
   classes = undefined,
-  type = ButtoStyle.button,
+  type = ButtonType.button,
   areaLabel,
   onClick,
   disabled = false,
