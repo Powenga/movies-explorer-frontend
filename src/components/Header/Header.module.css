@@ -1,3 +1,7 @@
+.header {
+  display: block;
+}
+
 .header__container {
   max-width: 1140px;
   width: calc(1140 / 1280 * 100%);
@@ -13,5 +17,6 @@
   flex-grow: 1;
 }
 
-
-
+.header_style_main {
+  background-color: #073042;
+}
