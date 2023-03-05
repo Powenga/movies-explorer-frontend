@@ -1,9 +1,16 @@
+import { FC } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import Button from '../Button/Button';
+import Button, { ButtonType } from '../Button/Button';
 import deleteBtmPath from '../../images/card-delete-btn.svg';
+import { ICardData } from '../../types';
 
-function MoviesCardWithDelete({ cardData, onCardDelete }) {
-  function handleDelete(evt) {
+interface Props {
+  cardData: ICardData;
+  onCardDelete: (value: boolean, cardData: ICardData) => void;
+}
+
+const MoviesCardWithDelete: FC<Props> = ({ cardData, onCardDelete }) => {
+  function handleDelete() {
     onCardDelete(false, cardData);
   }
 
@@ -11,7 +18,7 @@ function MoviesCardWithDelete({ cardData, onCardDelete }) {
     <MoviesCard cardData={cardData}>
       <Button
         classes="btn_type_icon"
-        type="button"
+        type={ButtonType.button}
         areaLabel="Удалить карточку"
         onClick={handleDelete}
       >
@@ -19,6 +26,6 @@ function MoviesCardWithDelete({ cardData, onCardDelete }) {
       </Button>
     </MoviesCard>
   );
-}
+};
 
 export default MoviesCardWithDelete;
