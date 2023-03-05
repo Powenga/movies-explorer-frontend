@@ -12,8 +12,7 @@ interface Props {
   movieIsLoading: boolean;
   classes?: string;
   keyWord: string;
-  onKeyWordChange: boolean;
-  onMovieFind: boolean;
+  onKeyWordChange: (value: string) => void;
   movieList: ICardData[];
   hiddenMovieListLength: number;
   isCardsNotFound: boolean;
@@ -22,6 +21,7 @@ interface Props {
   onCardSave: () => void;
   onMoreClick: () => void;
   keyWordError: string;
+  onMovieFind: (keyWord: string) => void;
 }
 
 const Movies: FC<Props> = ({
