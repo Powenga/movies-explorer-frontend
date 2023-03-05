@@ -1,6 +1,7 @@
 import React from 'react';
+import { IUser } from '../types';
 type TCurrentUserContext = {
-  currentUser?: { useName: string; userEmail: string; userId: string };
+  currentUser?: IUser;
   loggedIn?: boolean;
   isUserChecking?: boolean;
 };

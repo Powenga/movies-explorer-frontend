@@ -1,16 +1,23 @@
-import { useContext } from 'react';
+import { ChangeEvent, FC, useContext, useState } from 'react';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { ICardData } from '../../types';
 
-function MoviesCardWithCheckbox({ cardData, onCardSave }) {
+interface Props {
+  cardData: ICardData;
+  onCardSave: (status: boolean, data: ICardData) => void;
+}
+
+const MoviesCardWithCheckbox: FC<Props> = ({ cardData, onCardSave }) => {
+  const [isSaved, setIsSaved] = useState(false);
   const { currentUser } = useContext(CurrentUserContext);
-  function handleChange(evt) {
+
+  function handleChange(evt: ChangeEvent<HTMLInputElement>) {
     onCardSave(evt.target.checked, cardData);
   }
 
-  let isSaved = false;
-  if (cardData.owner) {
-    isSaved = currentUser.userId === cardData.owner;
+  if (cardData.owner && currentUser?.userId) {
+    setIsSaved(currentUser.userId === cardData.owner);
   }
 
   return (
@@ -26,6 +33,6 @@ function MoviesCardWithCheckbox({ cardData, onCardSave }) {
       </label>
     </MoviesCard>
   );
-}
+};
 
 export default MoviesCardWithCheckbox;
