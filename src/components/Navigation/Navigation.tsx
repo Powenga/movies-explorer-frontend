@@ -1,10 +1,14 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { NavLink } from 'react-router-dom';
 import UserWidget from '../UserWidget/UserWidget';
 import './Navigation.css';
 
-function Navigation({ classes }) {
+interface Props {
+  classes?: string;
+}
+
+const Navigation: FC<Props> = ({ classes }) => {
   const { loggedIn, isUserChecking } = useContext(CurrentUserContext);
 
   return (
@@ -17,7 +21,7 @@ function Navigation({ classes }) {
                 <li className="navigation__page-item">
                   <NavLink
                     className="navigation__link transition"
-                    activeClassName="navigation__link_active"
+                    // activeClassName="navigation__link_active"
                     to="/movies"
                   >
                     Фильмы
@@ -26,7 +30,7 @@ function Navigation({ classes }) {
                 <li className="navigation__page-item">
                   <NavLink
                     className="navigation__link transition"
-                    activeClassName="navigation__link_active"
+                    // activeClassName="navigation__link_active"
                     to="/saved-movies"
                   >
                     Сохраненные фильмы
@@ -59,6 +63,6 @@ function Navigation({ classes }) {
       )}
     </>
   );
-}
+};
 
 export default Navigation;
