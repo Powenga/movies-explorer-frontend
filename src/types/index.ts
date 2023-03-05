@@ -11,5 +11,9 @@ export interface IUser {
 
 export interface ICardData {
   title: string;
-  owner: IUser;
+  owner: string;
+  trailer: string;
+  image: string;
+  nameRU: string;
+  duration: number;
 }
