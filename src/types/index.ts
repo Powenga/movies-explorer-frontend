@@ -16,4 +16,5 @@ export interface ICardData {
   image: string;
   nameRU: string;
   duration: number;
+  movieId: string;
 }
