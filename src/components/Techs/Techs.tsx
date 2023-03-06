@@ -1,12 +1,18 @@
-import "./Techs.css";
+import { FC, PropsWithChildren } from 'react';
+import './Techs.css';
 
-function Techs({ classes, children }) {
+interface Props {
+  classes?: string;
+}
+
+const Techs: FC<PropsWithChildren<Props>> = ({ classes, children }) => {
   return (
-    <div className={`techs ${classes ? classes : ""}`}>
+    <div className={`techs ${classes ? classes : ''}`}>
       {children}
       <h3 className="techs__subtitle">7 технологий</h3>
       <p className="techs__text">
-        На курсе веб-разработки мы освоили технологии, которые применили в&nbsp;дипломном проекте.
+        На курсе веб-разработки мы освоили технологии, которые применили
+        в&nbsp;дипломном проекте.
       </p>
       <ul className="techs__techs-list">
         <li className="techs__item">HTML</li>
@@ -19,6 +25,6 @@ function Techs({ classes, children }) {
       </ul>
     </div>
   );
-}
+};
 
 export default Techs;
