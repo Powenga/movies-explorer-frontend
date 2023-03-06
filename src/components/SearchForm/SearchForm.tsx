@@ -1,8 +1,22 @@
-import Button from '../Button/Button';
+import Button, { ButtonType } from '../Button/Button';
 import submitButtonPath from '../../images/search-form-submit.svg';
 import './SearchForm.css';
+import { ChangeEvent, FC, SyntheticEvent } from 'react';
 
-function SeacrchForm({
+const MIN_INPUT_LENGTH = 1;
+const MAX_INPUT_LENGTH = 150;
+
+interface Props {
+  classes?: string;
+  onSubmit: (keyWord: string) => void;
+  keyWord: string;
+  onKeyWordChange: (value: string) => void;
+  isShortMovie: boolean;
+  onShortMovieChange: (value: boolean) => void;
+  keyWordError?: string;
+}
+
+const SeacrchForm: FC<Props> = ({
   classes,
   onSubmit,
   keyWord,
@@ -10,20 +24,18 @@ function SeacrchForm({
   isShortMovie,
   onShortMovieChange,
   keyWordError,
-  children,
-}) {
-
-  function handleSubmit(evt) {
+}) => {
+  function handleSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
     onSubmit(keyWord);
   }
 
-  function handleChange(evt) {
+  function handleChange(evt: ChangeEvent<HTMLInputElement>) {
     const { value } = evt.target;
     onKeyWordChange(value);
   }
 
-  function handleShortMovieChange(evt) {
+  function handleShortMovieChange(evt: ChangeEvent<HTMLInputElement>) {
     onShortMovieChange(evt.target.checked);
   }
 
@@ -40,8 +52,8 @@ function SeacrchForm({
           id="movie-input"
           name="movie"
           placeholder="Фильм"
-          minLength="1"
-          maxLength="150"
+          minLength={MIN_INPUT_LENGTH}
+          maxLength={MAX_INPUT_LENGTH}
           value={keyWord}
           onChange={handleChange}
           required
@@ -49,7 +61,10 @@ function SeacrchForm({
         {keyWordError && (
           <span className="search-form__error">{keyWordError}</span>
         )}
-        <Button classes="btn_type_search search-form__submit" type="submit">
+        <Button
+          classes="btn_type_search search-form__submit"
+          type={ButtonType.submit}
+        >
           <img src={submitButtonPath} alt="Найти фильмы" />
         </Button>
       </label>
@@ -58,7 +73,6 @@ function SeacrchForm({
           type="checkbox"
           className="search-form__checkbox"
           checked={isShortMovie}
-          value={isShortMovie}
           onChange={handleShortMovieChange}
         />
         <span className="search-form__checkbox-pseudo"></span>
@@ -66,6 +80,6 @@ function SeacrchForm({
       </label>
     </form>
   );
-}
+};
 
 export default SeacrchForm;

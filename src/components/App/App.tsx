@@ -4,27 +4,27 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import Main from '../Main/Main';
-import Movies from '../Movies/Movies';
-import SavedMovies from '../SavedMovies/SavedMovies';
-import Profile from '../Profile/Profile';
-import Register from '../Register/Register';
-import Login from '../Login/Login';
-import NotFound from '../NotFound/NotFound';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import auth from '../../utils/auth';
-import mainApi from '../../utils/MainApi';
-import moviesApi from '../../utils/MoviesApi';
-import {
-  errorMessages,
-  localStorageObj,
-  movieListAge,
-  cardNumber,
-} from '../../utils/constants';
-import { findMovies, filterMovies } from '../../utils/utils';
+// import Main from '../Main/Main';
+// import Movies from '../Movies/Movies';
+// import SavedMovies from '../SavedMovies/SavedMovies';
+// import Profile from '../Profile/Profile';
+// import Register from '../Register/Register';
+// import Login from '../Login/Login';
+// import NotFound from '../NotFound/NotFound';
+// import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+// import auth from '../../utils/auth';
+// import mainApi from '../../utils/MainApi';
+// import moviesApi from '../../utils/MoviesApi';
+// import {
+//   errorMessages,
+//   localStorageObj,
+//   movieListAge,
+//   cardNumber,
+// } from '../../utils/constants';
+// import { findMovies, filterMovies } from '../../utils/utils';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
-import { router } from '../../utils/routes';
+import { router } from '../../config/routes';
 
 function App() {
   const [keyWord, setKeyWord] = useState('');
@@ -43,10 +43,10 @@ function App() {
 
   const [userMoviesKeyword, setUserMoviesKeyword] = useState('');
   const [userMovieIsShort, setUserMovieIsShort] = useState(false);
-  const [userMovies, userMovieDispatch] = useReducer(setUserMovies, {
-    userMovieList: [],
-    userMovieRenderedList: [],
-  });
+  // const [userMovies, userMovieDispatch] = useReducer(setUserMovies, {
+  //   userMovieList: [],
+  //   userMovieRenderedList: [],
+  // });
   const [userMovieIsLoading, setUserMovieIsLoading] = useState(true);
   const [userMoviesNotFound, setUserMoviesNotFound] = useState(false);
 
@@ -55,7 +55,7 @@ function App() {
   const [isUserChecking, setIsUserChecking] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
-    useName: '',
+    userName: '',
     userEmail: '',
     userId: '',
   });

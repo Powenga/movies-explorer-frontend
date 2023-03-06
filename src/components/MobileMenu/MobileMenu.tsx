@@ -1,34 +1,39 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, FC, PropsWithChildren } from 'react';
 import { NavLink } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import Button from '../Button/Button';
+import Button, { ButtonType } from '../Button/Button';
 import UserWidget from '../UserWidget/UserWidget';
 import menuPath from '../../images/mobile-menu-icon.svg';
 import closeMenuPath from '../../images/mobile-menu-icon-close.svg';
-import './MobileMenu.css';
+import block from 'bem-css-modules';
+import cn from 'classnames';
+import styles from './MobileMenu.module.css';
 
-function MobileMenu({ classes, children }) {
+const b = block(styles);
+
+interface Props {
+  classes?: string;
+}
+
+const MobileMenu: FC<PropsWithChildren<Props>> = ({ classes, children }) => {
   const { loggedIn, isUserChecking } = useContext(CurrentUserContext);
   const [isVisible, setIsVisible] = useState(false);
 
-  function openMenu(evt) {
+  function openMenu() {
     setIsVisible(true);
   }
-  function closeMenu(evt) {
+
+  function closeMenu() {
     setIsVisible(false);
   }
 
   return (
     <>
       {!isUserChecking && (
-        <div
-          className={`mobile-menu mobile-menu__tablet_visible ${
-            classes ? classes : ''
-          }`}
-        >
+        <div className={cn(b({ tablet: 'visible' }), classes)}>
           <Button
             classes="btn_type_icon mobile-menu__btn-open"
-            type="button"
+            type={ButtonType.button}
             areaLabel="Открыть меню"
             onClick={openMenu}
           >
@@ -46,10 +51,9 @@ function MobileMenu({ classes, children }) {
                     <li className="mobile-menu__page-item">
                       <NavLink
                         className="mobile-menu__page__link transition"
-                        activeClassName="mobile-menu__page__link_active"
+                        // activeClassName="mobile-menu__page__link_active"
                         to="/"
                         onClick={closeMenu}
-                        exact
                       >
                         Главная
                       </NavLink>
@@ -57,7 +61,7 @@ function MobileMenu({ classes, children }) {
                     <li className="mobile-menu__page-item">
                       <NavLink
                         className="mobile-menu__page__link transition"
-                        activeClassName="mobile-menu__page__link_active"
+                        // activeClassName="mobile-menu__page__link_active"
                         to="/movies"
                         onClick={closeMenu}
                       >
@@ -67,7 +71,7 @@ function MobileMenu({ classes, children }) {
                     <li className="obile-menu__page-item">
                       <NavLink
                         className="mobile-menu__page__link transition"
-                        activeClassName="mobile-menu__page__link_active"
+                        // activeClassName="mobile-menu__page__link_active"
                         to="/saved-movies"
                         onClick={closeMenu}
                       >
@@ -80,7 +84,7 @@ function MobileMenu({ classes, children }) {
                     <li className="mobile-menu__page-item">
                       <NavLink
                         className="mobile-menu__page__link transition"
-                        activeClassName="mobile-menu__page__link_active"
+                        // activeClassName="mobile-menu__page__link_active"
                         to="/signin"
                         onClick={closeMenu}
                       >
@@ -90,7 +94,7 @@ function MobileMenu({ classes, children }) {
                     <li className="obile-menu__page-item">
                       <NavLink
                         className="mobile-menu__page__link transition"
-                        activeClassName="mobile-menu__page__link_active"
+                        // activeClassName="mobile-menu__page__link_active"
                         to="/signup"
                         onClick={closeMenu}
                       >
@@ -108,7 +112,7 @@ function MobileMenu({ classes, children }) {
               )}
               <Button
                 classes="btn_type_icon mobile-menu__btn-close"
-                type="button"
+                type={ButtonType.button}
                 areaLabel="Закрыть меню"
                 onClick={closeMenu}
               >
@@ -120,6 +124,6 @@ function MobileMenu({ classes, children }) {
       )}
     </>
   );
-}
+};
 
 export default MobileMenu;

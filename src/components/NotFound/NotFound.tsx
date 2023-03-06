@@ -1,7 +1,12 @@
 import './NotFound.css';
 import { Link } from 'react-router-dom';
+import { FC } from 'react';
 
-function NotFound({ classes }) {
+interface Props {
+  classes?: string;
+}
+
+const NotFound: FC<Props> = ({ classes }) => {
   return (
     <main className={`main ${classes ? classes : ''}`}>
       <div className="nof-found__code-box">
@@ -15,6 +20,6 @@ function NotFound({ classes }) {
       </div>
     </main>
   );
-}
+};
 
 export default NotFound;

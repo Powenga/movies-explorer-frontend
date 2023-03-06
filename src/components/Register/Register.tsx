@@ -1,14 +1,37 @@
-import { useContext, useState, useRef } from 'react';
+import {
+  useContext,
+  useState,
+  useRef,
+  FC,
+  ChangeEvent,
+  SyntheticEvent,
+} from 'react';
 import './Register.css';
-import Button from '../Button/Button';
+import Button, { ButtonType } from '../Button/Button';
 import SignForm from '../SignForm/SignForm';
 import SignToggleLink from '../SignToggleLink/SignToggleLink';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { useValidation } from '../../hooks/useValidation';
 import Preloader from '../Preloader/Preloader';
+import {
+  EMAIL_MIN_LENGTH,
+  INPUT_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+  PASSWORD_MIN_LENGTH,
+} from '../../config';
 
-function Register({ classes, onRegister, isLoading }) {
+interface Props {
+  classes?: string;
+  onRegister: (
+    userName: string,
+    userEmail: string,
+    userPassword: string
+  ) => void;
+  isLoading: boolean;
+}
+
+const Register: FC<Props> = ({ classes, onRegister, isLoading }) => {
   const { registerError } = useContext(ErrorsContext);
   const [userData, setUserData] = useState({
     userName: '',
@@ -18,13 +41,13 @@ function Register({ classes, onRegister, isLoading }) {
   const { errors, isValid, handleValidation } = useValidation();
   const formRef = useRef(null);
 
-  function handleChange(evt) {
+  function handleChange(evt: ChangeEvent<HTMLInputElement>) {
     handleValidation(evt, formRef.current);
     const { name, value } = evt.target;
     setUserData({ ...userData, [name]: value });
   }
 
-  function handleSubmit(evt) {
+  function handleSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
     onRegister(userData.userName, userData.userEmail, userData.userPass);
   }
@@ -39,7 +62,7 @@ function Register({ classes, onRegister, isLoading }) {
         <main className={`main ${classes ? classes : ''}`}>
           <section className="main__section register">
             <SignForm
-              formRef={formRef}
+              ref={formRef}
               classes="main__section-inner"
               formTitle="Добро пожаловать!"
               formName="register-form"
@@ -52,8 +75,8 @@ function Register({ classes, onRegister, isLoading }) {
                   id="user-name"
                   name="userName"
                   type="text"
-                  minLength="2"
-                  maxLength="30"
+                  minLength={NAME_MIN_LENGTH}
+                  maxLength={INPUT_MAX_LENGTH}
                   value={userData.userName}
                   onChange={handleChange}
                   required
@@ -69,8 +92,8 @@ function Register({ classes, onRegister, isLoading }) {
                   id="user-email"
                   name="userEmail"
                   type="email"
-                  minLength="2"
-                  maxLength="30"
+                  minLength={EMAIL_MIN_LENGTH}
+                  maxLength={INPUT_MAX_LENGTH}
                   value={userData.userEmail}
                   onChange={handleChange}
                   required
@@ -86,8 +109,8 @@ function Register({ classes, onRegister, isLoading }) {
                   id="user-pass"
                   name="userPass"
                   type="password"
-                  minLength="8"
-                  maxLength="30"
+                  minLength={PASSWORD_MIN_LENGTH}
+                  maxLength={INPUT_MAX_LENGTH}
                   value={userData.userPass}
                   onChange={handleChange}
                   required
@@ -98,7 +121,7 @@ function Register({ classes, onRegister, isLoading }) {
               </label>
               <Button
                 classes={`btn_type_sign ${!isValid && 'btn_disabled'}`}
-                type="submit"
+                type={ButtonType.submit}
                 disabled={!isValid}
               >
                 Зарегистрироваться
@@ -120,6 +143,6 @@ function Register({ classes, onRegister, isLoading }) {
       )}
     </>
   );
-}
+};
 
 export default Register;

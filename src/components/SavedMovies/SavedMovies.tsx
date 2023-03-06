@@ -1,12 +1,26 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
 import MoviesCardWithDelete from '../MoviesCardWithDelete/MoviesCardWithDelete';
 import Preloader from '../Preloader/Preloader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { ICardData } from '../../types';
 
-function SavedMovies({
+interface Props {
+  classes?: string;
+  userMoviesList: ICardData[];
+  userMovieIsLoading: boolean;
+  onCardDelete: () => void;
+  keyWord: string;
+  onKeyWordChange: () => void;
+  isCardsNotFound: boolean;
+  isShortMovie: boolean;
+  onShortMovieChange: () => void;
+  onMovieFind: () => void;
+}
+
+const SavedMovies: FC<Props> = ({
   classes,
   userMoviesList,
   userMovieIsLoading,
@@ -17,7 +31,7 @@ function SavedMovies({
   isShortMovie,
   onShortMovieChange,
   onMovieFind,
-}) {
+}) => {
   const { deleteMovieError, getUserMovieError } = useContext(ErrorsContext);
   return (
     <main className={`main ${classes ? classes : ''}`}>
@@ -38,9 +52,7 @@ function SavedMovies({
             text={deleteMovieError}
           />
         )}
-        {!userMovieIsLoading &&
-        !getUserMovieError &&
-        !isCardsNotFound ? (
+        {!userMovieIsLoading && !getUserMovieError && !isCardsNotFound ? (
           <MoviesCardList
             classes="main__section-inner"
             card={MoviesCardWithDelete}
@@ -49,8 +61,8 @@ function SavedMovies({
           />
         ) : isCardsNotFound ? (
           <p className="main__section-inner card-not-found-message">
-          Ничего не найдено
-        </p>
+            Ничего не найдено
+          </p>
         ) : getUserMovieError ? (
           <ErrorMessage
             classes="error-message_active error-message_position_top"
@@ -62,6 +74,6 @@ function SavedMovies({
       </section>
     </main>
   );
-}
+};
 
 export default SavedMovies;

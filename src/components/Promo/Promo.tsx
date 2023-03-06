@@ -1,7 +1,13 @@
 import './Promo.css';
-import Button from '../Button/Button';
+import { FC } from 'react';
+import Button, { ButtonType } from '../Button/Button';
 
-function Promo({ onLearnMoreClick, classes }) {
+interface Props {
+  onLearnMoreClick: () => void;
+  classes?: string;
+}
+
+const Promo: FC<Props> = ({ onLearnMoreClick, classes }) => {
   return (
     <div className={`promo ${classes ? classes : ''}`}>
       <div className="promo__grid">
@@ -19,13 +25,13 @@ function Promo({ onLearnMoreClick, classes }) {
       </div>
       <Button
         classes="btn_type_promo promo__learn-more"
-        type="button"
+        type={ButtonType.button}
         onClick={onLearnMoreClick}
       >
         Узнать больше
       </Button>
     </div>
   );
-}
+};
 
 export default Promo;

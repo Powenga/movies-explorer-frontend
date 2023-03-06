@@ -1,9 +1,24 @@
-import './MoviesCard.css';
 import { REACT_APP_SERVER_URL } from '../../utils/constants';
+import { ICardData } from '../../types';
+import { FC, PropsWithChildren } from 'react';
+import block from 'bem-css-modules';
+import cn from 'classnames';
+import styles from './MoviesCard.module.css';
 
-function MoviesCard({ classes, cardData, children }) {
+const b = block(styles);
+
+interface Props {
+  classes?: string;
+  cardData: ICardData;
+}
+
+const MoviesCard: FC<PropsWithChildren<Props>> = ({
+  classes,
+  cardData,
+  children,
+}) => {
   return (
-    <li className={`movie-card ${classes ? classes : ''}`}>
+    <li className={cn(b(), classes)}>
       <a
         href={cardData.trailer}
         target="_blank"
@@ -30,6 +45,6 @@ function MoviesCard({ classes, cardData, children }) {
       </div>
     </li>
   );
-}
+};
 
 export default MoviesCard;

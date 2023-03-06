@@ -1,13 +1,30 @@
-import { useContext } from 'react';
+import { FC, useContext } from 'react';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SeacrchForm from '../SearchForm/SearchForm';
 import MoviesCardWithCheckbox from '../MovieCardWithCheckbox/MovieCardWithCheckbox.js';
-import Button from '../Button/Button';
+import Button, { ButtonType } from '../Button/Button';
 import Preloader from '../Preloader/Preloader';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
+import { ICardData } from '../../types';
 
-function Movies({
+interface Props {
+  movieIsLoading: boolean;
+  classes?: string;
+  keyWord: string;
+  onKeyWordChange: (value: string) => void;
+  movieList: ICardData[];
+  hiddenMovieListLength: number;
+  isCardsNotFound: boolean;
+  isShortMovie: boolean;
+  onShortMovieChange: () => void;
+  onCardSave: () => void;
+  onMoreClick: () => void;
+  keyWordError: string;
+  onMovieFind: (keyWord: string) => void;
+}
+
+const Movies: FC<Props> = ({
   movieIsLoading,
   classes,
   keyWord,
@@ -21,7 +38,7 @@ function Movies({
   onCardSave,
   onMoreClick,
   keyWordError,
-}) {
+}) => {
   const { movieApiError, saveMovieError, deleteMovieError, getUserMovieError } =
     useContext(ErrorsContext);
 
@@ -68,7 +85,7 @@ function Movies({
                 <div className="main__section-inner">
                   <Button
                     classes="btn_type_more"
-                    type="button"
+                    type={ButtonType.button}
                     onClick={onMoreClick}
                   >
                     Ещё
@@ -97,6 +114,6 @@ function Movies({
       </section>
     </main>
   );
-}
+};
 
 export default Movies;

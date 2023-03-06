@@ -1,38 +1,65 @@
-import { useContext, useState, useRef, useEffect } from 'react';
+import {
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  FC,
+  SyntheticEvent,
+} from 'react';
 import './Profile.css';
-import Button from '../Button/Button';
+import Button, { ButtonType } from '../Button/Button';
 import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useValidation } from '../../hooks/useValidation';
 import Preloader from '../Preloader/Preloader';
+import {
+  EMAIL_MIN_LENGTH,
+  INPUT_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+} from '../../config';
 
-function Profile({ classes, onLogout, onProfileChange, isLoading }) {
+interface Props {
+  classes?: string;
+  onLogout: () => void;
+  onProfileChange: (userName: string, userEmail: string) => void;
+  isLoading: boolean;
+}
+
+const Profile: FC<Props> = ({
+  classes,
+  onLogout,
+  onProfileChange,
+  isLoading,
+}) => {
   const { profileError, logoutError } = useContext(ErrorsContext);
   const { currentUser } = useContext(CurrentUserContext);
   const [userData, setUserData] = useState({
-    userName: currentUser.userName,
-    userEmail: currentUser.userEmail,
+    userName: currentUser?.userName,
+    userEmail: currentUser?.userEmail,
   });
   const { errors, isValid, handleValidation } = useValidation();
   const formRef = useRef(null);
   const [isFormValid, setIsFormValid] = useState(isValid);
 
-  function handleChange(evt) {
+  function handleChange(evt: ChangeEvent<HTMLInputElement>) {
     handleValidation(evt, formRef.current);
     const { name, value } = evt.target;
     setUserData({ ...userData, [name]: value });
   }
 
-  function handleSubmit(evt) {
+  function handleSubmit(evt: SyntheticEvent) {
     evt.preventDefault();
-    onProfileChange(userData.userName, userData.userEmail);
+    if (userData.userName && userData.userEmail) {
+      onProfileChange(userData.userName, userData.userEmail);
+    }
   }
 
   useEffect(() => {
     if (
-      userData.userName === currentUser.userName &&
-      userData.userEmail === currentUser.userEmail
+      userData.userName === currentUser?.userName &&
+      userData.userEmail === currentUser?.userEmail
     ) {
       setIsFormValid(false);
     } else {
@@ -64,8 +91,8 @@ function Profile({ classes, onLogout, onProfileChange, isLoading }) {
                     id="user-name"
                     name="userName"
                     type="text"
-                    minLength="2"
-                    maxLength="30"
+                    minLength={NAME_MIN_LENGTH}
+                    maxLength={INPUT_MAX_LENGTH}
                     value={userData.userName}
                     onChange={handleChange}
                     required
@@ -83,8 +110,8 @@ function Profile({ classes, onLogout, onProfileChange, isLoading }) {
                     id="user-email"
                     name="userEmail"
                     type="email"
-                    minLength="2"
-                    maxLength="30"
+                    minLength={EMAIL_MIN_LENGTH}
+                    maxLength={INPUT_MAX_LENGTH}
                     value={userData.userEmail}
                     onChange={handleChange}
                     required
@@ -100,7 +127,7 @@ function Profile({ classes, onLogout, onProfileChange, isLoading }) {
                   classes={`btn_type_profile-submit ${
                     !isFormValid && 'btn_disabled'
                   }`}
-                  type="submit"
+                  type={ButtonType.submit}
                   disabled={!isFormValid}
                 >
                   Редактировать
@@ -121,7 +148,7 @@ function Profile({ classes, onLogout, onProfileChange, isLoading }) {
               </form>
               <Button
                 classes="btn_type_profile-logout"
-                type="button"
+                type={ButtonType.button}
                 onClick={onLogout}
               >
                 Выйти из аккаунта
@@ -132,6 +159,6 @@ function Profile({ classes, onLogout, onProfileChange, isLoading }) {
       )}
     </>
   );
-}
+};
 
 export default Profile;

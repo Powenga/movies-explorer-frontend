@@ -1,8 +1,14 @@
+import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import './UserWidget.css';
 import avatarPath from '../../images/avatar.svg';
 
-function UserWidget({ classes, onClick }) {
+interface Props {
+  classes?: string;
+  onClick?: () => void;
+}
+
+const UserWidget: FC<Props> = ({ classes, onClick }) => {
   return (
     <NavLink
       className={`user-widget transition ${classes ? classes : ''}`}
@@ -19,6 +25,6 @@ function UserWidget({ classes, onClick }) {
       </div>
     </NavLink>
   );
-}
+};
 
 export default UserWidget;
