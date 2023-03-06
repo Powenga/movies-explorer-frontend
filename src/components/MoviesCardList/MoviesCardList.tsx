@@ -6,7 +6,7 @@ interface Props {
   card: React.ElementType;
   cardList: ICardData[];
   classes?: string;
-  onCardSave: () => void;
+  onCardSave?: () => void;
   onCardDelete?: () => void;
 }
 

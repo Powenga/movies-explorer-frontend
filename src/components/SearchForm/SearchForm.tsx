@@ -13,7 +13,7 @@ interface Props {
   onKeyWordChange: (value: string) => void;
   isShortMovie: boolean;
   onShortMovieChange: (value: boolean) => void;
-  keyWordError: string;
+  keyWordError?: string;
 }
 
 const SeacrchForm: FC<Props> = ({
