@@ -4,7 +4,7 @@ export interface ILink {
 }
 
 export interface IUser {
-  useName: string;
+  userName: string;
   userEmail: string;
   userId: string;
 }
