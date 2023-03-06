@@ -62,7 +62,7 @@ const Register: FC<Props> = ({ classes, onRegister, isLoading }) => {
         <main className={`main ${classes ? classes : ''}`}>
           <section className="main__section register">
             <SignForm
-              formRef={formRef}
+              ref={formRef}
               classes="main__section-inner"
               formTitle="Добро пожаловать!"
               formName="register-form"

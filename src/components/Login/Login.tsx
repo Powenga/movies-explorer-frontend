@@ -54,7 +54,7 @@ const Login: FC<Props> = ({ classes, onLogin, isLoading }) => {
         <main className={`main ${classes ? classes : ''}`}>
           <section className="main__section">
             <SignForm
-              formRef={formRef}
+              ref={formRef}
               classes="main__section-inner"
               formTitle="Рады видеть!"
               formName="login-form"
