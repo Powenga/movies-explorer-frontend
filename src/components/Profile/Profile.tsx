@@ -14,10 +14,11 @@ import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { useValidation } from '../../hooks/useValidation';
 import Preloader from '../Preloader/Preloader';
-
-const MIN_NAME_INPUT_LENGTH = 2;
-const MIN_EMAIL_INPUT_LENGTH = 2;
-const MAX_INPUT_LENGTH = 30;
+import {
+  EMAIL_MIN_LENGTH,
+  INPUT_MAX_LENGTH,
+  NAME_MIN_LENGTH,
+} from '../../config';
 
 interface Props {
   classes?: string;
@@ -90,8 +91,8 @@ const Profile: FC<Props> = ({
                     id="user-name"
                     name="userName"
                     type="text"
-                    minLength={MIN_NAME_INPUT_LENGTH}
-                    maxLength={MAX_INPUT_LENGTH}
+                    minLength={NAME_MIN_LENGTH}
+                    maxLength={INPUT_MAX_LENGTH}
                     value={userData.userName}
                     onChange={handleChange}
                     required
@@ -109,8 +110,8 @@ const Profile: FC<Props> = ({
                     id="user-email"
                     name="userEmail"
                     type="email"
-                    minLength={MIN_EMAIL_INPUT_LENGTH}
-                    maxLength={MAX_INPUT_LENGTH}
+                    minLength={EMAIL_MIN_LENGTH}
+                    maxLength={INPUT_MAX_LENGTH}
                     value={userData.userEmail}
                     onChange={handleChange}
                     required

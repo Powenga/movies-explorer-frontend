@@ -13,10 +13,11 @@ import ErrorMessage from '../ErrorMessage/ErrorMessage';
 import { ErrorsContext } from '../../contexts/ErrorsContext';
 import { useValidation } from '../../hooks/useValidation';
 import Preloader from '../Preloader/Preloader';
-
-const EMAIL_MIN_LENGTH = 2;
-const PASSWORD_MIN_LENGTH = 8;
-const INPUT_MAX_LENGTH = 30;
+import {
+  EMAIL_MIN_LENGTH,
+  INPUT_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+} from '../../config';
 
 interface Props {
   classes?: string;
