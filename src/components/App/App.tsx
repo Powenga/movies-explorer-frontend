@@ -55,7 +55,7 @@ function App() {
   const [isUserChecking, setIsUserChecking] = useState(true);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({
-    useName: '',
+    userName: '',
     userEmail: '',
     userId: '',
   });
