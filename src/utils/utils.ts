@@ -1,4 +1,6 @@
-export function findMovies(keyWord, movieList) {
+import { ICardData } from '../types';
+
+export function findMovies(keyWord: string, movieList: ICardData[]) {
   const lowerKeyWord = keyWord.toLowerCase();
   return movieList.filter((movie) => {
     if (
@@ -12,12 +14,12 @@ export function findMovies(keyWord, movieList) {
   });
 }
 
-export function filterMovies(isShortMovie, movieList) {
+export function filterMovies(isShortMovie: boolean, movieList: ICardData[]) {
   return movieList.filter((movie) => {
-    if(isShortMovie) {
+    if (isShortMovie) {
       return movie.duration < 40 ? true : false;
     } else {
       return true;
     }
-  })
+  });
 }
