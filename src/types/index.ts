@@ -15,6 +15,7 @@ export interface ICardData {
   trailer: string;
   image: string;
   nameRU: string;
+  nameEN: string;
   duration: number;
   movieId: string;
   _id: string;
