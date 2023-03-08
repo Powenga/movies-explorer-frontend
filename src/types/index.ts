@@ -17,4 +17,12 @@ export interface ICardData {
   nameRU: string;
   duration: number;
   movieId: string;
+  _id: string;
+}
+
+type THeaders = 'Content-Type';
+
+export interface IApiProps {
+  baseUrl: string;
+  headers: Record<THeaders, string>;
 }
