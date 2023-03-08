@@ -1,63 +1,61 @@
+import { IApiProps } from '../types';
+import { Api } from './api';
 import { REACT_APP_API_URL as BASE_URL } from './constants';
-class Auth {
-  constructor({baseUrl}) {
-    this._baseUrl = baseUrl;
+
+interface IAuth {
+  signUp: (name: string, email: string, password: string) => void;
+  signIn: (email: string, password: string) => void;
+  checkAutorization: () => void;
+  logout: () => void;
+}
+
+class Auth extends Api implements IAuth {
+  constructor({ baseUrl, headers }: IApiProps) {
+    super({ baseUrl, headers });
   }
 
-  _onError(res) {
-    return res.json()
-    .then(data => {
-      if(res.ok) {
-        return Promise.resolve(data)
-      }
-      if(data.message === 'celebrate request validation failed') {
-        data = data.validation.body;
-      }
-      return Promise.reject(data);
-    })
-  }
-
-  signUp(name, email, password) {
-    return fetch(`${this._baseUrl}/signup`, {
+  signUp(name: string, email: string, password: string) {
+    return fetch(`${this.baseUrl}/signup`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({name, email, password}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, password }),
       credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this.onError);
   }
 
-  signIn(email, password) {
-    return fetch(`${this._baseUrl}/signin`, {
+  signIn(email: string, password: string) {
+    return fetch(`${this.baseUrl}/signin`, {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({password, email}),
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password, email }),
       credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this.onError);
   }
 
   checkAutorization() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this.baseUrl}/users/me`, {
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this.onError);
   }
 
   logout() {
-    return fetch(`${this._baseUrl}/signout`, {
+    return fetch(`${this.baseUrl}/signout`, {
       headers: {
         'Content-Type': 'application/json',
       },
       credentials: 'include',
-    })
-      .then(this._onError)
+    }).then(this.onError);
   }
 }
 
-export default new Auth({
+const auth = new Auth({
   baseUrl: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
 });
+
+export default auth;
